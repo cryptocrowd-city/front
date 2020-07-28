@@ -50,6 +50,19 @@
         <m-icon iconId="chevron_right"></m-icon>
       </m-dropdownMenu>
     </li>
+
+    <li>
+      <m-dropdownMenu
+        [menu]="permawebMenu"
+        [anchorPosition]="{ top: '0', right: 'calc(100% - 4px)' }"
+        triggerClass="m-dropdownMenu__item"
+        data-cy="meatball-menu-permaweb"
+        *ngIf="features.has('permaweb')"
+      >
+        <span>Permaweb</span>
+        <m-icon iconId="chevron_right"></m-icon>
+      </m-dropdownMenu>
+    </li>
   </ul>
 </ng-template>
 
@@ -82,6 +95,17 @@
           iconId="check"
           *ngIf="(license$ | async) === licenseItem.value"
         ></m-icon>
+      </span>
+    </li>
+  </ul>
+</ng-template>
+
+<ng-template #permawebMenu>
+  <ul data-cy="meatball-menu-license-menu">
+    <li (click)="onPostToPermawebClick()">
+      <span class="m-dropdownMenu__item">
+        <span>Post to Permaweb</span>
+        <m-icon iconId="check" *ngIf="service.postToPermaweb$ | async"></m-icon>
       </span>
     </li>
   </ul>
