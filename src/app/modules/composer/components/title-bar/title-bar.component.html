@@ -57,7 +57,7 @@
         [anchorPosition]="{ top: '0', right: 'calc(100% - 4px)' }"
         triggerClass="m-dropdownMenu__item"
         data-cy="meatball-menu-permaweb"
-        *ngIf="features.has('permaweb')"
+        *ngIf="shouldShowPermawebOption()"
       >
         <span>Permaweb</span>
         <m-icon iconId="chevron_right"></m-icon>

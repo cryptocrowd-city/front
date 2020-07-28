@@ -18,6 +18,7 @@ import {
 } from '../../services/composer.service';
 import { BehaviorSubject } from 'rxjs';
 import { FeaturesService } from '../../../../services/features.service';
+import { Session } from '../../../../services/session';
 
 /**
  * Composer title bar component. It features a label and a dropdown menu
@@ -60,7 +61,8 @@ export class TitleBarComponent {
 
   constructor(
     protected service: ComposerService,
-    public features: FeaturesService
+    private features: FeaturesService,
+    private session: Session
   ) {}
 
   /**
@@ -145,5 +147,13 @@ export class TitleBarComponent {
    */
   onPostToPermawebClick(): void {
     this.postToPermaweb$.next(!this.postToPermaweb$.getValue());
+  }
+
+  /**
+   * Show permaweb option.
+   * @returns { boolean } true if option should be shown.
+   */
+  public shouldShowPermawebOption(): Promise<boolean> {
+    return this.features.has('permaweb') && this.session.getLoggedInUser().plus;
   }
 }
