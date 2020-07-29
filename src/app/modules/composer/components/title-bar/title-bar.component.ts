@@ -14,8 +14,11 @@ import {
   AccessIdSubjectValue,
   ComposerService,
   LicenseSubjectValue,
+  PostToPermawebSubjectValue,
 } from '../../services/composer.service';
 import { BehaviorSubject } from 'rxjs';
+import { FeaturesService } from '../../../../services/features.service';
+import { Session } from '../../../../services/session';
 
 /**
  * Composer title bar component. It features a label and a dropdown menu
@@ -56,7 +59,11 @@ export class TitleBarComponent {
     license => license.selectable
   );
 
-  constructor(protected service: ComposerService) {}
+  constructor(
+    protected service: ComposerService,
+    private features: FeaturesService,
+    private session: Session
+  ) {}
 
   /**
    * Access ID subject from service
@@ -70,6 +77,13 @@ export class TitleBarComponent {
    */
   get license$(): BehaviorSubject<LicenseSubjectValue> {
     return this.service.license$;
+  }
+
+  /**
+   * Post to permaweb subject from service
+   */
+  get postToPermaweb$(): BehaviorSubject<PostToPermawebSubjectValue> {
+    return this.service.postToPermaweb$;
   }
 
   /**
@@ -125,5 +139,21 @@ export class TitleBarComponent {
    */
   onLicenseClick($event) {
     this.license$.next($event);
+  }
+
+  /**
+   * Toggles post to permaweb variable
+   * @returns { void }
+   */
+  onPostToPermawebClick(): void {
+    this.postToPermaweb$.next(!this.postToPermaweb$.getValue());
+  }
+
+  /**
+   * Show permaweb option.
+   * @returns { boolean } true if option should be shown.
+   */
+  public shouldShowPermawebOption(): Promise<boolean> {
+    return this.features.has('permaweb') && this.session.getLoggedInUser().plus;
   }
 }
