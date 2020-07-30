@@ -1,5 +1,4 @@
 <div class="mdl-textfield mdl-js-textfield m-pro__searchBox">
-  <i class="material-icons search">search</i>
   <input
     [ngModel]="query"
     (ngModelChange)="queryChange.emit($event)"
@@ -8,6 +7,7 @@
     class="mdl-textfield__input ng-pristine ng-valid ng-touched"
     type="text"
     (keyup.enter)="onSearch.emit()"
+    placeholder="Search"
   />
   <ng-container *ngIf="query">
     <i class="material-icons clear" (click)="onClearSearch.emit()">close</i>

@@ -1,5 +1,20 @@
 <div class="m-pro__channel">
   <ng-container *ngIf="channel">
+    <div class="m-proChannel__loginRow">
+      <div class="m-proChannel__login">
+        <span i18n="@@M_PRO_CHANNEL__HAVE_ACCOUNT"
+          >Already have an account? </span
+        ><a (click)="showLoginModal()" i18n="@@COMMON__LOGIN">Login</a>
+      </div>
+      <div class="m-proChannel__joinNow">
+        <m-pro__joinButton></m-pro__joinButton>
+        <div class="m-proChannel__lowestPrice" *ngIf="lowestPrice">
+          <span i18n="@@M_PRO_CHANNEL__LOWEST_PRICE"
+            >from ${{ lowestPrice }}</span
+          ><span i18n="@@M_PRO_CHANNEL__PER_MONTH"> per month</span>
+        </div>
+      </div>
+    </div>
     <div class="m-proChannel__topbar">
       <ng-container
         *ngIf="!channel.pro_settings.has_custom_logo; else customLogo"
@@ -81,7 +96,7 @@
             >Pay</a
           >
 
-          <m-pro__subscribeButton></m-pro__subscribeButton>
+          <!-- <m-pro__subscribeButton></m-pro__subscribeButton> -->
         </ng-container>
         <ng-template #ownerNavLinks>
           <a

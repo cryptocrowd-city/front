@@ -1,0 +1,213 @@
+@import 'defaults.scss';
+
+:host {
+  .m-pro__channel {
+    max-width: 1382px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-rows: 60px 170px 1fr 100px;
+    grid-template-columns: repeat(12, 1fr);
+    //min-height: calc(100vh - 52px); /* 52px is the topbar height */
+    min-height: 100%;
+
+    .is-pro-domain & {
+      min-height: 100vh;
+    }
+
+    .m-proChannel__loginRow {
+      grid-row: 1 / span 1;
+      padding: 15px 8vw 13px 8vw;
+
+      .m-proChannel__login {
+        text-align: right;
+        font-size: 17px;
+        font-weight: 400;
+        color: var(--m-pro--secondary-text-color);
+
+        a {
+          font-weight: 400;
+          color: var(--m-pro--text-color);
+          text-decoration: underline;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .m-proChannel__joinNow {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+
+        .m-proChannel__lowestPrice {
+          font-size: 18px;
+          font-weight: 400;
+          span {
+            color: var(--m-pro--text-color);
+          }
+          span:first-child {
+            color: var(--m-pro--secondary-text-color);
+          }
+        }
+      }
+    }
+
+    .m-proChannel__loginRow,
+    .m-proChannel__topbar {
+      width: 100%;
+      box-sizing: border-box;
+
+      grid-column: 1 / span 12;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--m-pro--border-color);
+    }
+
+    .m-proChannel__topbar {
+      grid-row: 2 / span 1;
+      padding: 10px 8vw 16px 8vw;
+
+      minds-avatar {
+        width: 90px;
+        height: 90px;
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .m-proChannelTopbar__logo {
+        max-width: 200px;
+        max-height: 100%;
+        cursor: pointer;
+        object-fit: contain;
+      }
+
+      .m-proChannelTopbar__logo:focus {
+        outline: none;
+      }
+
+      & > * {
+        padding: 0 16px 0 0;
+      }
+
+      .m-proChannelTopbar__searchBox {
+        margin: 0 16px;
+
+        @media screen and (max-width: 1081px) {
+          flex-grow: 1;
+          max-width: 300px;
+        }
+      }
+
+      .m-btn:disabled {
+        padding-left: 16px;
+        color: gray !important;
+        border: gray !important;
+      }
+    }
+
+    a.m-proChannelTopbar__navItem {
+      cursor: pointer;
+      text-decoration: none;
+      padding: 8px;
+      font-size: 19px;
+      font-weight: 400;
+    }
+
+    .m-proChannel__body {
+      grid-row: 3 / span 1;
+      grid-column: 1 / span 12;
+      padding: 0 16px;
+
+      @media screen and (max-width: $max-mobile) {
+        grid-row: 3 / span 2;
+        margin-bottom: 24px;
+      }
+
+      & > m-blog-view-infinite,
+      m-blog-view {
+        background-color: transparent !important;
+      }
+
+      .m-proChannel__error {
+        width: 100%;
+        display: inline-block;
+        margin: 16px 0;
+        padding: 17px 8px;
+        font-size: 24px;
+        text-align: center;
+        background: var(--m-pro--transparent-background-color);
+
+        @include m-theme() {
+          color: themed($m-red);
+        }
+      }
+    }
+
+    .m-proChannel__footer {
+      grid-row: 4 / span 1;
+      grid-column: 2 / span 10;
+      width: 80%;
+      margin: 0 auto;
+
+      @media screen and (max-width: $min-tablet) {
+        display: none;
+      }
+    }
+
+    m-pro--channel h1 {
+      font-size: 70px;
+      font-weight: bold;
+    }
+
+    .m-proChannel__topbar .minds-avatar {
+      margin: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-position: center;
+      background-size: cover;
+    }
+
+    // colors
+    a.active,
+    a:hover {
+      color: var(--m-pro--primary-color) !important;
+    }
+
+    a,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    p {
+      color: var(--m-pro--text-color) !important;
+    }
+  }
+
+  @media screen and (max-width: $min-tablet) {
+    .m-pro__channel {
+      .m-proChannelTopbar__searchBox {
+        display: none;
+      }
+    }
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    .m-pro__channel {
+      .m-proChannel__body {
+        margin-top: 10px;
+      }
+    }
+  }
+
+  ::ng-deep {
+    m-pro__joinButton {
+      display: inline-block;
+      margin-right: 20px;
+    }
+  }
+}

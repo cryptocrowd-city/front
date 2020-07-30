@@ -45,8 +45,7 @@ m-pro__hamburger-menu {
         display: block;
         font-size: 18px;
         line-height: 1.25;
-        text-transform: uppercase;
-        font-weight: 700;
+        font-weight: 400;
         letter-spacing: 1px;
         &.m-proHamburgerMenu__linkWrapper {
           cursor: pointer;
@@ -61,6 +60,7 @@ m-pro__hamburger-menu {
           }
         }
 
+        //TODOOJM replace with joinbutton
         &.m-proHamburgerMenu__subscribe {
           padding: 0 0 16px;
           text-align: center;
@@ -78,15 +78,15 @@ m-pro__hamburger-menu {
             margin: 0 auto 16px;
 
             .mdl-textfield__input {
-              border: 1px solid var(--m-pro--text-color);
-              border-radius: 6px;
+              border: 1px solid var(--m-pro--border-color);
+              border-radius: 21px;
             }
           }
         }
 
         &.m-proHamburgerMenu__spacer {
           height: 0;
-          border-top: 1px solid var(--m-pro--text-color);
+          border-top: 1px solid var(--m-pro--border-color);
           margin: 16px 0;
         }
 

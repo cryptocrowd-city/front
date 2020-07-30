@@ -3,6 +3,9 @@
   margin-bottom: 24px;
   color: var(--m-pro--text-color);
 
+  .m-proChannelFooter__link {
+    color: var(--m-pro--text-color);
+  }
   .m-proChannelFooter__items {
     > * {
       display: inline-block;
@@ -25,17 +28,16 @@
     margin-bottom: 16px;
 
     .m-proChannelFooter__text {
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
+      font-size: 19px;
+      font-weight: 400;
     }
   }
 
   a {
     cursor: pointer;
     text-decoration: none;
-
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    font-size: 19px;
+    font-weight: 400;
   }
 
   minds-button-user-dropdown {

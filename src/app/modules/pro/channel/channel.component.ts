@@ -40,6 +40,7 @@ import { FormToastService } from '../../../common/services/form-toast.service';
   providers: [ProChannelService, OverlayModalService, SignupModalService],
   selector: 'm-pro--channel',
   templateUrl: 'channel.component.html',
+  styleUrls: ['channel.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -132,6 +133,13 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   get isProDomain() {
     return this.site.isProDomain;
+  }
+
+  get lowestPrice() {
+    const moneyRewards = this.channel.wire_rewards.rewards.money;
+    if (moneyRewards[0]) {
+      return moneyRewards[0].amount;
+    }
   }
 
   @HostBinding('style.backgroundImage') get backgroundImageCssValue() {
@@ -289,7 +297,20 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   bindCssVariables() {
     if (isPlatformServer(this.platformId)) return;
-    const styles = this.channel.pro_settings.styles;
+    let styles = this.channel.pro_settings.styles;
+
+    /**
+     * Create secondary text and border colors
+     */
+    const textColor = styles['text_color'];
+    if (textColor) {
+      const additionalColors = {
+        secondary_text_color: textColor + 'B3', // 70% opacity
+        border_color: textColor + '99', // 60% opacity
+      };
+
+      styles = { ...styles, ...additionalColors };
+    }
 
     for (const style in styles) {
       if (!styles.hasOwnProperty(style)) {
@@ -304,6 +325,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       const styleAttr = style.replace(/_/g, '-');
+
       this.element.nativeElement.style.setProperty(
         `--m-pro--${styleAttr}`,
         styles[style]
