@@ -58,6 +58,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   collapseNavItems: boolean;
 
+  showSplash: boolean = false;
+
   protected params$: Subscription;
 
   protected loggedIn$: Subscription;
@@ -266,6 +268,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       this.channel = await this.channelService.load(this.username);
 
       this.bindCssVariables();
+      this.setSplash();
       this.shouldOpenWireModal();
     } catch (e) {
       this.error = e.message;
@@ -295,6 +298,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     try {
       this.channel = await this.channelService.reload(this.username);
 
+      this.setSplash();
       this.shouldOpenWireModal();
     } catch (e) {
       console.error(e);
@@ -304,6 +308,13 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.detectChanges();
+  }
+
+  setSplash(): void {
+    this.showSplash =
+      !this.currentUser &&
+      this.channel.pro_settings.splash &&
+      this.site.isProDomain;
   }
 
   bindCssVariables() {

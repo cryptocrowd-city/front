@@ -41,6 +41,7 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { ProRedirectComponent } from './redirect.component';
 import { MarketingModule } from '../marketing/marketing.module';
 import { JoinButtonComponent } from './channel/join-button/join-button.component';
+import { ProChannelSplashComponent } from './channel/splash/splash.component';
 
 const routes: Routes = [
   {
@@ -184,6 +185,7 @@ export const PRO_DOMAIN_ROUTES = [
     SubscribeButtonComponent,
     SearchBoxComponent,
     JoinButtonComponent,
+    ProChannelSplashComponent,
   ],
   exports: [ProChannelComponent],
 })
