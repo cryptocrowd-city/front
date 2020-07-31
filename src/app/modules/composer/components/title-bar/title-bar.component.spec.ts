@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { TitleBarComponent } from './title-bar.component';
 import { ComposerService } from '../../services/composer.service';
+import { FeaturesService } from '../../../../services/features.service';
+import { Session } from '../../../../services/session';
 
 describe('Composer Title Bar', () => {
   let comp: TitleBarComponent;
@@ -38,6 +40,14 @@ describe('Composer Title Bar', () => {
         {
           provide: ComposerService,
           useValue: composerServiceMock,
+        },
+        {
+          provide: FeaturesService,
+          useValue: MockService(FeaturesService),
+        },
+        {
+          provide: Session,
+          useValue: MockService(Session),
         },
       ],
     }).compileComponents();
