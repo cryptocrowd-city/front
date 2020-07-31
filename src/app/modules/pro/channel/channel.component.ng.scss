@@ -10,6 +10,9 @@
     //min-height: calc(100vh - 52px); /* 52px is the topbar height */
     min-height: 100%;
 
+    &.hideLoginRow {
+      grid-template-rows: 0 170px 1fr 100px;
+    }
     .is-pro-domain & {
       min-height: 100vh;
     }
@@ -23,6 +26,11 @@
         font-size: 17px;
         font-weight: 400;
         color: var(--m-pro--secondary-text-color);
+        span {
+          @media screen and (max-width: $max-mobile) {
+            display: none;
+          }
+        }
 
         a {
           font-weight: 400;
@@ -42,11 +50,16 @@
         .m-proChannel__lowestPrice {
           font-size: 18px;
           font-weight: 400;
+          margin-left: 20px;
+
           span {
             color: var(--m-pro--text-color);
           }
           span:first-child {
             color: var(--m-pro--secondary-text-color);
+          }
+          @media screen and (max-width: $min-tablet) {
+            display: none;
           }
         }
       }
@@ -63,6 +76,10 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--m-pro--border-color);
+
+      @media screen and (max-width: $min-tablet) {
+        padding: 15px 5vw 13px 5vw;
+      }
     }
 
     .m-proChannel__topbar {
@@ -106,6 +123,12 @@
         color: gray !important;
         border: gray !important;
       }
+    }
+
+    .m-proChannelTopbar__navItems {
+      display: flex;
+      justify-content: flex-end;
+      flex-flow: row nowrap;
     }
 
     a.m-proChannelTopbar__navItem {
@@ -207,7 +230,6 @@
   ::ng-deep {
     m-pro__joinButton {
       display: inline-block;
-      margin-right: 20px;
     }
   }
 }

@@ -142,6 +142,17 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  get hideLoginRow() {
+    let isOwner = false;
+    // todoojm uncomment
+    // if (this.currentUser) {
+    //   isOwner = this.currentUser?.guid === this.channel.guid;
+    // }
+    const isMember = false; // todoojm
+
+    return isOwner || isMember;
+  }
+
   @HostBinding('style.backgroundImage') get backgroundImageCssValue() {
     if (!this.channel || !this.channel.pro_settings.background_image) {
       return 'none';
@@ -191,7 +202,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.listen();
-    this.onResize();
+    // this.onResize();
     this.pageLayoutService.useFullWidth();
   }
 
@@ -232,9 +243,9 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
-  @HostListener('window:resize') onResize() {
-    this.collapseNavItems = window.innerWidth <= 768;
-  }
+  // @HostListener('window:resize') onResize() {
+  //   this.collapseNavItems = window.innerWidth <= 768;
+  // }
 
   ngOnDestroy() {
     this.params$.unsubscribe();
@@ -301,12 +312,13 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     /**
      * Create secondary text and border colors
+     * from text color w/ reduced opacity
      */
     const textColor = styles['text_color'];
     if (textColor) {
       const additionalColors = {
-        secondary_text_color: textColor + 'B3', // 70% opacity
-        border_color: textColor + '99', // 60% opacity
+        secondary_text_color: textColor + 'B3',
+        border_color: textColor + '80',
       };
 
       styles = { ...styles, ...additionalColors };

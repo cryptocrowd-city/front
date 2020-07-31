@@ -1,6 +1,6 @@
-<div class="m-pro__channel">
+<div class="m-pro__channel" [ngClass]="{ hideLoginRow: hideLoginRow }">
   <ng-container *ngIf="channel">
-    <div class="m-proChannel__loginRow">
+    <div class="m-proChannel__loginRow" [hidden]="hideLoginRow">
       <div class="m-proChannel__login">
         <span i18n="@@M_PRO_CHANNEL__HAVE_ACCOUNT"
           >Already have an account? </span
@@ -16,31 +16,33 @@
       </div>
     </div>
     <div class="m-proChannel__topbar">
-      <ng-container
-        *ngIf="!channel.pro_settings.has_custom_logo; else customLogo"
-      >
-        <minds-avatar
-          [object]="channel"
-          [routerLink]="homeRouterLink"
-        ></minds-avatar>
-      </ng-container>
-      <ng-template #customLogo>
-        <img
-          class="m-proChannelTopbar__logo"
-          [src]="channel.pro_settings.logo_image"
-          [routerLink]="homeRouterLink"
-        />
-      </ng-template>
+      <div class="m-proChannel__topbarLeft">
+        <ng-container
+          *ngIf="!channel.pro_settings.has_custom_logo; else customLogo"
+        >
+          <minds-avatar
+            [object]="channel"
+            [routerLink]="homeRouterLink"
+          ></minds-avatar>
+        </ng-container>
+        <ng-template #customLogo>
+          <img
+            class="m-proChannelTopbar__logo"
+            [src]="channel.pro_settings.logo_image"
+            [routerLink]="homeRouterLink"
+          />
+        </ng-template>
 
-      <div class="m-proChannelTopbar__searchBox">
-        <m-pro__searchBox
-          [(query)]="query"
-          (onSearch)="search()"
-          (onClearSearch)="clearSearch()"
-        ></m-pro__searchBox>
+        <div class="m-proChannelTopbar__searchBox">
+          <m-pro__searchBox
+            [(query)]="query"
+            (onSearch)="search()"
+            (onClearSearch)="clearSearch()"
+          ></m-pro__searchBox>
+        </div>
       </div>
 
-      <ng-container *ngIf="!collapseNavItems">
+      <div class="m-proChannelTopbar__navItems">
         <a
           class="m-proChannelTopbar__navItem"
           [routerLink]="feedRouterLink"
@@ -95,8 +97,6 @@
             i18n="@@COMMON__WIRE"
             >Pay</a
           >
-
-          <!-- <m-pro__subscribeButton></m-pro__subscribeButton> -->
         </ng-container>
         <ng-template #ownerNavLinks>
           <a
@@ -118,13 +118,13 @@
             Settings
           </a>
         </ng-template>
-      </ng-container>
+      </div>
 
-      <m-pro__hamburger-menu
+      <!-- <m-pro__hamburger-menu
         [(query)]="query"
         (onSearch)="search()"
         (onClearSearch)="clearSearch()"
-      ></m-pro__hamburger-menu>
+      ></m-pro__hamburger-menu> -->
     </div>
 
     <div class="m-proChannel__body">
@@ -136,10 +136,5 @@
     </div>
   </ng-container>
 </div>
-
-<m-modal-signup
-  *ngIf="!session.getLoggedInUser()"
-  [open]="false"
-></m-modal-signup>
 
 <m-overlay-modal #overlayModal></m-overlay-modal>
