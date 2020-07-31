@@ -17,7 +17,11 @@
           data-cy="m-activity__permawebFlag"
         >
           <a
-            [href]="'https://viewblock.io/arweave/tx/' + entity.permaweb_id"
+            [href]="
+              'https://viewblock.io/arweave/tx/' +
+              entity.permaweb_id +
+              '?showData'
+            "
             target="_blank"
           >
             <i class="material-icons">vpn_lock</i>
