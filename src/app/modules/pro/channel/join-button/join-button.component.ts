@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { WireModalService } from '../../../wire/wire-modal.service';
 import {
   SupportTiersService,
@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['join-button.component.ng.scss'],
   providers: [SupportTiersService],
 })
-export class JoinButtonComponent implements OnInit {
+export class JoinButtonComponent implements OnInit, OnDestroy {
   channel: MindsUser;
   supportTiersSubscription: Subscription;
 
@@ -22,7 +22,7 @@ export class JoinButtonComponent implements OnInit {
   lowestSupportTier: SupportTier;
 
   constructor(
-    private wireModalService: WireModalService,
+    private wireModal: WireModalService,
     protected supportTiersService: SupportTiersService,
     protected channelService: ProChannelService
   ) {}
@@ -36,19 +36,23 @@ export class JoinButtonComponent implements OnInit {
         if (supportTiers[0]) {
           this.lowestSupportTier = supportTiers[0];
 
-          this.userAlreadySubscribed = supportTiers.some(supportTier => {
-            supportTier.subscription_urn !== null;
-          });
+          this.userAlreadySubscribed = supportTiers.some(
+            supportTier => supportTier.subscription_urn
+          );
         }
       }
     );
   }
 
   async join(): Promise<void> {
-    await this.wireModalService
+    await this.wireModal
       .present(this.channel, {
         supportTier: this.lowestSupportTier,
       })
       .toPromise();
+  }
+
+  ngOnDestroy() {
+    this.supportTiersSubscription.unsubscribe();
   }
 }
