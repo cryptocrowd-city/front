@@ -45,14 +45,14 @@ export class ProChannelService implements OnDestroy {
 
   readonly onChannelChange: BehaviorSubject<any> = new BehaviorSubject(null);
 
-  readonly isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  readonly isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   readonly isOwner$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  readonly userIsMember$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  readonly userIsMember$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   readonly userIsSubscribed$: BehaviorSubject<boolean> = new BehaviorSubject(
-    false
+    true
   );
 
   readonly lowestSupportTier$: BehaviorSubject<any> = new BehaviorSubject(null);
@@ -109,7 +109,6 @@ export class ProChannelService implements OnDestroy {
 
   listen() {
     this.isLoggedInSubscription = this.session.loggedinEmitter.subscribe(is => {
-      console.log('*** logged in emitter?', is);
       if (is) {
         this.isLoggedIn$.next(true);
         this.showSplash$.next(false);
