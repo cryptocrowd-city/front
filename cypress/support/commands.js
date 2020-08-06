@@ -172,11 +172,12 @@ Cypress.Commands.add(
       .then(xhr => {
         expect(xhr.status).to.equal(200);
         expect(xhr.response.body.status).to.deep.equal('success');
-      });
+      })
+      .location('pathname')
+      .should('eq', '/onboarding/notice');
 
     // skip onboarding
     if (skipOnboarding) {
-      cy.location('pathname').should('eq', '/onboarding/notice');
       cy.contains("No thanks, I'll do it later").click();
     }
   }
