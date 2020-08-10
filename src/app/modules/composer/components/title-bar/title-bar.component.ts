@@ -19,6 +19,8 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { FeaturesService } from '../../../../services/features.service';
 import { Session } from '../../../../services/session';
+import { PopupService } from '../popup/popup.service';
+import { PermawebTermsComponent } from '../popup/permaweb/permaweb-terms.component';
 
 /**
  * Composer title bar component. It features a label and a dropdown menu
@@ -62,7 +64,8 @@ export class TitleBarComponent {
   constructor(
     protected service: ComposerService,
     private features: FeaturesService,
-    private session: Session
+    private session: Session,
+    private popup: PopupService
   ) {}
 
   /**
@@ -145,8 +148,16 @@ export class TitleBarComponent {
    * Toggles post to permaweb variable
    * @returns { void }
    */
-  onPostToPermawebClick(): void {
-    this.postToPermaweb$.next(!this.postToPermaweb$.getValue());
+  public async onPostToPermawebClick(): Promise<void> {
+    const currentValue = this.postToPermaweb$.getValue();
+    if (currentValue) {
+      this.postToPermaweb$.next(!currentValue);
+      return;
+    }
+    await this.popup
+      .create(PermawebTermsComponent)
+      .present()
+      .toPromise(/* Promise is needed to boot-up the Observable */);
   }
 
   /**
