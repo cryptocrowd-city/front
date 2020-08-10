@@ -151,6 +151,18 @@ export class TitleBarComponent implements OnDestroy {
     if (!this.canChangeVisibility) {
       return;
     }
+    console.log('1');
+    if (
+      this.features.has('permaweb') &&
+      this.service.postToPermaweb$.getValue() &&
+      $event !== 2
+    ) {
+      console.log('2');
+      this.toaster.warn(
+        'Cannot set visibility to non-public on permaweb posts.'
+      );
+      return;
+    }
 
     this.accessId$.next($event);
   }
