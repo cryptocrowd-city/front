@@ -300,6 +300,9 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.supportTiers.setEntityGuid(this.channel.guid);
       this.bindCssVariables();
+      if (this.session.getLoggedInUser().guid === this.channel.guid) {
+        this.channelService.isOwner$.next(true);
+      }
       this.setSplash();
       this.setSubscribed();
       this.shouldOpenWireModal();
