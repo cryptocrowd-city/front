@@ -301,6 +301,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       this.supportTiers.setEntityGuid(this.channel.guid);
       this.bindCssVariables();
       this.setSplash();
+      this.setSubscribed();
       this.shouldOpenWireModal();
     } catch (e) {
       this.error = e.message;
@@ -330,7 +331,9 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     try {
       this.channel = await this.channelService.reload(this.username);
 
+      this.supportTiers.refresh();
       this.setSplash();
+      this.setSubscribed();
       this.shouldOpenWireModal();
     } catch (e) {
       console.error(e);
@@ -347,6 +350,12 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       !this.currentUser &&
         this.channel.pro_settings.splash &&
         this.site.isProDomain
+    );
+  }
+
+  setSubscribed(): void {
+    this.channelService.userIsSubscribed$.next(
+      this.channel.subscribed || false
     );
   }
 
