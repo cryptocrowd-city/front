@@ -355,9 +355,8 @@ export class ActivityContentComponent
         { entity: this.entity },
         {
           class: 'm-overlayModal--media',
-        }
-        // todoojm this didn't work
-        // this.injector
+        },
+        this.injector
       )
       .present();
   }

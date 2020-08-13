@@ -9,6 +9,7 @@ import {
   EventEmitter,
   Optional,
   SkipSelf,
+  Self,
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
@@ -54,15 +55,14 @@ export const ACTIVITY_MODAL_WIDTH_EXCL_STAGE =
     SlowFadeAnimation, // Fade media in after load
   ],
   providers: [
-    //ActivityService,
+    ActivityService,
+    ActivityModalService,
     ComposerService,
     ActivityServiceCommentsLegacySupport,
   ],
 })
 export class ActivityModalComponent implements OnInit, OnDestroy {
   @Input('entity') set data(params: MediaModalParams) {
-    console.log(params);
-    // ojm skipSelf create new activity service and detach from existing
     this.service.setActivityService(this.activityService);
 
     // this.service.setSourceUrl(this.router.url);
@@ -117,7 +117,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   entityHeight: number = 0;
 
   constructor(
-    public activityService: ActivityService,
+    @Self() public activityService: ActivityService,
     public client: Client,
     public session: Session,
     public analyticsService: AnalyticsService,

@@ -59,7 +59,6 @@ import { ActivityModalService } from './modal/modal.service';
     ActivityModalTitleOverlayComponent,
     ActivityModalPagerComponent,
   ],
-  providers: [ActivityModalService],
   exports: [ActivityComponent],
 })
 export class ActivityModule {}
