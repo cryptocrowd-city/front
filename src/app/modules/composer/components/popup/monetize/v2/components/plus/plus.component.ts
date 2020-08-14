@@ -45,7 +45,7 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
   /**
    * Seconds after which paywall is disabled
    */
-  expires: PlusPostExpiry = this.twoDays;
+  expires: PlusPostExpiry = null;
 
   /**
    * Whether an existing post with a
@@ -117,6 +117,8 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
         onComplete: wire => {
           completed = true;
           this.isPro = true;
+          this.detectChanges();
+          this.stackableModal.dismiss();
         },
       })
       .toPromise();
