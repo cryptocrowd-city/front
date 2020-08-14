@@ -4,6 +4,8 @@ import { TitleBarComponent } from './title-bar.component';
 import { ComposerService } from '../../services/composer.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { Session } from '../../../../services/session';
+import { PopupService } from '../popup/popup.service';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 describe('Composer Title Bar', () => {
   let comp: TitleBarComponent;
@@ -48,6 +50,14 @@ describe('Composer Title Bar', () => {
         {
           provide: Session,
           useValue: MockService(Session),
+        },
+        {
+          provide: PopupService,
+          useValue: MockService(PopupService),
+        },
+        {
+          provide: FormToastService,
+          useValue: MockService(FormToastService),
         },
       ],
     }).compileComponents();

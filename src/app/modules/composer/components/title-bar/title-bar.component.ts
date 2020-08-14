@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   Output,
+  OnDestroy,
 } from '@angular/core';
 import {
   ACCESS,
@@ -16,11 +17,13 @@ import {
   LicenseSubjectValue,
   PostToPermawebSubjectValue,
 } from '../../services/composer.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { FeaturesService } from '../../../../services/features.service';
 import { Session } from '../../../../services/session';
 import { PopupService } from '../popup/popup.service';
 import { PermawebTermsComponent } from '../popup/permaweb/permaweb-terms.component';
+import { take } from 'rxjs/operators';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 /**
  * Composer title bar component. It features a label and a dropdown menu
@@ -31,7 +34,7 @@ import { PermawebTermsComponent } from '../popup/permaweb/permaweb-terms.compone
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'title-bar.component.html',
 })
-export class TitleBarComponent {
+export class TitleBarComponent implements OnDestroy {
   /**
    * Composer textarea ID
    */
@@ -61,12 +64,21 @@ export class TitleBarComponent {
     license => license.selectable
   );
 
+  permawebPostClickSubscription: Subscription;
+
   constructor(
     protected service: ComposerService,
     private features: FeaturesService,
     private session: Session,
-    private popup: PopupService
+    private popup: PopupService,
+    private toaster: FormToastService
   ) {}
+
+  ngOnDestroy() {
+    if (this.permawebPostClickSubscription) {
+      this.permawebPostClickSubscription.unsubscribe();
+    }
+  }
 
   /**
    * Access ID subject from service
@@ -111,6 +123,13 @@ export class TitleBarComponent {
   }
 
   /**
+   * Get monetization subject value from service
+   */
+  get monetization$() {
+    return this.service.monetization$;
+  }
+
+  /**
    * Can the actor change visibility? (disabled when there's a container)
    */
   get canChangeVisibility(): boolean {
@@ -132,6 +151,18 @@ export class TitleBarComponent {
     if (!this.canChangeVisibility) {
       return;
     }
+    console.log('1');
+    if (
+      this.features.has('permaweb') &&
+      this.service.postToPermaweb$.getValue() &&
+      $event !== 2
+    ) {
+      console.log('2');
+      this.toaster.warn(
+        'Cannot set visibility to non-public on permaweb posts.'
+      );
+      return;
+    }
 
     this.accessId$.next($event);
   }
@@ -145,26 +176,48 @@ export class TitleBarComponent {
   }
 
   /**
-   * Toggles post to permaweb variable
+   * Opens modal for permaweb if it can be opened.
    * @returns { void }
    */
   public async onPostToPermawebClick(): Promise<void> {
-    const currentValue = this.postToPermaweb$.getValue();
-    if (currentValue) {
-      this.postToPermaweb$.next(!currentValue);
-      return;
-    }
-    await this.popup
-      .create(PermawebTermsComponent)
-      .present()
-      .toPromise(/* Promise is needed to boot-up the Observable */);
+    this.permawebPostClickSubscription = combineLatest([
+      this.postToPermaweb$,
+      this.monetization$,
+      this.accessId$,
+    ])
+      .pipe(take(1))
+      .subscribe(async ([postToPermaweb, monetization, accessId]) => {
+        if (postToPermaweb) {
+          this.postToPermaweb$.next(!postToPermaweb);
+          return;
+        }
+
+        if (monetization) {
+          this.toaster.warn('Cannot post monetized posts to permaweb');
+          return;
+        }
+
+        if (accessId !== '2') {
+          this.toaster.warn('Only public posts can be posted to the permaweb');
+          return;
+        }
+
+        await this.popup
+          .create(PermawebTermsComponent)
+          .present()
+          .toPromise(/* Promise is needed to boot-up the Observable */);
+      });
   }
 
   /**
    * Show permaweb option.
    * @returns { boolean } true if option should be shown.
    */
-  public shouldShowPermawebOption(): Promise<boolean> {
-    return this.features.has('permaweb') && this.session.getLoggedInUser().plus;
+  public shouldShowPermawebOption(): boolean {
+    return (
+      this.features.has('permaweb') &&
+      this.session.getLoggedInUser().plus &&
+      this.canChangeVisibility
+    ); // true is there is a container_guid
   }
 }
