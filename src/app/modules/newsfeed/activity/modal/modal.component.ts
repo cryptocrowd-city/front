@@ -62,8 +62,6 @@ export const ACTIVITY_MODAL_WIDTH_EXCL_STAGE =
 })
 export class ActivityModalComponent implements OnInit, OnDestroy {
   @Input('entity') set data(params: MediaModalParams) {
-    console.log(params);
-    // ojm skipSelf create new activity service and detach from existing
     this.service.setActivityService(this.activityService);
 
     // this.service.setSourceUrl(this.router.url);
