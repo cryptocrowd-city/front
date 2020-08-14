@@ -217,6 +217,7 @@ export class TitleBarComponent implements OnDestroy {
     return (
       this.features.has('permaweb') &&
       this.session.getLoggedInUser().plus &&
+      !this.service.isEditing$.getValue() &&
       this.canChangeVisibility
     ); // true is there is a container_guid
   }
