@@ -20,17 +20,14 @@ export class ActivityModalCreatorService {
     }
 
     /**
-     * 'modal_source_url' is only used in the MediaModalComponent
+     * NOTE: 'modal_source_url' is only used in the MediaModalComponent
      * and can be removed when it is replaced with ActivityModalComponent
      */
     entity.modal_source_url = this.router.url;
 
-    //todoojm uncomment
-    // const modal = this.features.has('activity-modal')
-    //   ? ActivityModalComponent
-    //   : MediaModalComponent;
-
-    const modal = ActivityModalComponent;
+    const modal = this.features.has('activity-modal')
+      ? ActivityModalComponent
+      : MediaModalComponent;
 
     this.overlayModal
       .create(

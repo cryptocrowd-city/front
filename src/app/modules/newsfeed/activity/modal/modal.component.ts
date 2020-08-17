@@ -64,7 +64,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   @Input('entity') set data(params: MediaModalParams) {
     this.service.setActivityService(this.activityService);
 
-    // this.service.setSourceUrl(this.router.url);
+    this.service.setSourceUrl(this.router.url);
 
     this.service.setEntity(params.entity);
 
@@ -138,7 +138,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   /////////////////////////////////////////////////////////////////
   ngOnInit(): void {
     // Prevent dismissal of modal when it's just been opened
-    // this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
+    this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
 
     this.isPaywall2020 = this.features.has('paywall-2020');
 
@@ -151,6 +151,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
         if (!entity) {
           return;
         }
+
         if (
           entity.activity_type &&
           !this.allowedActivityTypes.includes(entity.activity_type)
@@ -187,24 +188,24 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
          * Change the url to point to media page so user can easily share link
          * (but don't actually redirect)
          */
-        // this.location.replaceState(canonicalUrl);
+        this.location.replaceState(canonicalUrl);
       }
     );
 
     // When user clicks a link from inside the modal
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
-        // if (!this.navigatedAway) {
-        // this.navigatedAway = true;
+        if (!this.navigatedAway) {
+          this.navigatedAway = true;
 
-        // // Fix browser history so back button doesn't go to media page
-        // this.service.returnToSourceUrl();
+          // Fix browser history so back button doesn't go to media page
+          this.service.returnToSourceUrl();
 
-        // // Go to the intended destination
-        // this.router.navigate([event.url]);
+          // Go to the intended destination
+          this.router.navigate([event.url]);
 
-        this.overlayModal.dismiss();
-        // }
+          this.overlayModal.dismiss();
+        }
       }
     });
 
@@ -305,9 +306,9 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     // If the modal was closed without a redirect, replace media page url
     // with original source url and fix browser history so back button
     // doesn't go to media page
-    // if (!this.navigatedAway) {
-    //   this.service.returnToSourceUrl();
-    // }
+    if (!this.navigatedAway) {
+      this.service.returnToSourceUrl();
+    }
   }
 
   /////////////////////////////////////////////////////////////////

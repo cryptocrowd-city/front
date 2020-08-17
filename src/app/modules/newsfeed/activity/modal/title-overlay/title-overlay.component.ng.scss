@@ -24,7 +24,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-right: 36px;
+    margin-right: 60px;
     @include m-theme() {
       color: themed($m-white-always);
     }
@@ -76,14 +76,13 @@
 
   .m-activityModal__fullscreenButtonWrapper {
     cursor: pointer;
-    padding: 24px;
+    padding: 5px;
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 20px;
+    top: 20px;
 
     .m-activityModal__fullscreenButton {
       float: left;
-      margin-left: 16px;
       display: block;
       padding: 0;
       position: static;

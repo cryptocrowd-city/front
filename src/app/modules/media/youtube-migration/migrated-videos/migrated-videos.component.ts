@@ -12,6 +12,7 @@ import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Session } from '../../../../services/session';
 import { FeaturesService } from '../../../../services/features.service';
 import { ActivityModalCreatorService } from '../../../newsfeed/activity/modal/modal-creator.service';
+import { EntitiesService } from '../../../../common/services/entities.service';
 
 @Component({
   selector: 'm-youtubeMigration__migratedVideos',
@@ -35,7 +36,8 @@ export class YoutubeMigrationMigratedVideosComponent implements OnInit {
     protected router: Router,
     private features: FeaturesService,
     private activityModalCreator: ActivityModalCreatorService,
-    private injector: Injector
+    private injector: Injector,
+    private entitiesService: EntitiesService
   ) {}
 
   ngOnInit() {
@@ -103,11 +105,22 @@ export class YoutubeMigrationMigratedVideosComponent implements OnInit {
     }
   }
 
-  onModalRequested($event): void {
-    const entity = $event.video;
+  loadFromFeedsService(guid: string) {
+    return this.entitiesService.single(guid);
+  }
 
-    // todoojm the modal loads but vids dont play
-    this.activityModalCreator.create(entity, this.injector);
+  onModalRequested($event): void {
+    // First get the ActivityEntity
+    const fetchSingleGuid = this.loadFromFeedsService($event.video.guid);
+
+    fetchSingleGuid.subscribe((activity: any) => {
+      if (activity === null) {
+        return; // Not yet loaded
+      }
+
+      //Then open the modal
+      this.activityModalCreator.create(activity, this.injector);
+    });
   }
 
   detectChanges() {

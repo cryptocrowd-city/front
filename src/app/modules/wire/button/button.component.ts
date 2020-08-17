@@ -53,15 +53,14 @@ export class WireButtonComponent {
 
     let wirePayload = null;
 
-    // todoojm figure out if/how we need to get the wireEvent.payload
-    // for wire_totals and doneEmitter
     await this.stackableModal
       .present(WireCreatorComponent, this.object, {
         wrapperClass: 'm-modalV2__wrapper',
         default: this.object && this.object.wire_threshold,
         onComplete: wire => {
-          console.log('ojm oncomplete wire', wire);
           wirePayload = wire;
+          // todo figure out if/how we need to get the wireEvent.payload
+          // for wire_totals and doneEmitter
           if (this.object.wire_totals) {
             this.object.wire_totals[wire.currency] = wire.amount;
           }

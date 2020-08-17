@@ -35,9 +35,12 @@
 
         <!-- MEDIA STAGE -->
         <div class="m-activityModal__stage">
+          <!-- PAYWALL BADGE -->
+          <m-paywallBadge [entity]="entity"></m-paywallBadge>
           <div
             class="m-activityModal__mediaWrapper"
             [style.width]="mediaWidth + 'px'"
+            [style.height]="mediaHeight + 'px'"
             [ngClass]="{
               'm-activityModal__mediaWrapper--richEmbed':
                 entity.content_type === 'rich-embed',
@@ -49,8 +52,6 @@
                 entity.content_type === 'blog'
             }"
           >
-            <!-- todoojm put back? [style.height]="mediaHeight + 'px'" -->
-
             <m-activity__content
               *ngIf="activityService.shouldShowContent$ | async"
               [hideText]="true"
