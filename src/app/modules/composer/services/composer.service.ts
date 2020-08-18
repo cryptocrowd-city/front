@@ -683,7 +683,6 @@ export class ComposerService implements OnDestroy {
    * @param activity
    */
   load(activity: any) {
-    // TODO: load
     if (!activity) {
       return;
     }
