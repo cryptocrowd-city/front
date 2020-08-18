@@ -25,6 +25,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     margin-right: 60px;
+    margin-top: 3px;
     @include m-theme() {
       color: themed($m-white-always);
     }
@@ -130,5 +131,13 @@
 
   .minds-avatar-hovercard {
     z-index: 9999999 !important;
+  }
+
+  ::ng-deep {
+    m-paywallBadge {
+      position: absolute;
+      right: 43px;
+      top: 18px;
+    }
   }
 }

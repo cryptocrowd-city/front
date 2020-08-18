@@ -3,7 +3,7 @@
   data-cy="data-minds-activity-modal"
   *ngIf="entity && entity.content_type"
 >
-  <div class="m-activityModal__theater">
+  <div class="m-activityModal__theater" (click)="clickedModal($event)">
     <div
       class="m-activityModal m-activityModal__clearFix"
       [style.width]="modalWidth + 'px'"
@@ -35,21 +35,17 @@
 
         <!-- MEDIA STAGE -->
         <div class="m-activityModal__stage">
-          <!-- PAYWALL BADGE -->
-          <m-paywallBadge [entity]="entity"></m-paywallBadge>
           <div
             class="m-activityModal__mediaWrapper"
             [style.width]="mediaWidth + 'px'"
             [style.height]="mediaHeight + 'px'"
             [ngClass]="{
               'm-activityModal__mediaWrapper--richEmbed':
-                entity.content_type === 'rich-embed',
+                entity.activity_type === 'rich-embed',
               'm-activityModal__mediaWrapper--image':
-                entity.content_type === 'image',
+                entity.activity_type === 'image',
               'm-activityModal__mediaWrapper--video':
-                entity.content_type === 'video',
-              'm-activityModal__mediaWrapper--blog':
-                entity.content_type === 'blog'
+                entity.activity_type === 'video'
             }"
           >
             <m-activity__content
@@ -60,6 +56,7 @@
                 activityService.shouldShowPaywallBadge$ | async
               "
               [@slowFade]="(this.service.loading$ | async) ? 'out' : 'in'"
+              [ngClass]="{ missingDimensions: mediaHeight === 0 }"
             ></m-activity__content>
           </div>
           <!-- this shows the old paywall -->

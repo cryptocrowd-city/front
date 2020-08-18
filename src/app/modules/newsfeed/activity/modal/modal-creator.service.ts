@@ -25,9 +25,11 @@ export class ActivityModalCreatorService {
      */
     entity.modal_source_url = this.router.url;
 
-    const modal = this.features.has('activity-modal')
-      ? ActivityModalComponent
-      : MediaModalComponent;
+    // const modal = this.features.has('activity-modal')
+    //   ? ActivityModalComponent
+    //   : MediaModalComponent;
+
+    const modal = ActivityModalComponent;
 
     this.overlayModal
       .create(

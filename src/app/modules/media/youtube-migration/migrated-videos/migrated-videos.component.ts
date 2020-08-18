@@ -105,22 +105,8 @@ export class YoutubeMigrationMigratedVideosComponent implements OnInit {
     }
   }
 
-  loadFromFeedsService(guid: string) {
-    return this.entitiesService.single(guid);
-  }
-
   onModalRequested($event): void {
-    // First get the ActivityEntity
-    const fetchSingleGuid = this.loadFromFeedsService($event.video.guid);
-
-    fetchSingleGuid.subscribe((activity: any) => {
-      if (activity === null) {
-        return; // Not yet loaded
-      }
-
-      //Then open the modal
-      this.activityModalCreator.create(activity, this.injector);
-    });
+    this.activityModalCreator.create($event.video, this.injector);
   }
 
   detectChanges() {

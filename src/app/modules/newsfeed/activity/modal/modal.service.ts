@@ -69,7 +69,7 @@ export class ActivityModalService {
   }
 
   // Set entity on load or page
-  setEntity(entity: ActivityEntity): void {
+  setEntity(entity: any): void {
     this.entity = entity;
 
     this.activityService.setEntity(entity);
@@ -93,6 +93,7 @@ export class ActivityModalService {
     this.fullscreenHovering$.next(false);
 
     const el = document.querySelector('.m-activityModal__stageWrapper');
+
     if (el) {
       this.isFullscreen$.next(toggleFullscreen(el));
     }

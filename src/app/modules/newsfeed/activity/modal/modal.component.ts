@@ -204,7 +204,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
           // Go to the intended destination
           this.router.navigate([event.url]);
 
-          this.overlayModal.dismiss();
+          this.service.dismiss();
         }
       }
     });
@@ -268,6 +268,27 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   }
 
   /////////////////////////////////////////////////////////////////
+  // MODAL DISMISSAL
+  /////////////////////////////////////////////////////////////////
+
+  // Dismiss modal when backdrop is clicked and modal is open
+  @HostListener('document:click', ['$event'])
+  clickedBackdrop($event) {
+    if ($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+    }
+    if (this.isOpen) {
+      this.service.dismiss();
+    }
+  }
+
+  // Don't dismiss modal if click somewhere other than backdrop
+  clickedModal($event) {
+    $event.stopPropagation();
+  }
+
+  /////////////////////////////////////////////////////////////////
   // KEYBOARD SHORTCUTS
   /////////////////////////////////////////////////////////////////
 
@@ -276,7 +297,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   ): Boolean {
     if (!this.service.shouldFilterOutKeyDownEvent($event)) {
       if ($event.key === 'Escape' && this.isOpen) {
-        this.overlayModal.dismiss();
+        this.service.dismiss();
       }
     }
     return true;

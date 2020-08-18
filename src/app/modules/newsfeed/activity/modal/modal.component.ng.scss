@@ -102,14 +102,6 @@
     min-height: 402px;
     position: relative;
     width: 100%;
-
-    ::ng-deep {
-      m-paywallBadge {
-        position: absolute;
-        right: 43px;
-        top: 20px;
-      }
-    }
   }
 
   .m-activityModal__mediaWrapper {
@@ -117,10 +109,29 @@
     margin: 0 auto;
     vertical-align: middle;
     height: auto;
+    position: relative;
 
     ::ng-deep {
       m-paywallBadge {
         display: none;
+      }
+      m-activity__content {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+
+        &.missingDimensions {
+          .m-activityContent__media--image img {
+            max-height: 520px;
+            min-height: 520px;
+          }
+        }
+
+        minds-rich-embed {
+          .m-rich-embed-src a {
+            cursor: default;
+          }
+        }
       }
     }
 
