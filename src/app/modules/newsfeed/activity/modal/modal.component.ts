@@ -4,9 +4,6 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  ViewChild,
-  ComponentRef,
-  EventEmitter,
   Optional,
   SkipSelf,
   Self,
@@ -16,10 +13,6 @@ import { Event, NavigationStart, Router } from '@angular/router';
 import { BehaviorSubject, Subscription, Observable } from 'rxjs';
 import { SlowFadeAnimation } from '../../../../animations';
 import { ActivityService, ActivityEntity } from '../activity.service';
-import {
-  StackableModalService,
-  StackableModalEvent,
-} from '../../../../services/ux/stackable-modal.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';

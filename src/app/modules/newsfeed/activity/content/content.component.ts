@@ -39,7 +39,10 @@ import {
   trigger,
 } from '@angular/animations';
 import { ScrollAwareVideoPlayerComponent } from '../../../media/components/video-player/scrollaware-player.component';
-import { ActivityModalComponent } from '../modal/modal.component';
+import {
+  ActivityModalComponent,
+  ACTIVITY_MODAL_MIN_STAGE_HEIGHT,
+} from '../modal/modal.component';
 import { FeaturesService } from '../../../../services/features.service';
 import { ActivityModalCreatorService } from '../modal/modal-creator.service';
 
@@ -158,7 +161,7 @@ export class ActivityContentComponent
         if (this.isVideo) {
           this.videoPlayer.forcePlay();
         }
-        if (this.isRichEmbed && this.entity.entity_guid) {
+        if (this.entity.content_type === 'blog') {
           this.redirectService.redirect(this.entity.perma_url);
         }
       }
@@ -244,7 +247,17 @@ export class ActivityContentComponent
     const originalHeight = parseInt(this.entity.custom_data[0].height || 0);
     const originalWidth = parseInt(this.entity.custom_data[0].width || 0);
 
-    if (!originalHeight || !originalWidth) return null;
+    if (!originalHeight || !originalWidth) {
+      if (this.service.displayOptions.isModal) {
+        return `${ACTIVITY_MODAL_MIN_STAGE_HEIGHT}px`;
+      } else {
+        return null;
+      }
+    }
+
+    if (this.service.displayOptions.isModal && originalHeight) {
+      return `${originalHeight}px`;
+    }
 
     const ratio = originalHeight / originalWidth;
 

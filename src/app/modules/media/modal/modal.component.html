@@ -432,7 +432,6 @@
                   <m-wire-button
                     *ngIf="session.getLoggedInUser().guid != entity.owner_guid"
                     [object]="entity"
-                    (done)="wireSubmitted($event)"
                   ></m-wire-button>
                   <minds-button-remind
                     *ngIf="originalEntity.type !== 'comment' && allowReminds"

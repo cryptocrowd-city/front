@@ -51,21 +51,12 @@ export class WireButtonComponent {
       return;
     }
 
-    let wirePayload = null;
-
     await this.stackableModal
       .present(WireCreatorComponent, this.object, {
         wrapperClass: 'm-modalV2__wrapper',
         default: this.object && this.object.wire_threshold,
-        onComplete: wire => {
-          wirePayload = wire;
-          // todo figure out if/how we need to get the wireEvent.payload
-          // for wire_totals and doneEmitter
-          if (this.object.wire_totals) {
-            this.object.wire_totals[wire.currency] = wire.amount;
-          }
+        onComplete: () => {
           this.stackableModal.dismiss();
-          this.doneEmitter.emit(wirePayload);
         },
       })
       .toPromise();

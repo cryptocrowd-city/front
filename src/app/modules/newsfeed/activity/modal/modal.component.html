@@ -38,7 +38,11 @@
           <div
             class="m-activityModal__mediaWrapper"
             [style.width]="mediaWidth + 'px'"
-            [style.height]="mediaHeight + 'px'"
+            [style.height]="
+              mediaHeight === 0
+                ? ACTIVITY_MODAL_MIN_STAGE_HEIGHT + 'px'
+                : mediaHeight + 'px'
+            "
             [ngClass]="{
               'm-activityModal__mediaWrapper--richEmbed':
                 entity.activity_type === 'rich-embed',

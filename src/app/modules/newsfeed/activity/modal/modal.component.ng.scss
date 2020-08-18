@@ -127,8 +127,12 @@
           }
         }
 
+        .m-activityContent__media--image img {
+          max-height: none;
+        }
+
         minds-rich-embed {
-          .m-rich-embed-src a {
+          .m-rich-embed-src a:first-child {
             cursor: default;
           }
         }
