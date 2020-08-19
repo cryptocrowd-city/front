@@ -596,6 +596,20 @@ m-media--modal {
     > .ion-icon {
       transform: scale(1.4);
     }
+    &.m-tipButton {
+      &:hover {
+        i {
+          @include m-theme() {
+            color: themed($m-blue-grey-800);
+          }
+        }
+      }
+      i {
+        @include m-theme() {
+          color: themed($m-blue-grey-500);
+        }
+      }
+    }
   }
 }
 
