@@ -11,6 +11,7 @@
     margin: 20px;
     display: inline-block;
     text-align: left;
+    overflow: hidden;
 
     .m-activityModal__theater {
       position: relative;
@@ -37,6 +38,10 @@
       background-color: rgba(themed($m-black-always), 0.9);
       box-shadow: 0 0 8px rgba(themed($m-black-always), 0.15);
     }
+  }
+
+  .m-activityModal__mediaWrapper {
+    overflow: hidden;
   }
 
   .m-activityModal__mediaWrapper--richEmbed {
@@ -178,6 +183,7 @@
     height: 100%;
     max-height: 100%;
     overflow-y: scroll;
+    overflow-y: overlay;
     overflow-x: hidden;
   }
 
@@ -254,6 +260,7 @@
 
   ::ng-deep {
     m-activity__content {
+      overflow: hidden;
       .m-rich-embed-has-thumbnail {
         text-align: left;
       }
@@ -278,6 +285,12 @@
 
     m-activity__nsfwConsent {
       position: absolute;
+    }
+
+    m-activity__menu {
+      .m-bgOverlay--v2 {
+        z-index: 999;
+      }
     }
   }
 }

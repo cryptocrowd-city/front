@@ -6,6 +6,7 @@ m-overlay-modal {
   right: 0;
   height: 100%;
   width: 100%;
+  overflow: overlay;
   overflow: scroll;
 
   .m-overlay-modal--backdrop {
