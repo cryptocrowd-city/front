@@ -37,10 +37,24 @@
         justify-content: center;
         align-items: center;
         height: 100%;
+        animation: fadein 2s;
+        animation-iteration-count: infinite;
       }
 
       .m-app__loadingLogo {
         max-width: 80px;
+      }
+
+      @keyframes fadein {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
       }
     </style>
     <title>Minds</title>
