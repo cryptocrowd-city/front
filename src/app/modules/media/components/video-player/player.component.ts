@@ -149,7 +149,7 @@ export class MindsVideoPlayerComponent
     this.service.setShouldPlayInModal(shouldPlayInModal);
   }
 
-  get sources$(): BehaviorSubject<VideoSource> {
+  get sources$(): BehaviorSubject<VideoSource[]> {
     return this.service.sources$;
   }
 

@@ -4,6 +4,7 @@ import { Client } from '../../../../services/api';
 import isMobile from '../../../../helpers/is-mobile';
 import { Session } from '../../../../services/session';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { take } from 'rxjs/operators';
 
 export type VideoSource = {
   id: string;
@@ -22,12 +23,16 @@ export class VideoPlayerService implements OnDestroy {
   /**
    * @var BehaviorSubject<VideoSource>
    */
-  sources$: BehaviorSubject<VideoSource> = new BehaviorSubject<VideoSource>({
-    id: null,
-    type: null,
-    size: 0,
-    src: null,
-  });
+  sources$: BehaviorSubject<VideoSource[]> = new BehaviorSubject<VideoSource[]>(
+    [
+      {
+        id: null,
+        type: null,
+        size: 0,
+        src: null,
+      },
+    ]
+  );
 
   /**
    * @var string
@@ -146,5 +151,9 @@ export class VideoPlayerService implements OnDestroy {
    */
   async recordPlay(): Promise<void> {
     // TODO
+  }
+
+  async hasSources(): Promise<boolean> {
+    return this.status !== 'failed' && this.sources$.getValue().length > 0;
   }
 }
