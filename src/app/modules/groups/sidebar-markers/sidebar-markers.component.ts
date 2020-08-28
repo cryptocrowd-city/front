@@ -195,4 +195,8 @@ export class GroupsSidebarMarkersComponent
   onGroupClick(): void {
     this.onGroupSelected.emit(true);
   }
+
+  get tooltipsEnabled() {
+    return this.layoutMode === 'tablet';
+  }
 }
