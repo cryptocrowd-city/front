@@ -31,6 +31,7 @@ export class SearchBarSuggestionsComponent implements OnInit {
 
   recent: Array<any> = []; // recent text/publishers from local storage
   suggestions: Array<any> = []; // channel results from api
+  noResults: boolean = false;
 
   inProgress: boolean = false;
 
@@ -47,6 +48,7 @@ export class SearchBarSuggestionsComponent implements OnInit {
   }
 
   @Input('q') set _q(value: string) {
+    this.noResults = false;
     if (this.searchTimeout) {
       clearTimeout(this.searchTimeout);
     }
@@ -65,20 +67,23 @@ export class SearchBarSuggestionsComponent implements OnInit {
 
     // HAS QUERY INPUT
     this.searchTimeout = setTimeout(async () => {
+      this.suggestions = [];
       this.inProgress = true;
       try {
         const response: any = await this.client.get('api/v2/search/suggest', {
           q: value,
           limit: 10,
         });
-        if (response && response.entities) {
-          this.inProgress = false;
+        if (response && response.entities.length) {
           this.suggestions = response.entities;
+        } else {
+          this.noResults = true;
         }
+        this.inProgress = false;
       } catch (e) {
         console.error(e);
         this.inProgress = false;
-        this.suggestions = [];
+        this.noResults = true;
       }
     }, 300);
   }

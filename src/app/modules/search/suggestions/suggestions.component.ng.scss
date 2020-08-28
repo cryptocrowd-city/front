@@ -137,4 +137,12 @@
       }
     }
   }
+  .m-searchBarSuggestions__noResults {
+    font-weight: 300;
+    display: inline-block;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    letter-spacing: 0.5px;
+    line-height: 18px;
+  }
 }

@@ -1,9 +1,8 @@
-<!-- [hidden]="disabled || !active" -->
-
 <div
   class="m-searchBarSuggestions"
   (mousedown)="mousedown($event)"
   *ngIf="session.isLoggedIn()"
+  [hidden]="disabled || !active"
 >
   <m-loadingEllipsis *ngIf="inProgress"></m-loadingEllipsis>
 
@@ -46,12 +45,19 @@
 
   <!-- IF SEARCH BAR HAS QUERY INPUT
     SHOW SUGGESTED CHANNELS API RESPONSE -->
-  <ng-container *ngIf="q && !inProgress && suggestions.length > 0">
-    <ng-container
-      *ngFor="let suggestion of suggestions"
-      [ngTemplateOutlet]="channelSuggestion"
-      [ngTemplateOutletContext]="{ suggestion: suggestion }"
-    >
+  <ng-container *ngIf="q && !inProgress">
+    <ng-container *ngIf="suggestions.length > 0">
+      <ng-container
+        *ngFor="let suggestion of suggestions"
+        [ngTemplateOutlet]="channelSuggestion"
+        [ngTemplateOutletContext]="{ suggestion: suggestion }"
+      >
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="noResults"
+      ><span class="m-searchBarSuggestions__noResults"
+        >Sorry, we couldn't find any channel results for <b>{{ q }}</b></span
+      >
     </ng-container>
   </ng-container>
 </div>
