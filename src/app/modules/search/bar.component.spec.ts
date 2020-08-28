@@ -28,7 +28,7 @@ import { SharedModule } from '../../common/shared.module';
 // Mocks
 
 @Component({
-  selector: 'm-search--bar-suggestions',
+  selector: 'm-searchBar__suggestions',
   template: '',
 })
 class SearchBarSuggestionsMock {

@@ -5,47 +5,44 @@ import {
   ChangeDetectorRef,
   OnInit,
   PLATFORM_ID,
+  EventEmitter,
+  Output,
 } from '@angular/core';
 import { Location, isPlatformServer } from '@angular/common';
 import { Session } from '../../../services/session';
-import { Client, Upload } from '../../../services/api';
+import { Client } from '../../../services/api';
 import { RecentService } from '../../../services/ux/recent';
-import {
-  ContextService,
-  ContextServiceResponse,
-} from '../../../services/context.service';
-import { FeaturesService } from '../../../services/features.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
-  selector: 'm-search--bar-suggestions',
+  selector: 'm-searchBar__suggestions',
   templateUrl: 'suggestions.component.html',
+  styleUrls: ['suggestions.component.ng.scss'],
 })
 export class SearchBarSuggestionsComponent implements OnInit {
-  suggestions: Array<any> = [];
-  recent: any[];
-  q: string = '';
-  currentContext: ContextServiceResponse;
-  readonly cdnUrl: string;
-  @Input() active: boolean;
+  @Output() mousedownEvent: EventEmitter<any> = new EventEmitter();
+
+  @Input() active: boolean; // a.k.a. search bar is focused
   @Input() disabled: boolean = false;
 
-  newNavigation: boolean = false;
-
+  q: string = '';
+  readonly cdnUrl: string;
   private searchTimeout;
+
+  recent: Array<any> = []; // recent text/publishers from local storage
+  suggestions: Array<any> = []; // channel results from api
+
+  inProgress: boolean = false;
 
   constructor(
     public session: Session,
     public client: Client,
     public location: Location,
     public recentService: RecentService,
-    private featuresService: FeaturesService,
-    private context: ContextService,
     private cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
     private configs: ConfigsService
   ) {
-    this.newNavigation = this.featuresService.has('navigation');
     this.cdnUrl = this.configs.get('cdn_url');
   }
 
@@ -58,26 +55,29 @@ export class SearchBarSuggestionsComponent implements OnInit {
 
     if (isPlatformServer(this.platformId)) return;
 
-    if (!value || this.location.path().indexOf('/search') === 0) {
+    // NO QUERY INPUT
+    if (!value) {
+      this.inProgress = false;
       this.loadRecent();
-      this.currentContext = null;
       this.suggestions = [];
       return;
     }
 
-    this.currentContext = this.context.get();
-
+    // HAS QUERY INPUT
     this.searchTimeout = setTimeout(async () => {
-      this.loadRecent();
-
+      this.inProgress = true;
       try {
         const response: any = await this.client.get('api/v2/search/suggest', {
           q: value,
-          limit: 4,
+          limit: 10,
         });
-        this.suggestions = response.entities;
+        if (response && response.entities) {
+          this.inProgress = false;
+          this.suggestions = response.entities;
+        }
       } catch (e) {
         console.error(e);
+        this.inProgress = false;
         this.suggestions = [];
       }
     }, 300);
@@ -88,18 +88,18 @@ export class SearchBarSuggestionsComponent implements OnInit {
   }
 
   clearHistory() {
-    this.recentService.clear('recent:text');
+    this.recentService.clearSuggestions();
     this.recent = [];
   }
 
   loadRecent() {
-    if (this.session.getLoggedInUser()) {
-      this.recent = this.recentService.fetch('recent:text', 6);
-    }
+    if (!this.session.getLoggedInUser()) return;
+    this.recent = this.recentService.fetchSuggestions();
   }
 
   mousedown(e) {
     e.preventDefault();
+    this.mousedownEvent.emit();
 
     setTimeout(() => {
       this.active = false;
