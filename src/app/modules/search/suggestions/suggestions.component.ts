@@ -32,8 +32,9 @@ export class SearchBarSuggestionsComponent implements OnInit {
   recent: Array<any> = []; // recent text/publishers from local storage
   suggestions: Array<any> = []; // channel results from api
   noResults: boolean = false;
+  noRecents: boolean = false;
 
-  inProgress: boolean = false;
+  inProgress: boolean = true;
 
   constructor(
     public session: Session,
@@ -49,8 +50,10 @@ export class SearchBarSuggestionsComponent implements OnInit {
 
   @Input('q') set _q(value: string) {
     this.noResults = false;
+
     if (this.searchTimeout) {
       clearTimeout(this.searchTimeout);
+      this.inProgress = true;
     }
 
     this.q = value || '';
@@ -95,6 +98,7 @@ export class SearchBarSuggestionsComponent implements OnInit {
   clearHistory() {
     this.recentService.clearSuggestions();
     this.recent = [];
+    this.noRecents = true;
   }
 
   loadRecent() {
@@ -115,5 +119,13 @@ export class SearchBarSuggestionsComponent implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  get hidden() {
+    return (
+      this.disabled ||
+      !this.active ||
+      (!this.q && this.recent && this.recent.length < 1)
+    );
   }
 }

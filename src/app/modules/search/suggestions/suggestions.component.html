@@ -2,20 +2,24 @@
   class="m-searchBarSuggestions"
   (mousedown)="mousedown($event)"
   *ngIf="session.isLoggedIn()"
-  [hidden]="disabled || !active"
+  [hidden]="hidden"
 >
   <m-loadingEllipsis *ngIf="inProgress"></m-loadingEllipsis>
 
   <!-- IF SEARCH BAR IS EMPTY, DISPLAY RECENTS FROM LOCAL STORAGE -->
   <ng-container *ngIf="!q && recent && recent.length > 0">
-    <div class="m-searchBar__toolbar">
+    <!-- <div class="m-searchBar__toolbar">
       <span i18n="@@SEARCH_SUGGESTIONS__SEARCH_HISTORY">
         Search History
       </span>
-      <span (click)="clearHistory()" i18n="@@SEARCH_SUGGESTIONS__CLEAR_HISTORY">
+      <span
+        class="m-searchBarSuggestions__clearResults"
+        (click)="clearHistory()"
+        i18n="@@SEARCH_SUGGESTIONS__CLEAR_HISTORY"
+      >
         Clear History
       </span>
-    </div>
+    </div> -->
 
     <ng-container *ngFor="let suggestion of recent">
       <a
@@ -55,9 +59,16 @@
       </ng-container>
     </ng-container>
     <ng-container *ngIf="noResults"
-      ><span class="m-searchBarSuggestions__noResults"
-        >Sorry, we couldn't find any channel results for <b>{{ q }}</b></span
-      >
+      ><div class="m-searchBarSuggestions__noResults">
+        <span
+          >We couldn't find any channels that match <b>{{ q }}</b></span
+        >
+        <a
+          [routerLink]="['/discovery/search']"
+          [queryParams]="{ q: q, f: 'top', t: 'all' }"
+          >See discovery results instead</a
+        >
+      </div>
     </ng-container>
   </ng-container>
 </div>
