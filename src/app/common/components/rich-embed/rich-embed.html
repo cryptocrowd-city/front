@@ -18,8 +18,9 @@
     rel="noopener nofollow ugc"
     *ngIf="src.thumbnail_src || inlineEmbed"
   >
-    <!-- ---- -->
-
+    <!-- ----------------------------------- -->
+    <!-- LOADING ANIMATION -->
+    <!-- ----------------------------------- -->
     <div
       class="mdl-progress mdl-js-progress mdl-progress__indeterminate m-html-loading"
       *ngIf="embeddedInline && (!inlineEmbed || !inlineEmbed.html)"
@@ -40,7 +41,6 @@
       [ngStyle]="{ 'background-image': 'url(' + src.thumbnail_src + ')' }"
     ></div>
     <!-- ---- -->
-
     <div
       class="m-rich-embed-thumbnail-wrapper m-rich-embed-thumbnail-placeholder"
       *ngIf="!src.thumbnail_src"
