@@ -153,7 +153,11 @@ export class VideoPlayerService implements OnDestroy {
     // TODO
   }
 
-  async hasSources(): Promise<boolean> {
-    return this.status !== 'failed' && this.sources$.getValue().length > 0;
+  /**
+   * Check whether the video's are still awaiting transcode.
+   * @returns true if video has no sources and is not failed.
+   */
+  awaitingTranscode(): boolean {
+    return this.status !== 'failed' && this.sources$.getValue().length < 1;
   }
 }

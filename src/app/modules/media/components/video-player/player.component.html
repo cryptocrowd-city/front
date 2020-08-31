@@ -8,7 +8,10 @@
   >
     This video is still transcoding.
   </span>
-  <span class="m-videoPlayer__notice--created" *ngIf="!service.hasSources()">
+  <span
+    class="m-videoPlayer__notice--created"
+    *ngIf="service.awaitingTranscode()"
+  >
     This video is waiting to be transcoded.
   </span>
   <div class="m-videoPlayer__screen">
