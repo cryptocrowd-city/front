@@ -4,6 +4,7 @@ import { ActivityService } from '../../activity.service';
 import { HorizontalFeedService } from '../../../../../common/services/horizontal-feed.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { MediumFadeAnimation } from '../../../../../animations';
+import { AutoProgressVideoService } from '../../../../../common/services/auto-progress-video.service';
 
 @Component({
   selector: 'm-activity__modalPager',
@@ -14,6 +15,7 @@ import { MediumFadeAnimation } from '../../../../../animations';
 export class ActivityModalPagerComponent implements OnInit, OnDestroy {
   protected modalPagerSubscription: Subscription;
   protected asyncEntitySubscription: Subscription;
+  protected autoProgressSubscription: Subscription;
 
   modalPager = {
     hasPrev: false,
@@ -23,7 +25,8 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
   constructor(
     public service: ActivityModalService,
     public activityService: ActivityService,
-    private horizontalFeed: HorizontalFeedService
+    private horizontalFeed: HorizontalFeedService,
+    private autoProgress: AutoProgressVideoService
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +43,11 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
         };
       });
 
+    /** Trigger next video */
+    this.autoProgressSubscription = this.autoProgress.trigger$.subscribe(() => {
+      this.goToNext();
+    });
+
     this.horizontalFeed.setContext('container');
   }
 
@@ -51,6 +59,9 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
     }
     if (this.asyncEntitySubscription) {
       this.asyncEntitySubscription.unsubscribe();
+    }
+    if (this.autoProgressSubscription) {
+      this.autoProgressSubscription.unsubscribe();
     }
   }
 
