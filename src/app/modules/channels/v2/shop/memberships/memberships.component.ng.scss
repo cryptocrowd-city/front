@@ -111,4 +111,11 @@
       }
     }
   }
+  ::ng-deep {
+    m-carousel {
+      [class*='m-carousel__overflowScrollButton--'] {
+        top: 27%;
+      }
+    }
+  }
 }
