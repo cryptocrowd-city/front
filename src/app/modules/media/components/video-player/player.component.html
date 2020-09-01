@@ -18,6 +18,7 @@
       [plyrPlaysInline]="true"
       [plyrSources]="!service.playable ? emptySource : (sources$ | async)"
       [plyrOptions]="options"
+      (plyrEnded)="autoProgress.trigger$.next(true)"
       (plyrPlay)="onPlayed($event)"
       (plyrEnterFullScreen)="fullScreenChange.next($event)"
       (plyrExitFullScreen)="fullScreenChange.next($event)"

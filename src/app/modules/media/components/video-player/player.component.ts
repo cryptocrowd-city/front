@@ -21,6 +21,7 @@ import { PlyrComponent } from 'ngx-plyr';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
+import { AutoProgressVideoService } from '../../../../common/services/auto-progress-video.service';
 
 @Component({
   selector: 'm-videoPlayer',
@@ -111,6 +112,7 @@ export class MindsVideoPlayerComponent
     private service: VideoPlayerService,
     private session: Session,
     private cd: ChangeDetectorRef,
+    private autoProgress: AutoProgressVideoService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
