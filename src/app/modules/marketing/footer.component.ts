@@ -14,6 +14,7 @@ import { OverlayModalService } from '../../services/ux/overlay-modal';
   selector: 'm-marketing__footer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'footer.component.html',
+  styleUrls: ['footer.component.ng.scss'],
 })
 export class MarketingFooterComponent implements OnInit {
   readonly year: number = new Date().getFullYear();
