@@ -107,7 +107,7 @@ export class MindsRichEmbed {
     // Create inline embed object
     let inlineEmbed = this.parseInlineEmbed(this.inlineEmbed);
 
-    if (this.mediaSource === 'minds') {
+    if (this.mediaSource === 'minds' || this.mediaSource === 'youtube') {
       this.modalRequestSubscribed =
         this.mediaModalRequested.observers.length > 0;
     }

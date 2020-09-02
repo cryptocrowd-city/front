@@ -52,7 +52,7 @@
     <minds-rich-embed
       (mediaModalRequested)="onModalRequested($event)"
       [src]="entity"
-      [maxheight]="320"
+      [maxheight]="isModal ? null : 320"
       [isModal]="isModal"
     >
     </minds-rich-embed>
