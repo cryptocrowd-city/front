@@ -51,6 +51,7 @@
         text-decoration: underline;
         margin-right: 20px;
         text-align: center;
+        text-transform: capitalize;
 
         @include m-theme() {
           color: themed($m-link);

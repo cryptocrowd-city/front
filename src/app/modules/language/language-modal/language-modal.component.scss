@@ -21,6 +21,7 @@ m-languageModal {
     text-decoration: underline;
     box-sizing: border-box;
     cursor: pointer;
+    text-transform: capitalize;
 
     @include m-theme() {
       color: themed($m-link);
