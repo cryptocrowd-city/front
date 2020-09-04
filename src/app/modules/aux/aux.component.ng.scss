@@ -1,0 +1,94 @@
+@import 'defaults.scss';
+
+:host {
+  .m-aux__marketing,
+  .m-aux__marketing > * {
+    @include m-theme {
+      background-color: themed($m-bgColor--secondary);
+    }
+  }
+
+  .m-aux__marketing {
+    padding-top: 30px;
+  }
+
+  ::ng-deep m-marketing {
+    .m-marketing__mainWrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    .m-marketing__main {
+      max-width: 1280px;
+      margin: 0 40px;
+
+      @media screen and (max-width: $max-mobile) {
+        margin: 0 24px;
+      }
+
+      h1 {
+        font-size: 36px;
+        font-weight: 500;
+        margin-bottom: 20px;
+        opacity: 1;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      h2 {
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 14px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      h3 {
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      b {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      p,
+      li {
+        font-size: 17px;
+        line-height: 25px;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      li {
+        margin-bottom: 16px;
+      }
+
+      a {
+        text-decoration: underline;
+      }
+      .m-aux__lastUpdated {
+        font-style: italic;
+        margin-top: 65px;
+      }
+    }
+
+    ::ng-deep {
+      m-aux__contact {
+        ul {
+          margin-top: -20px;
+          list-style-type: none;
+          padding-left: 0;
+        }
+      }
+    }
+  }
+}

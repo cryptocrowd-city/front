@@ -8,6 +8,7 @@ import { MobileService } from './mobile.service';
 import { HttpClient } from '@angular/common/http';
 import { FeaturesService } from '../../services/features.service';
 import { Session } from '../../services/session';
+import { MarketingModule } from '../marketing/marketing.module';
 
 const routes: Routes = [
   {
@@ -23,7 +24,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), NgCommonModule, CommonModule],
+  imports: [
+    RouterModule.forChild(routes),
+    NgCommonModule,
+    CommonModule,
+    MarketingModule,
+  ],
   declarations: [MobileMarketingComponent],
   exports: [MobileMarketingComponent],
   providers: [
