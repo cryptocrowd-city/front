@@ -36,17 +36,20 @@
 
   <div class="m-channelFeed__sidebar" m-pageLayout__pane="right">
     <div class="m-pageLayoutPane__inner">
-      <div class="m-pageLayoutPane__sticky" m-stickySidebar>
-        <m-channelAbout__brief></m-channelAbout__brief>
-        <ng-container *mIfBrowser>
-          <m-channelShop__brief
-            *mIfFeature="'support-tiers'; else wireRewardsBrief"
-          ></m-channelShop__brief>
-          <ng-template #wireRewardsBrief>
-            <m-channelShop__briefWireRewards></m-channelShop__briefWireRewards>
-          </ng-template>
+      <m-channelAbout__brief></m-channelAbout__brief>
+      <ng-container *mIfBrowser>
+        <ng-container *mIfFeature="'paywall-2020'; else wireRewardsBrief">
+          <m-channelShop__lazy
+            component="m-channelShop__brief"
+          ></m-channelShop__lazy>
         </ng-container>
-      </div>
+
+        <ng-template #wireRewardsBrief>
+          <m-channelShop__lazy
+            component="m-channelShop__briefWireRewards"
+          ></m-channelShop__lazy>
+        </ng-template>
+      </ng-container>
     </div>
   </div>
 </div>

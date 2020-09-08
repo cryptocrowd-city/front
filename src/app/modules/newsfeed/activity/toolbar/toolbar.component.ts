@@ -6,6 +6,7 @@ import { Session } from '../../../../services/session';
 import { Router } from '@angular/router';
 import { BoostCreatorComponent } from '../../../boost/creator/creator.component';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { StackableModalService } from '../../../../services/ux/stackable-modal.service';
 
 @Component({
   selector: 'm-activity__toolbar',
@@ -13,14 +14,17 @@ import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 })
 export class ActivityToolbarComponent {
   private entitySubscription: Subscription;
+  private paywallBadgeSubscription: Subscription;
 
   entity: ActivityEntity;
+  allowReminds: boolean = true;
 
   constructor(
     public service: ActivityService,
     public session: Session,
     private router: Router,
-    private overlayModalService: OverlayModalService
+    private overlayModalService: OverlayModalService,
+    private stackableModal: StackableModalService
   ) {}
 
   ngOnInit() {
@@ -29,10 +33,17 @@ export class ActivityToolbarComponent {
         this.entity = entity;
       }
     );
+
+    this.paywallBadgeSubscription = this.service.shouldShowPaywallBadge$.subscribe(
+      (showBadge: boolean) => {
+        this.allowReminds = !showBadge;
+      }
+    );
   }
 
   ngOnDestroy() {
     this.entitySubscription.unsubscribe();
+    this.paywallBadgeSubscription.unsubscribe();
   }
 
   toggleComments(): void {
@@ -45,9 +56,9 @@ export class ActivityToolbarComponent {
       .displayOptions.showOnlyCommentsInput;
   }
 
-  openBoostModal(e: MouseEvent): void {
-    this.overlayModalService
-      .create(BoostCreatorComponent, this.entity)
-      .present();
+  async openBoostModal(e: MouseEvent): Promise<void> {
+    await this.stackableModal
+      .present(BoostCreatorComponent, this.entity)
+      .toPromise();
   }
 }

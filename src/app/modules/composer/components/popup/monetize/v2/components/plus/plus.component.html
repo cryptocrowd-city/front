@@ -21,14 +21,12 @@
         (ngModelChange)="onTermsChange($event)"
       >
         <span i18n="@@COMPOSER__PLUS__TERMS__CHECKBOX"
-          >Post to Minds+ and agree to the
-          <a routerLink="/p/terms" target="_blank">
-            terms
-          </a></span
-        >
+          >I agree to the <a routerLink="/p/terms" target="_blank">Terms</a>
+          and have the rights to monetize this content.
+        </span>
       </m-formInput__checkbox>
     </div>
-    <div class="m-form__field--textboxToggle">
+    <div class="m-form__field--textboxToggle" hidden>
       <div
         class="m-form__row--label m-composerPopup__text"
         i18n="@@COMPOSER__MONETIZE_PLUS__EXCLUSIVITY_PERIOD"
@@ -86,7 +84,7 @@
     (click)="save()"
     [disabled]="!canSave"
     i18n="@@COMMON__SAVE"
-    data-cy="plus-save-button"
+    data-cy="monetize-save-button"
   >
     Save
   </m-shadowboxSubmitButton>

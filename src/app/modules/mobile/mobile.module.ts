@@ -11,11 +11,12 @@ import { Session } from '../../services/session';
 
 const routes: Routes = [
   {
-    path: 'mobile',
+    path: '',
     component: MobileMarketingComponent,
     data: {
-      title: 'Minds Mobile App',
-      description: 'Download the Minds mobile app for Android & iOS.',
+      title: 'The Minds Social Network Mobile App',
+      description:
+        'Download the Minds mobile app and use the leading alternative social media platform anywhere. Available on both iOS & Android.',
       ogImage: '/assets/photos/mobile-app.jpg',
     },
   },

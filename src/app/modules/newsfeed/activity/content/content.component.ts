@@ -8,6 +8,7 @@ import {
   OnInit,
   ViewChild,
   HostBinding,
+  Injector,
 } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 
@@ -38,14 +39,18 @@ import {
   trigger,
 } from '@angular/animations';
 import { ScrollAwareVideoPlayerComponent } from '../../../media/components/video-player/scrollaware-player.component';
+import {
+  ActivityModalComponent,
+  ACTIVITY_MODAL_MIN_STAGE_HEIGHT,
+} from '../modal/modal.component';
+import { FeaturesService } from '../../../../services/features.service';
+import { ActivityModalCreatorService } from '../modal/modal-creator.service';
 
 @Component({
   selector: 'm-activity__content',
   templateUrl: 'content.component.html',
   animations: [
     trigger('fader', [
-      state('active', style({})),
-      state('dismissed', style({})),
       transition(':leave', [
         style({ opacity: '1' }),
         animate(
@@ -70,6 +75,12 @@ export class ActivityContentComponent
 
   @Input() showPaywall: boolean = false;
   @Input() showPaywallBadge: boolean = false;
+
+  /**
+   * Used in activity modal
+   */
+  @Input() hideText: boolean = false;
+  @Input() hideMedia: boolean = false;
 
   @ViewChild('mediaEl', { read: ElementRef })
   mediaEl: ElementRef;
@@ -112,7 +123,10 @@ export class ActivityContentComponent
     private el: ElementRef,
     private redirectService: RedirectService,
     private session: Session,
-    configs: ConfigsService
+    configs: ConfigsService,
+    private features: FeaturesService,
+    private injector: Injector,
+    private activityModalCreator: ActivityModalCreatorService
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -147,7 +161,7 @@ export class ActivityContentComponent
         if (this.isVideo) {
           this.videoPlayer.forcePlay();
         }
-        if (this.isRichEmbed && this.entity.entity_guid) {
+        if (this.entity.content_type === 'blog') {
           this.redirectService.redirect(this.entity.perma_url);
         }
       }
@@ -213,35 +227,10 @@ export class ActivityContentComponent
     );
   }
 
-  get isPaywalledGif(): boolean {
-    return (
-      this.isImage &&
-      this.entity.custom_type === 'batch' &&
-      this.entity.custom_data &&
-      this.entity.custom_data[0].gif &&
-      this.showPaywallBadge &&
-      !this.paywallUnlocked
-    );
-  }
-
   get imageUrl(): string {
     if (this.entity.custom_type === 'batch') {
-      if (this.isPaywalledGif) {
-        return `${this.cdnAssetsUrl}assets/photos/andromeda-galaxy-blur.jpg`;
-      }
-
       let thumbUrl = this.entity.custom_data[0].src;
-      if (this.showPaywallBadge) {
-        /**
-         * Check whether we need to add 'unlock_paywall' query as the only
-         * query param OR append to an existing one
-         */
-        const joiner = thumbUrl.split('?').length > 1 ? '&' : '/?';
 
-        const thumbTimestamp = this.paywallUnlocked ? moment().unix() : '0';
-
-        thumbUrl += `${joiner}unlock_paywall=${thumbTimestamp}`;
-      }
       return thumbUrl;
     }
 
@@ -258,7 +247,17 @@ export class ActivityContentComponent
     const originalHeight = parseInt(this.entity.custom_data[0].height || 0);
     const originalWidth = parseInt(this.entity.custom_data[0].width || 0);
 
-    if (!originalHeight || !originalWidth) return null;
+    if (!originalHeight || !originalWidth) {
+      if (this.isModal) {
+        return `${ACTIVITY_MODAL_MIN_STAGE_HEIGHT}px`;
+      } else {
+        return null;
+      }
+    }
+
+    if (this.isModal && originalHeight) {
+      return `${originalHeight}px`;
+    }
 
     const ratio = originalHeight / originalWidth;
 
@@ -281,7 +280,17 @@ export class ActivityContentComponent
 
   get videoHeight(): string {
     if (!this.mediaEl) return '';
-    const height = this.mediaEl.nativeElement.clientWidth / (16 / 9);
+    let aspectRatio = 16 / 9;
+    if (
+      this.entity.custom_data &&
+      this.entity.custom_data.height &&
+      this.entity.custom_data.height !== '0'
+    ) {
+      aspectRatio =
+        parseInt(this.entity.custom_data.width, 10) /
+        parseInt(this.entity.custom_data.height, 10);
+    }
+    const height = this.mediaEl.nativeElement.clientWidth / aspectRatio;
     return `${height}px`;
   }
 
@@ -294,9 +303,13 @@ export class ActivityContentComponent
       return parseInt(this.videoHeight.slice(0, -2), 10);
     }
     if (this.isRichEmbed) {
-      return 220;
+      return 400;
     }
     return null;
+  }
+
+  get isModal(): boolean {
+    return this.service.displayOptions.isModal;
   }
 
   calculateFixedContentHeight(): void {
@@ -342,15 +355,13 @@ export class ActivityContentComponent
   }
 
   onModalRequested(event: MouseEvent) {
-    if (!this.overlayModal.canOpenInModal()) {
+    if (!this.overlayModal.canOpenInModal() || this.isModal) {
       return;
     }
-
     if (event) {
       event.preventDefault();
       event.stopPropagation();
     }
-
     if (
       this.entity.perma_url &&
       this.entity.perma_url.indexOf(this.siteUrl) === 0
@@ -359,17 +370,7 @@ export class ActivityContentComponent
       return; // Don't open modal for minds links
     }
 
-    this.entity.modal_source_url = this.router.url;
-
-    this.overlayModal
-      .create(
-        MediaModalComponent,
-        { entity: this.entity },
-        {
-          class: 'm-overlayModal--media',
-        }
-      )
-      .present();
+    this.activityModalCreator.create(this.entity, this.injector);
   }
 
   onImageError(e: Event): void {}

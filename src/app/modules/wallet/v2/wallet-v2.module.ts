@@ -35,6 +35,10 @@ import { WalletV2TokensComponent } from './tokens/tokens.component';
 import { WalletV2CashComponent } from './cash/cash.component';
 import { WalletV2EthComponent } from './eth/eth.component';
 import { WalletV2BtcComponent } from './btc/btc.component';
+import { WalletProEarningsCashComponent } from './cash/pro-earnings/pro-earnings.component';
+import { WalletTabHistoryService } from './tab-history.service';
+import { DefaultRedirectGuard } from './guards/default-redirect-guard.component';
+import { TabStorageGuard } from './guards/tab-storage-guard.component';
 
 export const WALLET_V2_ROUTES: Routes = [
   {
@@ -57,10 +61,12 @@ export const WALLET_V2_ROUTES: Routes = [
           },
           {
             path: 'overview',
+            canActivate: [TabStorageGuard],
             component: WalletChartComponent,
           },
           {
             path: 'transactions',
+            canActivate: [TabStorageGuard],
             component: WalletTransactionsTokensComponent,
           },
           {
@@ -74,8 +80,14 @@ export const WALLET_V2_ROUTES: Routes = [
         component: WalletV2CashComponent,
         children: [
           {
+            path: 'earnings',
+            component: WalletProEarningsCashComponent,
+            canActivate: [TabStorageGuard],
+          },
+          {
             path: 'transactions',
             component: WalletTransactionsCashComponent,
+            canActivate: [TabStorageGuard],
           },
           {
             path: 'settings',
@@ -93,12 +105,14 @@ export const WALLET_V2_ROUTES: Routes = [
           },
           {
             path: 'settings',
+            canActivate: [TabStorageGuard],
             component: WalletSettingsETHComponent,
           },
         ],
       },
       {
         path: 'btc',
+        canActivate: [TabStorageGuard],
         component: WalletV2BtcComponent,
         children: [
           {
@@ -112,8 +126,8 @@ export const WALLET_V2_ROUTES: Routes = [
         ],
       },
       {
-        path: '**',
-        redirectTo: 'tokens',
+        path: '**', // redirected by RouterRedirectGuard
+        canActivate: [DefaultRedirectGuard],
       },
     ],
   },
@@ -144,6 +158,7 @@ export const WALLET_V2_ROUTES: Routes = [
     WalletOnchainTransferComponent,
     WalletBalanceTokensV2Component,
     WalletBalanceCashComponent,
+    WalletProEarningsCashComponent,
     WalletPendingCashPayoutComponent,
     WalletTransactionsTokensComponent,
     WalletTransactionsCashComponent,
@@ -170,6 +185,9 @@ export const WALLET_V2_ROUTES: Routes = [
     },
     TokenContractService,
     WithdrawContractService,
+    WalletTabHistoryService,
+    DefaultRedirectGuard,
+    TabStorageGuard,
   ],
 })
 export class WalletV2Module {}

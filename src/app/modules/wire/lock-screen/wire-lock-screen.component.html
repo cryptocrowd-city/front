@@ -6,7 +6,7 @@
       isMedia: contentType !== 'status',
       isVideo: contentType === 'video'
     }"
-    (click)="$event.stopPropagation(); unlock()"
+    [style.maxHeight.px]="mediaHeight"
     *ngIf="entity.wire_threshold && init"
   >
     <!-- ------------------------------ -->
@@ -22,7 +22,11 @@
     <!-- ------------------------------ -->
 
     <div class="m-wireLockScreen__inner">
-      <h5 class="m-wireLockScreen__message">
+      <h5
+        *ngIf="contentType !== 'rich-embed'"
+        class="m-wireLockScreen__message"
+        [class.m-wireLockScreen__message--hasTeaser]="hasTeaser"
+      >
         <ng-container *ngIf="!showSubmittedInfo && !hasTeaser">
           <ng-container
             *ngIf="entity?.wire_threshold?.type; else supportTierText"
@@ -65,12 +69,24 @@
           </ng-container>
 
           <ng-template #supportTierText>
-            <ng-container i18n="@@WIRE__SUPPORT__TIER__TEXT" *ngIf="!isPlus">
-              Subscribe to {{ entity.wire_threshold.support_tier.name }} Tier to
-              see this post
+            <ng-container *ngIf="!isPlus">
+              <ng-container
+                i18n="@@WIRE__SUPPORT__TIER__TEXT"
+                *ngIf="!isCustom"
+              >
+                Join @{{ entity.ownerObj.username }}'s
+                {{ entity.wire_threshold.support_tier.name }}
+                Membership to see this post
+              </ng-container>
+              <ng-container i18n="@@WIRE__SUPPORT__TIER__TEXT" *ngIf="isCustom">
+                Join @{{ entity.ownerObj.username }}'s Custom Membership for ${{
+                  entity.wire_threshold.support_tier.usd
+                }}
+                per month to see this post
+              </ng-container>
             </ng-container>
             <ng-container i18n="@@WIRE__SUPPORT__TIER__TEXT" *ngIf="isPlus">
-              Join Plus to see this post
+              Only Minds+ users can see this post
             </ng-container>
           </ng-template>
         </ng-container>
@@ -93,6 +109,7 @@
           (click)="unlock()"
           [saving]="inProgress"
           data-cy="wire-lock-screen-unlock-button"
+          class="m-unlock-button"
         >
           <ng-container i18n="@@WIRE__UNLOCK__POST">Unlock Post</ng-container>
         </m-shadowboxSubmitButton>
@@ -242,7 +259,7 @@
       </span>
     </h2>
 
-    <h5 class="m-wire--lock-screen--message">
+    <h5 class="m-wire--lock-screen--message m-wireLockScreen__message">
       <ng-container i18n="@@WIRE__LOCK_SCREEN__CAN_ONLY_BE_SEEN_TITLE_PART"
         >This post can only be seen by supporters who wire</ng-container
       >

@@ -12,6 +12,7 @@ import {
   Output,
   PLATFORM_ID,
   ViewChild,
+  Input,
 } from '@angular/core';
 import { Subject, Subscription, BehaviorSubject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -41,6 +42,7 @@ import { isPlatformBrowser } from '@angular/common';
   selector: 'm-composer__toolbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'toolbar.component.html',
+  styleUrls: ['toolbar.component.ng.scss'],
 })
 export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   /**
@@ -49,6 +51,11 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output('onPost') onPostEmitter: EventEmitter<
     ButtonComponentAction
   > = new EventEmitter<ButtonComponentAction>();
+
+  /**
+   * Is the composer in a modal?
+   */
+  @Input() isModal: boolean = false;
 
   /**
    * Upload component ref
@@ -241,6 +248,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   get isEditing$() {
     return this.service.isEditing$;
+  }
+
+  get showShimmer() {
+    return this.isModal && !this.service.monetization$.getValue();
   }
 
   /**

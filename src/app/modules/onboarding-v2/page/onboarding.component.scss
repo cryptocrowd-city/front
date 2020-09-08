@@ -417,11 +417,11 @@ m-onboarding {
 
             &:active,
             &:focus {
-              outline: 1px solid #4a90e2;
+              border-color: #4a90e2;
             }
 
             &.m-onboardingInput__error {
-              outline: 1px solid #d0021b;
+              border-color: #d0021b;
             }
           }
 
@@ -555,14 +555,9 @@ m-onboarding {
             font-size: 15px;
             line-height: 18px;
             letter-spacing: 0;
-
-            @include m-theme() {
-              color: themed($m-grey-700);
-            }
           }
 
           .m-tooltip--bubble {
-            background-color: #4a90e2;
             font-size: 15px;
             line-height: 18px;
           }

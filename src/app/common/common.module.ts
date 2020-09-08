@@ -139,7 +139,7 @@ import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox
 import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
 import { PhoneInputV2Component } from './components/phone-input-v2/phone-input-v2.component';
 import { PhoneInputCountryV2Component } from './components/phone-input-v2/country.component';
-import { TagsService } from './services/tags.service';
+import { RegexService } from './services/regex.service';
 import { ExplicitOverlayComponent } from './components/explicit-overlay/overlay.component';
 import { RedirectService } from './services/redirect.service';
 import { V3TopbarComponent } from './layout/v3-topbar/v3-topbar.component';
@@ -177,6 +177,8 @@ import { FeedsUpdateService } from './services/feeds-update.service';
 import { ClientMetaDirective } from './directives/client-meta.directive';
 import { ClientMetaService } from './services/client-meta.service';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { PoweredByComponent } from './components/powered-by/powered-by.component';
+import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-ellipsis.component';
 
 const routes: Routes = [
   {
@@ -326,6 +328,8 @@ const routes: Routes = [
     PaywallBadgeComponent,
     ClientMetaDirective,
     CarouselComponent,
+    PoweredByComponent,
+    LoadingEllipsisComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -453,6 +457,8 @@ const routes: Routes = [
     PaywallBadgeComponent,
     ClientMetaDirective,
     CarouselComponent,
+    PoweredByComponent,
+    LoadingEllipsisComponent,
   ],
   providers: [
     SiteService,
@@ -519,7 +525,7 @@ const routes: Routes = [
       useFactory: SidebarMarkersService._,
     },
     HorizontalFeedService,
-    TagsService,
+    RegexService,
     ApiService,
     AttachmentApiService,
     FeedsUpdateService,

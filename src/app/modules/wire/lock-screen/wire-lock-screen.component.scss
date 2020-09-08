@@ -14,11 +14,9 @@ m-wire--lock-screen.m-wire--lock-screen-2020 {
     height: 100%;
     width: 100%;
     position: relative;
-
     z-index: 0;
-    cursor: pointer;
     @include m-theme() {
-      color: themed($m-white);
+      color: themed($m-white-always);
     }
 
     > * {
@@ -63,10 +61,15 @@ m-wire--lock-screen.m-wire--lock-screen-2020 {
 
   .isVideo .m-wireLockScreen__inner {
     padding-top: 80px;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-top: 60px;
+    }
   }
 
   .m-wireLockScreen__message {
     margin: 20px auto;
+    min-height: 20px;
     text-align: center;
     max-width: 60%;
     font-weight: 400;
