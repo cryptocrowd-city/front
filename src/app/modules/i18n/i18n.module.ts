@@ -15,7 +15,7 @@ const i18nRoutes: Routes = [
     data: {
       title: 'Localization',
       description: 'Help translate Minds into every global language',
-      ogImage: '/assets/photos/satellite.jpg',
+      ogImage: '/assets/photos/night-sky.jpg',
     },
   },
 ];

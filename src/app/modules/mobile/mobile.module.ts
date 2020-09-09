@@ -15,10 +15,10 @@ const routes: Routes = [
     path: '',
     component: MobileMarketingComponent,
     data: {
-      title: 'The Minds Social Network Mobile App',
+      title: 'Mobile App',
       description:
         'Download the Minds mobile app and use the leading alternative social media platform anywhere. Available on both iOS & Android.',
-      ogImage: '/assets/photos/mobile-app.jpg',
+      ogImage: '/assets/photos/network.jpg',
     },
   },
 ];

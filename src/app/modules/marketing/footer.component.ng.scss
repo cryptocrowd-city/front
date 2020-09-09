@@ -1,190 +1,212 @@
 @import 'defaults.scss';
-@import '../../foundation/grid-values';
 
 :host {
   display: block;
-  // margin: 105px 0 20px 0;
-
-  * {
-    border: 1px solid salmon;
-  }
-
-  @media screen and (max-width: $m-grid-min-vp) {
-    // margin: 80px 0 0;
-  }
+  padding: 20px 0 40px;
+  margin-top: 80px;
 
   @include m-theme() {
+    color: themed($m-textColor--primary);
+    border-top: 1px solid themed($m-borderColor--tertiary);
     background: linear-gradient(
       180deg,
       themed($m-marketing-bg-gradient-start) 0%,
       themed($m-white) 100%
     );
   }
-
   .m-marketing__footer {
-    // padding: 30px 0 60px;
-    border-top: 1px solid;
-
-    @include m-theme() {
-      border-color: themed($m-borderColor--tertiary);
-      color: themed($m-textColor--primary);
+    padding-bottom: 10px;
+    @media screen and (max-width: $min-tablet) {
+      padding-bottom: 0;
     }
 
-    .m-grid {
-      // padding: 0 !important;
-    }
-
-    .m-marketingFooter__columns {
-      max-width: 1084px;
-      // margin: 0 auto;
+    [class*='m-marketingFooter__section'] {
+      max-width: 900px;
+      margin: 0 auto;
 
       @media screen and (max-width: $m-grid-min-vp) {
-        // padding: 0 32px !important;
+        padding-left: 40px;
+        padding-right: 40px;
       }
 
-      .m-marketingFooter__languageBar {
-        // margin: 0 6%;
-        @media screen and (max-width: $m-grid-max-mobile) {
-          // margin: 0;
+      @media screen and (max-width: $min-tablet) {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      &[class*='--language'] {
+        padding-top: 20px;
+        padding-bottom: 20px;
+
+        @media screen and (max-width: $min-tablet) {
+          padding-top: 8px;
+          padding-bottom: 8px;
         }
-      }
-    }
 
-    .m-marketingFooter__column {
-      @media screen and(max-width: $m-grid-max-mobile) {
-        @for $i from 1 through 5 {
-          &:nth-child(#{$i}) {
-            grid-row: $i;
+        ::ng-deep m-language__bar {
+          width: 90%;
+          display: block;
+          @media screen and (max-width: $min-tablet) {
+            width: 100%;
           }
         }
       }
 
-      @media screen and (max-width: $m-grid-min-vp) {
-        // margin-bottom: 32px;
-
-        &:last-child,
-        &.m-marketingFooter__column--noMobileSpacing {
-          // margin-bottom: 0;
-        }
-      }
-
-      &.m-marketingFooter__brandColumn {
-        // width: 60%;
-        // margin: 0 auto;
-
-        @media screen and (max-width: $m-grid-max-mobile) {
-          // width: 60%;
-          grid-row: 999;
-          // margin: 32px 0 0;
-        }
-      }
-
-      h4 {
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 21px;
-        // margin: 0 0 26px;
-
-        @media screen and (max-width: $m-grid-min-vp) {
-          // margin: 0 0 8px;
+      &[class*='--main'] {
+        display: flex;
+        flex-direction: row;
+        margin-top: 10px;
+        margin-bottom: 50px;
+        @media screen and (max-width: $min-tablet) {
+          flex-direction: column-reverse;
+          margin-bottom: 32px;
         }
 
-        @include m-theme() {
-          color: themed($m-textColor--primary);
-        }
+        [class*='m-marketingFooter__mainSubsection'] {
+          // brand
+          &:first-child {
+            flex: 0 0 30%;
+            max-width: 170px;
+            margin-right: 100px;
+            transition: 0.3s all cubic-bezier(0.23, 1, 0.32, 1);
 
-        &.m-marketingFooter__sloganText {
-          font-weight: 400;
-          // margin: 0 0 21px;
+            @media screen and (max-width: $min-tablet) {
+              flex-basis: 100%;
+              margin-top: 32px;
+            }
+            @media screen and (max-width: $m-grid-min-vp) {
+              margin-right: 6vh;
+            }
+            @media screen and (max-width: 800px) and (min-width: $min-tablet) {
+              margin-right: 3vh;
+            }
+          }
+          // links
+          &:last-child {
+            flex-grow: 1;
+          }
 
-          @include m-theme() {
-            color: themed($m-textColor--secondary);
+          &[class*='--brand'] {
+            margin-top: 25px;
+            @media screen and (max-width: $min-tablet) {
+              margin-top: 40px;
+            }
+
+            .m-marketingFooter__logo {
+              width: 116px;
+              height: 43px;
+              margin-bottom: 18px;
+              background: url('../../../assets/logos/bulb.svg') no-repeat center
+                left;
+              background-size: contain;
+            }
+            h4.m-marketingFooter__slogan {
+              font-weight: 600;
+              margin-bottom: 21px;
+              font-size: 18px;
+              line-height: 23px;
+            }
+          }
+
+          &[class*='--links'] {
+            display: flex;
+            flex-flow: row nowrap;
+
+            @media screen and (max-width: $min-tablet) {
+              flex-direction: column;
+
+              h4 {
+                margin-bottom: 8px;
+              }
+            }
+            h4 {
+              font-weight: 500;
+            }
+            .m-marketingFooter__mainLinksCategory {
+              flex: 1 0 22%;
+            }
           }
         }
       }
 
-      .m-marketingFooter__mindsLogo {
-        width: 116px;
-        height: 43px;
-        // margin: 0 0 35px;
-        background: url('../../../assets/logos/logo.svg') no-repeat center left;
-        background-size: contain;
+      &[class*='--legal'] {
+        text-align: right;
+        margin-top: 40px;
+        @media screen and (max-width: $min-tablet) {
+          margin-top: 35px;
+          text-align: left;
+        }
+        li {
+          margin-right: 40px;
+          display: inline-block;
 
-        @include m-on-theme(dark) {
-          background: url('../../../assets/logos/logo-white.svg') no-repeat
-            center left;
-          background-size: contain;
+          transition: margin 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+          @media screen and (max-width: $m-grid-min-vp) {
+            margin-right: 3vw;
+          }
+          @media screen and (max-width: $min-tablet) {
+            margin-right: 10px;
+          }
         }
       }
+    }
 
-      .m-marketingFooter__text {
-        font-size: 14px;
-        line-height: 26px;
+    .m-marketingFooter__sep {
+      width: 100%;
+      margin: 20px 0;
+      @include m-theme() {
+        border-top: 1px solid themed($m-borderColor--tertiary);
+      }
+    }
+
+    h4 {
+      font-size: 16px;
+      line-height: 21px;
+      margin: 20px 0 18px;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-marketingFooter__text {
+      font-size: 14px;
+      line-height: 26px;
+
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      > li {
+        @extend .m-marketingFooter__text;
 
         @include m-theme() {
           color: themed($m-textColor--tertiary);
         }
-      }
 
-      ul {
-        list-style: none;
-        // margin: 0;
-        // padding: 0;
-
-        > li {
-          @extend .m-marketingFooter__text;
-
-          @include m-theme() {
-            color: themed($m-textColor--tertiary);
-          }
-
-          @media screen and (max-width: $m-grid-min-vp) {
-            display: inline-block;
-            // margin-right: 1em;
-
-            &:last-child {
-              // margin-right: 0;
-            }
-          }
-
-          a {
-            color: inherit;
-            font-weight: normal;
-            text-decoration: none;
-          }
+        @media screen and (max-width: $min-tablet) {
+          margin-right: 10px;
+          display: inline-block;
         }
 
-        &.m-marketingFooter__inlineList {
-          > li {
-            display: inline-block;
-            // margin-right: 40px;
+        a {
+          color: inherit;
+          font-weight: normal;
+          text-decoration: none;
 
-            @media screen and (max-width: $m-grid-min-vp) {
-              // margin-right: 1em;
-            }
-
-            &:last-child {
-              // margin-right: 0;
-            }
-          }
-
-          &.m-marketingFooter__legalLinks {
-            text-align: right;
-            // padding-right: 92px;
-
-            @media screen and (max-width: $m-grid-min-vp) {
-              text-align: inherit;
-              // padding-right: initial;
+          &:hover {
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
             }
           }
         }
       }
-    }
-  }
-
-  .m-marketing__sep {
-    @include m-theme() {
-      border-color: themed($m-borderColor--tertiary);
     }
   }
 }

@@ -149,10 +149,19 @@
       <ng-container
         *ngFor="let link of footerLinks.slice(0, maxFooterLinks); let i = index"
       >
-        <a *ngIf="link.routerLink" [routerLink]="link.routerLink">
+        <a
+          *ngIf="link.routerLink"
+          [routerLink]="link.routerLink"
+          (click)="closeMenu()"
+        >
           {{ link.label }}
         </a>
-        <a *ngIf="link.href" [href]="link.href" target="_blank">
+        <a
+          *ngIf="link.href"
+          [href]="link.href"
+          target="_blank"
+          (click)="closeMenu()"
+        >
           {{ link.label }}
         </a>
         <span> · </span>

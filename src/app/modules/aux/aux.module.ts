@@ -3,20 +3,17 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../common/common.module';
 import { RouterModule, Routes } from '@angular/router';
 import { AuxComponent } from './aux.component';
-import { AuxPrivacyComponent } from './components/privacy/privacy.component';
+import { AuxPrivacyComponent } from './pages/privacy/privacy.component';
 import { MarketingModule } from '../marketing/marketing.module';
-import { AuxDmcaComponent } from './components/dmca/dmca.component';
-import { AuxTermsComponent } from './components/terms/terms.component';
-import { AuxRightsComponent } from './components/rights/rights.component';
-import { AuxContactComponent } from './components/contact/contact.component';
+import { AuxDmcaComponent } from './pages/dmca/dmca.component';
+import { AuxTermsComponent } from './pages/terms/terms.component';
+import { AuxRightsComponent } from './pages/rights/rights.component';
+import { AuxContactComponent } from './pages/contact/contact.component';
 
 const AUX_ROUTES: Routes = [
   {
     path: '',
     component: AuxComponent,
-    data: {
-      ogImage: '/assets/logos/placeholder.jpg',
-    },
     children: [
       {
         path: '',
@@ -29,6 +26,7 @@ const AUX_ROUTES: Routes = [
           title: 'Privacy Policy',
           description:
             'This privacy policy is made available for remix under a Creative Commons Sharealike license. Your privacy is important to Minds, Inc. ...',
+          ogImage: '/assets/product-pages/pro/pro-4.jpg',
         },
       },
       {
@@ -38,6 +36,7 @@ const AUX_ROUTES: Routes = [
           title: 'DMCA',
           description:
             'If you believe that material available on our sites infringes on your copyright(s), please notify us by providing a DMCA notice...',
+          ogImage: '/assets/product-pages/pay/pay-3.jpg',
         },
       },
       {
@@ -47,6 +46,7 @@ const AUX_ROUTES: Routes = [
           title: 'Terms of Service',
           description:
             'We (the people who work with Minds) create free and open source software and run the Minds.com social network...',
+          ogImage: '/assets/product-pages/pro/pro-1.jpg',
         },
       },
       {
@@ -55,7 +55,8 @@ const AUX_ROUTES: Routes = [
         data: {
           title: 'Contact',
           description:
-            'Contact details for press, general enquiries and support, copyright and DMCA, security and vulnerabilities...',
+            'Contact details for press, general enquiries and support, copyright and DMCA, security and vulnerabilities',
+          ogImage: '/assets/product-pages/nodes/nodes-2.jpg',
         },
       },
       {
@@ -65,6 +66,7 @@ const AUX_ROUTES: Routes = [
           title: 'Bill of Rights',
           description:
             'Minds is officially adopting the Manila Principles On Intermediary Liability, a digital bill of rights...',
+          ogImage: '/assets/product-pages/token/token-2.jpg',
         },
       },
       {
