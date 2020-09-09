@@ -1,4 +1,4 @@
-<div class="m-tabs__container">
+<div class="m-tabs__container" *ngIf="(isPlusPage$ | async) === false">
   <div class="m-tabs__tab">
     <a
       routerLink="/discovery/overview"
@@ -15,7 +15,7 @@
       routerLinkActive="m-tabs__tab--selected"
       data-cy="discovery-tab-link-tags"
       i18n="@@DISCOVERY_TAGS__YOUR_TAGS"
-      >Your Tags</a
+      >Your tags</a
     >
   </div>
   <div class="m-tabs__tab">

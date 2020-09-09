@@ -3,6 +3,8 @@
  */
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DiscoveryService } from '../discovery.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'm-discovery__tabs',
@@ -14,7 +16,16 @@ export class DiscoveryTabsComponent {
    */
   @Input() showSettingsButton = true;
 
-  constructor(public route: ActivatedRoute, private router: Router) {}
+  /**
+   * If plus or not
+   */
+  isPlusPage$: Observable<boolean> = this.service.isPlusPage$;
+
+  constructor(
+    public route: ActivatedRoute,
+    private router: Router,
+    private service: DiscoveryService
+  ) {}
 
   /**
    * Checks whether passed URL is the active URL

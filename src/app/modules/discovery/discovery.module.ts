@@ -40,6 +40,9 @@ import { DiscoveryTabsComponent } from './tabs/tabs.component';
           {
             path: 'overview',
             component: DiscoveryTrendsComponent,
+            data: {
+              title: 'Discovery / Overview',
+            },
           },
           {
             path: 'trend/:guid',
@@ -59,12 +62,18 @@ import { DiscoveryTabsComponent } from './tabs/tabs.component';
               {
                 path: ':type',
                 component: DiscoveryTagsComponent,
+                data: {
+                  title: 'Discovery / Tags',
+                },
               },
             ],
           },
           {
             path: 'boost/feed',
             component: DiscoveryBoostFeedComponent,
+            data: {
+              title: 'Discovery / Boosted',
+            },
           },
           {
             path: 'feeds',
@@ -102,7 +111,10 @@ import { DiscoveryTabsComponent } from './tabs/tabs.component';
               {
                 path: 'overview',
                 component: DiscoveryTrendsComponent,
-                data: { plus: true },
+                data: {
+                  title: 'Minds+ / Overview',
+                  plus: true,
+                },
               },
               {
                 path: 'trend/:guid',
