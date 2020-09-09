@@ -1,6 +1,5 @@
 @import 'defaults.scss';
-// TODO: import this from layouts scss
-$layoutMax2ColWidth: 1039px;
+@import '../../common/layout/layout.scss';
 
 :host {
   .m-aux__marketing,

@@ -17,7 +17,7 @@
           [saving]="inProgress"
         >
           <ng-container *ngIf="!user.canary">
-            {{ buttonHovering ? '  Enable  ' : 'Disabled' }}
+            Join
           </ng-container>
           <ng-container *ngIf="user.canary">
             {{ buttonHovering ? '  Disable  ' : 'Enabled' }}
