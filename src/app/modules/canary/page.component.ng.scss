@@ -1,6 +1,9 @@
 @import 'defaults.scss';
 
 :host {
+  .m-aux__hero {
+    background-image: url('../../../assets/photos/canary.jpg');
+  }
   .m-canary__groupLink {
     display: inline-block;
     text-transform: none;
