@@ -90,6 +90,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
 
   pagerTimeout: any = null;
   navigatedAway: boolean = false;
+  tabletOverlayTimeout: any = null;
 
   /**
    * Dimensions
@@ -281,21 +282,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     $event.stopPropagation();
   }
 
-  /////////////////////////////////////////////////////////////////
-  // KEYBOARD SHORTCUTS
-  /////////////////////////////////////////////////////////////////
-
-  @HostListener('window:keydown', ['$event']) onWindowKeyDown(
-    $event: KeyboardEvent
-  ): Boolean {
-    if (!this.service.shouldFilterOutKeyDownEvent($event)) {
-      if ($event.key === 'Escape' && this.isOpen) {
-        this.service.dismiss();
-      }
-    }
-    return true;
-  }
-
   ngOnDestroy() {
     if (this.entitySubscription) {
       this.entitySubscription.unsubscribe();
@@ -313,6 +299,10 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
       this.fullscreenSubscription.unsubscribe();
     }
 
+    if (this.tabletOverlayTimeout) {
+      clearTimeout(this.tabletOverlayTimeout);
+    }
+
     if (this.isOpenTimeout) {
       clearTimeout(this.isOpenTimeout);
     }
@@ -323,6 +313,39 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     if (!this.navigatedAway) {
       this.service.returnToSourceUrl();
     }
+  }
+
+  /////////////////////////////////////////////////////////////////
+  // KEYBOARD SHORTCUTS
+  /////////////////////////////////////////////////////////////////
+
+  @HostListener('window:keydown', ['$event']) onWindowKeyDown(
+    $event: KeyboardEvent
+  ): Boolean {
+    if (!this.service.shouldFilterOutKeyDownEvent($event)) {
+      if ($event.key === 'Escape' && this.isOpen) {
+        this.service.dismiss();
+      }
+    }
+    return true;
+  }
+
+  /////////////////////////////////////////////////////////////////
+  // TABLET TOUCH CONTROLS
+  /////////////////////////////////////////////////////////////////
+  /**
+   * Briefly display title overlay and video controls on stage touch
+   */
+  showOverlaysOnTablet() {
+    this.onMouseEnterStage();
+
+    if (this.tabletOverlayTimeout) {
+      clearTimeout(this.tabletOverlayTimeout);
+    }
+
+    this.tabletOverlayTimeout = setTimeout(() => {
+      this.onMouseLeaveStage();
+    }, 3000);
   }
 
   /////////////////////////////////////////////////////////////////
@@ -355,7 +378,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
       case 'blog':
         this.entityWidth = window.innerWidth * 0.6;
         this.entityHeight = window.innerHeight * 0.6;
-        break;
     }
 
     /**
@@ -424,10 +446,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
       this.stageHeight = windowHeight;
 
       switch (this.entity.content_type) {
-        case 'blog':
-          this.mediaHeight = windowHeight;
-          this.mediaWidth = windowWidth;
-          return;
         case 'image':
           // For images, set mediaHeight as tall as possible but not taller than instrinsic height
           this.mediaHeight =
@@ -436,6 +454,11 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
         case 'video':
           // It's ok if videos are taller than intrinsic height
           this.mediaHeight = windowHeight;
+        case 'blog':
+        case 'rich-embed':
+        case 'default':
+          this.mediaHeight = windowHeight;
+          this.mediaWidth = windowWidth;
       }
 
       this.mediaWidth =
@@ -486,8 +509,10 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     this.mediaWidth = this.scaleWidth();
   }
 
+  /**
+   * Media is intrinsically too wide, set width to max and rescale heights
+   */
   rescaleHeightsForMaxWidth() {
-    // Media is intrinsically too wide, set width to max and rescale heights
     this.mediaWidth = this.maxStageWidth;
     this.stageWidth = this.maxStageWidth;
 
@@ -498,10 +523,11 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * When at minStageWidth and windowWidth falls below threshold,
+   * shrink vertically until it hits minStageHeight
+   */
   handleNarrowWindow() {
-    // When at minStageWidth and windowWidth falls below threshold,
-    // shrink vertically until it hits minStageHeight
-
     // When window is narrower than this, start to shrink height
     const verticalShrinkWidthThreshold =
       this.mediaWidth + ACTIVITY_MODAL_WIDTH_EXCL_STAGE;

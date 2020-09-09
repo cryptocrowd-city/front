@@ -16,7 +16,7 @@ import { OverlayModalService } from '../../services/ux/overlay-modal';
   templateUrl: 'footer.component.html',
   styleUrls: ['footer.component.ng.scss'],
 })
-export class MarketingFooterComponent implements OnInit {
+export class MarketingFooterComponent {
   readonly year: number = new Date().getFullYear();
 
   readonly cdnAssetsUrl: string;
