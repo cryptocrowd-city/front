@@ -112,7 +112,7 @@ export class MindsVideoPlayerComponent
     private service: VideoPlayerService,
     private session: Session,
     private cd: ChangeDetectorRef,
-    private autoProgress: AutoProgressVideoService,
+    public autoProgress: AutoProgressVideoService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -297,5 +297,11 @@ export class MindsVideoPlayerComponent
         video.load();
       } catch (err) {}
     }
+  }
+
+  nextVideo(): void {
+    // TODO: check whether has next in modal pager or similar service.
+    // if (this.modalPager.modalPager.hasNext)
+    this.autoProgress.delayed(6);
   }
 }

@@ -18,7 +18,7 @@
       [plyrPlaysInline]="true"
       [plyrSources]="!service.playable ? emptySource : (sources$ | async)"
       [plyrOptions]="options"
-      (plyrEnded)="autoProgress.trigger$.next(true)"
+      (plyrEnded)="nextVideo()"
       (plyrPlay)="onPlayed($event)"
       (plyrEnterFullScreen)="fullScreenChange.next($event)"
       (plyrExitFullScreen)="fullScreenChange.next($event)"
@@ -44,3 +44,16 @@
     </i>
   </div>
 </ng-template>
+<ng-container *ngIf="(autoProgress.timer$ | async) > 0">
+  <div class="m-videoPlayer__autoProgressOverlay">
+    <div class="m-videoPlayer__autoProgressPanel">
+      <i
+        class="material-icons minds-video-play-icon"
+        (click)="onPlaceholderClick($event)"
+      >
+        replay
+      </i>
+      <span>{{ autoProgress.timer$ | async }}</span>
+    </div>
+  </div>
+</ng-container>
