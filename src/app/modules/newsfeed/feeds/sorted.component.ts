@@ -16,7 +16,6 @@ import { Navigation as NavigationService } from '../../../services/navigation';
 import { Session } from '../../../services/session';
 import { CookieService } from '../../../common/services/cookie.service';
 import { ContextService } from '../../../services/context.service';
-import { SettingsService } from '../../settings/settings.service';
 import { PosterComponent } from '../poster/poster.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { NewsfeedService } from '../services/newsfeed.service';
@@ -25,6 +24,7 @@ import { NewsfeedHashtagSelectorService } from '../services/newsfeed-hashtag-sel
 import { FeedsService } from '../../../common/services/feeds.service';
 import { FeaturesService } from '../../../services/features.service';
 import { isPlatformServer } from '@angular/common';
+import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 
 @Component({
   selector: 'm-newsfeed--sorted',
@@ -63,7 +63,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     protected cookieService: CookieService,
     protected context: ContextService,
     protected session: Session,
-    protected settingsService: SettingsService,
+    protected settingsService: SettingsV2Service,
     protected overlayModal: OverlayModalService,
     protected newsfeedService: NewsfeedService,
     protected topbarHashtagsService: TopbarHashtagsService,

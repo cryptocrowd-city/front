@@ -10,8 +10,8 @@ import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { Subscription } from 'rxjs';
-import { SettingsService } from '../settings/settings.service';
 import { isPlatformServer } from '@angular/common';
+import { SettingsV2Service } from '../settings-v2/settings-v2.service';
 
 @Component({
   selector: 'm-ads-boost',
@@ -41,7 +41,7 @@ export class BoostAds implements OnInit, OnDestroy {
     public client: Client,
     public session: Session,
     private storage: Storage,
-    private settingsService: SettingsService,
+    private settingsService: SettingsV2Service,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 

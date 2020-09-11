@@ -23,7 +23,6 @@ import { MindsUser } from '../../../interfaces/entities';
 import { Activity } from '../../../modules/legacy/components/cards/activity/activity';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { NewsfeedBoostService } from '../newsfeed-boost.service';
-import { SettingsService } from '../../settings/settings.service';
 import { FeaturesService } from '../../../services/features.service';
 import { BoostedContentService } from '../../../common/services/boosted-content.service';
 import { FeedsService } from '../../../common/services/feeds.service';
@@ -38,6 +37,7 @@ import {
 import { ConfigsService } from '../../../common/services/configs.service';
 import { BehaviorSubject, Subscription, Subject } from 'rxjs';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
+import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 
 const BOOST_VIEW_THESHOLD = 1000;
 
@@ -111,7 +111,7 @@ export class NewsfeedBoostRotatorComponent {
     public client: Client,
     public scroll: ScrollService,
     public newsfeedService: NewsfeedService,
-    public settingsService: SettingsService,
+    public settingsService: SettingsV2Service,
     private storage: Storage,
     public element: ElementRef,
     public service: NewsfeedBoostService,

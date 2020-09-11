@@ -8,11 +8,11 @@ import { Navigation as NavigationService } from '../../../services/navigation';
 import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
-import { SettingsService } from '../../settings/settings.service';
 import { PosterComponent } from '../poster/poster.component';
 import { HashtagsSelectorModalComponent } from '../../../modules/hashtags/hashtag-selector-modal/hashtags-selector.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { NewsfeedService } from '../services/newsfeed.service';
+import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 
 @Component({
   selector: 'm-newsfeed--top',
@@ -42,7 +42,7 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
     private storage: Storage,
     private context: ContextService,
     private session: Session,
-    private settingsService: SettingsService,
+    private settingsService: SettingsV2Service,
     private overlayModal: OverlayModalService,
     private newsfeedService: NewsfeedService
   ) {
