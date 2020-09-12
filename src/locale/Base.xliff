@@ -8319,7 +8319,7 @@
         <source>{$START_TAG_SPAN}@{$CLOSE_TAG_SPAN}{$INTERPOLATION}, want to join the team?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/jobs/marketing/marketing.component.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">8</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -8327,7 +8327,7 @@
         <source>Hello there, want to join the team?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/jobs/marketing/marketing.component.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">15</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -12332,7 +12332,7 @@
         <source>Localization</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/i18n/marketing.component.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">8</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -12340,7 +12340,7 @@
         <source>Help translate Minds into every global language</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/i18n/marketing.component.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">9</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -12348,7 +12348,7 @@
         <source>Contribute</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/i18n/marketing.component.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">18</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13388,7 +13388,7 @@
         <source>Add your on-chain address</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/tokens/onboarding/token-onboarding.component.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">28</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13396,7 +13396,7 @@
         <source>Your Ethereum address allows you to start receiving payments on the blockchain.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/tokens/onboarding/token-onboarding.component.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">36</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13960,7 +13960,7 @@
         <source>Overview</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/tokens/tokens.component.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13968,7 +13968,7 @@
         <source>Transactions</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/tokens/tokens.component.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">30</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13976,7 +13976,7 @@
         <source>Settings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/tokens/tokens.component.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
