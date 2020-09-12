@@ -2,7 +2,8 @@
 
 :host {
   .m-aux__hero {
-    background-image: url('../../../../assets/photos/network.jpg');
+    background-image: url('../../../../assets/product-pages/nodes/nodes-1.jpg');
+    box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.2);
   }
   .m-aux__mobile__downloadPlatform {
     h2 {
@@ -12,18 +13,29 @@
   .m-aux__mobile__downloadOption {
     margin-bottom: 30px;
 
+    &:last-child {
+      margin-bottom: 45px;
+    }
     img {
       max-width: 200px;
       min-width: 175px;
     }
 
-    .m-aux__mobile__downloadButton {
+    li {
+      margin-bottom: 6px;
+    }
+
+    [class*='m-aux__mobile__downloadButton'] {
       margin-bottom: 20px;
       &:not(.m-aux__mobile__downloadButton--iOS) {
         margin-left: -12px;
       }
-      &.m-aux__mobile__downloadButton--iOS {
-        margin-top: 24px;
+      &[class*='--iOS'] {
+        margin-top: 22px;
+        margin-bottom: 30px;
+      }
+      &[class*='--playStore'] {
+        margin-top: -4px;
       }
     }
   }

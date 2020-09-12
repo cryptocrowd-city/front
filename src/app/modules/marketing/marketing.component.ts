@@ -33,7 +33,10 @@ export class MarketingComponent implements OnInit, OnDestroy {
 
     if (this.useFullWidth) {
       this.pageLayoutService.useFullWidth();
+    } else {
+      this.pageLayoutService.cancelFullWidth();
     }
+
     this.navigationService.toggleMarketingPages(
       true,
       this.showBottombar,
