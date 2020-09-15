@@ -364,7 +364,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/newsfeed/dropdown/dropdown.component.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">65</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -7288,7 +7288,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/newsfeed/dropdown/dropdown.component.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">17</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -7664,7 +7664,7 @@
         <source>By selecting Explicit mode, you acknowledge that you are 18+ years of age and are willing to see graphic content.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/newsfeed/dropdown/dropdown.component.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -7672,7 +7672,7 @@
         <source>Auto-rotate</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/newsfeed/dropdown/dropdown.component.html</context>
-          <context context-type="linenumber">109</context>
+          <context context-type="linenumber">110</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -7680,7 +7680,7 @@
         <source>This will enable/disable the Boost box on top of your feed from self-rotating.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/newsfeed/dropdown/dropdown.component.html</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">115</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -7688,11 +7688,11 @@
         <source>Hide Boost</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/newsfeed/dropdown/dropdown.component.html</context>
-          <context context-type="linenumber">153</context>
+          <context context-type="linenumber">154</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/newsfeed/dropdown/dropdown.component.html</context>
-          <context context-type="linenumber">172</context>
+          <context context-type="linenumber">173</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -7700,7 +7700,7 @@
         <source>Show Boost</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/newsfeed/dropdown/dropdown.component.html</context>
-          <context context-type="linenumber">159</context>
+          <context context-type="linenumber">160</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -7708,7 +7708,7 @@
         <source>Plus users may hide Boosts from their newsfeed.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/newsfeed/dropdown/dropdown.component.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">165</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -7716,7 +7716,7 @@
         <source>Upgrade to Plus in order to turn off Boost.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/newsfeed/dropdown/dropdown.component.html</context>
-          <context context-type="linenumber">179</context>
+          <context context-type="linenumber">180</context>
         </context-group>
         <note priority="1" from="description"/>
         <note priority="1" from="meaning">ng2.template</note>
@@ -7725,15 +7725,7 @@
         <source>About Boost</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/newsfeed/dropdown/dropdown.component.html</context>
-          <context context-type="linenumber">187</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__BOOSTFEED" datatype="html">
-        <source>Boostfeed</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/newsfeed/boost-rotator/boost-rotator.component.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">188</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15409,7 +15401,7 @@
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__HASHTAGS__LABEL" datatype="html">
-        <source>Theme</source>
+        <source>Hashtags</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/hashtags/hashtags.component.html</context>
           <context context-type="linenumber">5</context>
@@ -15878,7 +15870,7 @@
         <source>Enable Boosted Content {$START_TAG_SPAN}Minds+ Feature{$CLOSE_TAG_SPAN}</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/boosted-content/boosted-content.component.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">25</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15886,7 +15878,7 @@
         <source>Minds+ users may hide Boosts from their newsfeed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/boosted-content/boosted-content.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">33</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15894,15 +15886,15 @@
         <source>Enable</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/boosted-content/boosted-content.component.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">45</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/boosted-content/boosted-content.component.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">95</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/boosted-content/boosted-content.component.html</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">137</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15910,15 +15902,15 @@
         <source>Disable</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/boosted-content/boosted-content.component.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">65</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/boosted-content/boosted-content.component.html</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">107</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/boosted-content/boosted-content.component.html</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">149</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15926,15 +15918,15 @@
         <source>Boost Auto-rotation</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/boosted-content/boosted-content.component.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">84</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="BOOSTED_CONTENT__AUTOROTATE_TOOLTIP" datatype="html">
-        <source>This will enable/disable the Boost box on top of your feed from self-rotating</source>
+        <source>Enable/disable the Boost box on top of your feed from self-rotating</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/boosted-content/boosted-content.component.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">88</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15942,15 +15934,15 @@
         <source>Open Content</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/boosted-content/boosted-content.component.html</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">125</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="BOOSTED_CONTENT__RATING_TOOLTIP" datatype="html">
-        <source>Open my contain controversial content. By selection Open, you acknowledge that you are willing to see controversial content.</source>
+        <source>Open may contain controversial content. By selecting Open, you acknowledge that you are willing to see controversial content.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/boosted-content/boosted-content.component.html</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">129</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15958,7 +15950,7 @@
         <source>Save Boost Settings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/boosted-content/boosted-content.component.html</context>
-          <context context-type="linenumber">159</context>
+          <context context-type="linenumber">173</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
