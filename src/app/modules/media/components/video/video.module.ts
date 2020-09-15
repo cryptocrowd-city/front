@@ -8,6 +8,7 @@ import { MindsVideoPlayerComponent } from '../video-player/player.component';
 import { PlyrModule } from 'ngx-plyr';
 // import { VideoAutoplayService } from './services/video-autoplay.service';
 import { ScrollAwareVideoPlayerComponent } from '../video-player/scrollaware-player.component';
+import { AutoProgressOverlayComponent } from './auto-progress-overlay/auto-progress-overlay.component';
 
 @NgModule({
   imports: [
@@ -17,8 +18,16 @@ import { ScrollAwareVideoPlayerComponent } from '../video-player/scrollaware-pla
     RouterModule.forChild([]),
     PlyrModule,
   ],
-  declarations: [MindsVideoPlayerComponent, ScrollAwareVideoPlayerComponent],
-  exports: [MindsVideoPlayerComponent, ScrollAwareVideoPlayerComponent],
+  declarations: [
+    MindsVideoPlayerComponent,
+    ScrollAwareVideoPlayerComponent,
+    AutoProgressOverlayComponent,
+  ],
+  exports: [
+    MindsVideoPlayerComponent,
+    ScrollAwareVideoPlayerComponent,
+    AutoProgressOverlayComponent,
+  ],
   // providers: [VideoAutoplayService],
 })
 export class VideoModule {}

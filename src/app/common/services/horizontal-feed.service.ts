@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ActivityEntity } from '../../modules/newsfeed/activity/activity.service';
 import { Client } from '../../services/api/client';
 import { EntitiesService } from './entities.service';
 
@@ -48,6 +49,16 @@ interface HorizontalFeedChange {
 }
 
 /**
+ * Types of filter for feed, appended to end of v2/feeds/container URL.
+ */
+type FilterType = 'all' | 'videos';
+
+/**
+ * Default value for filter.
+ */
+const DEFAULT_FILTER_VALUE = 'all';
+
+/**
  * This service allow retrieving entities to navigate through a horizontal feed whose entities will be loaded
  * one by one in specialized components.
  *
@@ -81,6 +92,11 @@ export class HorizontalFeedService {
   constructor(protected client: Client, protected entities: EntitiesService) {}
 
   /**
+   * Filter the feed by filter type.
+   */
+  private filter: FilterType = DEFAULT_FILTER_VALUE;
+
+  /**
    * Sets the current context and resets
    * @param context
    */
@@ -88,6 +104,14 @@ export class HorizontalFeedService {
     this.context = context;
     this.reset();
     return this;
+  }
+
+  /**
+   * Gets Base Entity
+   * @returns entity
+   */
+  getBaseEntity(): any {
+    return this.baseEntity;
   }
 
   /**
@@ -106,6 +130,15 @@ export class HorizontalFeedService {
    */
   setLimit(limit: number): HorizontalFeedService {
     this.limit = limit;
+    return this;
+  }
+
+  /**
+   * Sets filter to set class to request specific content types.
+   * @param { FilterType } filter - entity type to be returned by fetch.
+   */
+  setFilter(filter: FilterType): HorizontalFeedService {
+    this.filter = filter;
     return this;
   }
 
@@ -239,6 +272,14 @@ export class HorizontalFeedService {
   }
 
   /**
+   * Gets next fetched entity.
+   * @returns { ActivityEntity } - next fetched entity.
+   */
+  updateNextEntity(): ActivityEntity {
+    return this.pools.next.entities[this.cursor].entity || null;
+  }
+
+  /**
    * Internal method that fires a change event
    * @private
    */
@@ -291,7 +332,9 @@ export class HorizontalFeedService {
     const baseEntity = this.baseEntity;
     const baseEntityTimestamp = baseEntity.time_created * 1000;
     const guid = baseEntity.container_guid || baseEntity.owner_guid;
-    const endpoint = `api/v2/feeds/container/${guid}/all`;
+
+    const filter = this.filter ? this.filter : 'all';
+    const endpoint = `api/v2/feeds/container/${guid}/${filter}`;
 
     const params = {
       sync: 1,

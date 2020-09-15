@@ -1,0 +1,25 @@
+<div
+  *ngIf="(autoProgress.timer$ | async) > 0"
+  class="m-videoPlayer__autoProgressOverlay"
+>
+  <div class="m-videoPlayer__autoProgressPanel">
+    <span class="m-videoPlayer__playingNextText" i18n="@@PLAYER__PLAY_NEXT"
+      >Playing next...</span
+    >
+    <span class="m-videoPlayer__nextVideoTitle">{{
+      autoProgress.nextTitle$ | async
+    }}</span>
+    <span class="m-videoPlayer__nextVideoOwner"
+      >@{{ autoProgress.nextAuthor$ | async }}</span
+    >
+    <span class="m-videoPlayer__countdown">{{
+      autoProgress.timer$ | async
+    }}</span>
+    <span
+      class="m-videoPlayer__cancelText"
+      (click)="autoProgress.cancel()"
+      i18n="@@PLAYER__CANCEL"
+      >Cancel</span
+    >
+  </div>
+</div>

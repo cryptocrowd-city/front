@@ -21,7 +21,7 @@ import { PlyrComponent } from 'ngx-plyr';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
-import { AutoProgressVideoService } from '../../../../common/services/auto-progress-video.service';
+import { AutoProgressVideoService } from '../video/auto-progress-overlay/auto-progress-video.service';
 
 @Component({
   selector: 'm-videoPlayer',
@@ -157,6 +157,10 @@ export class MindsVideoPlayerComponent
 
   get status(): string {
     return this.service.status;
+  }
+
+  get isModal(): boolean {
+    return this.service.isModal;
   }
 
   onPlayed(event: Plyr.PlyrEvent): void {
@@ -299,9 +303,7 @@ export class MindsVideoPlayerComponent
     }
   }
 
-  nextVideo(): void {
-    // TODO: check whether has next in modal pager or similar service.
-    // if (this.modalPager.modalPager.hasNext)
-    this.autoProgress.delayed(6);
+  onEnded($event: any): void {
+    this.autoProgress.next();
   }
 }

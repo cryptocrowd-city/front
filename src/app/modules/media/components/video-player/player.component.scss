@@ -63,35 +63,3 @@ m-videoPlayer--scrollaware {
     }
   }
 }
-
-.m-videoPlayer__autoProgressOverlay {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  @include m-theme() {
-    color: themed($m-white-always);
-    background-color: themed($m-black-always);
-  }
-
-  .m-videoPlayer__autoProgressPanel {
-    align-items: center;
-    display: flex;
-
-    i,
-    span {
-      margin: 8px;
-      font-size: 31pt;
-    }
-
-    i {
-      cursor: pointer;
-    }
-  }
-}

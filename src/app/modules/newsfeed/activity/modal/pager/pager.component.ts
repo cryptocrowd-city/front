@@ -1,10 +1,16 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  HostListener,
+  Optional,
+} from '@angular/core';
 import { ActivityModalService } from '../modal.service';
 import { ActivityService } from '../../activity.service';
 import { HorizontalFeedService } from '../../../../../common/services/horizontal-feed.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { MediumFadeAnimation } from '../../../../../animations';
-import { AutoProgressVideoService } from '../../../../../common/services/auto-progress-video.service';
+import { AutoProgressVideoService } from '../../../../../modules/media/components/video/auto-progress-overlay/auto-progress-video.service';
 
 @Component({
   selector: 'm-activity__modalPager',
@@ -26,7 +32,7 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
     public service: ActivityModalService,
     public activityService: ActivityService,
     private horizontalFeed: HorizontalFeedService,
-    private autoProgress: AutoProgressVideoService
+    @Optional() private autoProgress: AutoProgressVideoService
   ) {}
 
   ngOnInit(): void {
@@ -43,10 +49,18 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
         };
       });
 
-    /** Trigger next video */
-    this.autoProgressSubscription = this.autoProgress.trigger$.subscribe(() => {
-      this.goToNext();
-    });
+    if (this.autoProgress) {
+      /** Trigger next video */
+      this.autoProgressSubscription = this.autoProgress.goNext$.subscribe(
+        (val: boolean) => {
+          this.goToNext();
+        }
+      );
+
+      if (this.horizontalFeed.getBaseEntity().custom_type === 'video') {
+        this.horizontalFeed.setFilter('videos');
+      }
+    }
 
     this.horizontalFeed.setContext('container');
   }
@@ -91,6 +105,10 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (this.autoProgress) {
+      this.autoProgress.cancel();
+    }
+
     this.service.loading$.next(true);
 
     const response = await this.horizontalFeed.next();
@@ -99,6 +117,10 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
       this.setAsyncEntity(response.entity);
     } else {
       this.service.loading$.next(false);
+    }
+
+    if (this.autoProgress) {
+      this.autoProgress.updateNextEntity();
     }
   }
 
@@ -111,6 +133,10 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (this.autoProgress) {
+      this.autoProgress.cancel();
+    }
+
     this.service.loading$.next(true);
 
     const response = await this.horizontalFeed.prev();
@@ -119,6 +145,10 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
       this.setAsyncEntity(response.entity);
     } else {
       this.service.loading$.next(false);
+    }
+
+    if (this.autoProgress) {
+      this.autoProgress.updateNextEntity();
     }
   }
 
