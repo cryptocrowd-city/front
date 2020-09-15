@@ -23,7 +23,6 @@ import { MindsUser } from '../../../interfaces/entities';
 import { Activity } from '../../../modules/legacy/components/cards/activity/activity';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { FeaturesService } from '../../../services/features.service';
-import { BoostedContentService } from '../../../common/services/boosted-content.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { ACTIVITY_FIXED_HEIGHT_RATIO } from '../activity/activity.service';
 import {

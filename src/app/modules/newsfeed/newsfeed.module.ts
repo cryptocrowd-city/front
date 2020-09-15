@@ -23,7 +23,6 @@ import { NewsfeedTopComponent } from './feeds/top.component';
 import { NewsfeedSubscribedComponent } from './feeds/subscribed.component';
 import { NewsfeedBoostComponent } from './feeds/boost.component';
 import { NewsfeedService } from './services/newsfeed.service';
-import { NewsfeedDropdownComponent } from './dropdown/dropdown.component';
 import { PosterModule } from './poster/poster.module';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
@@ -98,7 +97,6 @@ const routes: Routes = [
     LanguageModule,
   ],
   declarations: [
-    NewsfeedDropdownComponent,
     NewsfeedComponent,
     NewsfeedSingleComponent,
     NewsfeedBoostRotatorComponent,
@@ -113,7 +111,6 @@ const routes: Routes = [
   ],
   providers: [NewsfeedService, NewsfeedHashtagSelectorService],
   exports: [
-    NewsfeedDropdownComponent,
     NewsfeedBoostRotatorComponent,
     NewsfeedEntityComponent,
     NewsfeedTilesComponent,
