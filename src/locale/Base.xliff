@@ -8335,7 +8335,7 @@
         <source>Playing next...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/components/video/auto-progress-overlay/auto-progress-overlay.component.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="linenumber">7</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -8343,7 +8343,7 @@
         <source>Cancel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/components/video/auto-progress-overlay/auto-progress-overlay.component.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
