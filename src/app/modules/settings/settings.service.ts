@@ -2,6 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 
+//ojm delete this file
 @Injectable()
 export class SettingsService {
   ratingChanged: EventEmitter<number> = new EventEmitter<number>();

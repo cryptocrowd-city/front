@@ -28,14 +28,12 @@ import { SettingsV2Service } from '../settings-v2/settings-v2.service';
     class: 'm-ad-block m-ad-block-boosts',
   },
 })
-export class BoostAds implements OnInit, OnDestroy {
+export class BoostAds implements OnInit {
   handler: string = 'content';
   limit: number = 2;
   offset: string = '';
   boosts: Array<any> = [];
   rating: number = 2;
-
-  ratingSubscription: Subscription;
 
   constructor(
     public client: Client,
@@ -47,16 +45,7 @@ export class BoostAds implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.rating = this.session.getLoggedInUser().boost_rating;
-    this.ratingSubscription = this.settingsService.ratingChanged.subscribe(
-      rating => {
-        this.onRatingChanged(rating);
-      }
-    );
     this.fetch();
-  }
-
-  ngOnDestroy() {
-    this.ratingSubscription.unsubscribe();
   }
 
   fetch() {
@@ -78,12 +67,5 @@ export class BoostAds implements OnInit, OnDestroy {
         if (response['load-next'])
           this.storage.set('boost:offset:sidebar', response['load-next']);
       });
-  }
-
-  onRatingChanged(rating: number) {
-    this.rating = rating;
-    this.storage.destroy('boost:offset:sidebar');
-    this.offset = '';
-    this.fetch();
   }
 }

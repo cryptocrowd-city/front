@@ -8,12 +8,11 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { Session } from '../../../../services/session';
-import { NewsfeedBoostService } from '../../../newsfeed/newsfeed-boost.service';
-import { Router } from '@angular/router';
 import { SettingsV2Service } from '../../settings-v2.service';
-import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { Observable, Subscription } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
+import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
+import { Storage } from '../../../../services/storage';
 
 @Component({
   selector: 'm-settingsV2__boostedContent',
@@ -30,36 +29,49 @@ export class SettingsV2BoostedContentComponent implements OnInit {
   settingsSubscription: Subscription;
 
   form;
+  initForm: any | null = null;
+  formChanged: boolean = false;
 
   constructor(
     protected cd: ChangeDetectorRef,
     public session: Session,
-    // public router: Router,
-    // public boostService: NewsfeedBoostService,
     protected settingsService: SettingsV2Service,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private storage: Storage
   ) {}
 
   ngOnInit(): void {
     this.user = this.session.getLoggedInUser();
 
     this.form = new FormGroup({
-      disabled_boost: new FormControl(''),
+      disabled_boost: new FormControl({ value: '' }),
       boost_autorotate: new FormControl(''),
       boost_rating: new FormControl(''),
     });
 
     this.settingsSubscription = this.settingsService.settings$.subscribe(
       (settings: any) => {
-        console.log('ojm settings sub', settings, settings.disabled_boost);
         this.disabled_boost.setValue(settings.disabled_boost);
         this.boost_autorotate.setValue(settings.boost_autorotate);
         this.boost_rating.setValue(settings.boost_rating);
+
+        /**
+         * Check that the settings$ have actually been loaded
+         */
+        if (!this.initForm && settings.guid) {
+          this.initForm = JSON.parse(JSON.stringify(this.form.value));
+        }
+        this.init = true;
         this.detectChanges();
       }
     );
 
-    this.init = true;
+    this.form.valueChanges.subscribe(val => {
+      this.formChanged =
+        JSON.stringify(this.form.value) !== JSON.stringify(this.initForm);
+      this.detectChanges();
+    });
+
     this.detectChanges();
   }
 
@@ -67,17 +79,43 @@ export class SettingsV2BoostedContentComponent implements OnInit {
     if (!this.canSubmit()) {
       return;
     }
+    this.inProgress = true;
+    this.detectChanges();
+
+    /**
+     * Reset boost sidebar offset
+     * when rating changes
+     */
+    if (this.boost_rating.value !== this.initForm.boost_rating) {
+      this.storage.destroy('boost:offset:sidebar');
+    }
+
+    /**
+     * Enable/disable boost goes to a different endpoint
+     * than the other settings
+     */
+    if (this.disabled_boost !== this.initForm.disabled_boost) {
+      if (this.disabled_boost) {
+        this.settingsService.hideBoost();
+      } else {
+        this.settingsService.showBoost();
+      }
+    }
+
     try {
-      this.inProgress = true;
-      this.detectChanges();
+      const formValue = {
+        boost_autorotate: this.boost_autorotate.value,
+        boost_rating: this.boost_rating.value,
+      };
 
       const response: any = await this.settingsService.updateSettings(
         this.user.guid,
-        this.form.value
+        formValue
       );
       if (response.status === 'success') {
         this.formSubmitted.emit({ formSubmitted: true });
-        this.form.reset();
+        this.form.markAsPristine();
+        this.initForm = null;
       }
     } catch (e) {
       this.formSubmitted.emit({ formSubmitted: false, error: e });
@@ -87,16 +125,23 @@ export class SettingsV2BoostedContentComponent implements OnInit {
     }
   }
 
+  clickedDisableBoost($event: MouseEvent): void {
+    if (!this.plus) {
+      $event.stopPropagation();
+      $event.preventDefault();
+    }
+  }
+
+  canSubmit(): boolean {
+    return !this.inProgress && !this.form.pristine && this.formChanged;
+  }
+
   canDeactivate(): Observable<boolean> | boolean {
-    if (this.form.pristine) {
+    if (this.form.pristine || !this.formChanged) {
       return true;
     }
 
     return this.dialogService.confirm('Discard changes?');
-  }
-
-  canSubmit(): boolean {
-    return !this.inProgress && !this.form.pristine;
   }
 
   detectChanges() {

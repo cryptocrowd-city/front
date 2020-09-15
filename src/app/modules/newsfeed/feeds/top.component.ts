@@ -28,7 +28,6 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
   allHashtags: boolean;
 
   paramsSubscription: Subscription;
-  ratingSubscription: Subscription;
   reloadFeedSubscription: Subscription;
 
   @ViewChild('poster') private poster: PosterComponent;
@@ -49,10 +48,6 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
     if (this.session.isLoggedIn())
       this.rating = this.session.getLoggedInUser().boost_rating;
 
-    this.ratingSubscription = settingsService.ratingChanged.subscribe(event => {
-      this.onRatingChanged(event);
-    });
-
     this.allHashtags = this.newsfeedService.allHashtags;
 
     this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(
@@ -70,10 +65,6 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.ratingSubscription) {
-      this.ratingSubscription.unsubscribe();
-    }
-
     if (this.paramsSubscription) {
       this.paramsSubscription.unsubscribe();
     }
@@ -153,12 +144,6 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
 
   prepend(activity: any) {
     this.prepended.unshift(activity);
-  }
-
-  onRatingChanged(rating) {
-    this.rating = rating;
-
-    this.load(true);
   }
 
   openHashtagsSelector() {

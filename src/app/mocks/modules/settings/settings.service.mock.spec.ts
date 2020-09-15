@@ -1,3 +1,4 @@
+//ojm delete this file
 import { EventEmitter } from '@angular/core';
 
 export let settingsServiceMock = new (function() {

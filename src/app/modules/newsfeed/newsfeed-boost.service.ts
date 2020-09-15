@@ -47,7 +47,6 @@ export class NewsfeedBoostService {
       })
       .catch(e => {
         this.session.getLoggedInUser().mature = !active;
-
         this.explicitChanged.emit(!active);
       });
   }

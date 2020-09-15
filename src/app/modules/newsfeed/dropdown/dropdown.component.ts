@@ -4,7 +4,7 @@ import { NewsfeedBoostService } from '../newsfeed-boost.service';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { SettingsService } from '../../settings/settings.service';
 import { Router } from '@angular/router';
-
+// ojm delete this file
 @Component({
   selector: 'm-newsfeed--dropdown',
   templateUrl: 'dropdown.component.html',
