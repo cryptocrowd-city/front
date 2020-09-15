@@ -1,16 +1,13 @@
 <ng-container *ngIf="isPlayable(); else placeholder">
-  <span class="m-videoPlayer__notice--error" *ngIf="status === 'failed'">
+  <span
+    class="m-videoPlayer__notice--error"
+    *ngIf="status === 'failed' && !(awaitingTranscode | async)"
+  >
     There was an error transcoding this video.
   </span>
   <span
-    class="m-videoPlayer__notice--transcoding"
-    *ngIf="status === 'transcoding'"
-  >
-    This video is still transcoding.
-  </span>
-  <span
     class="m-videoPlayer__notice--created"
-    *ngIf="service.awaitingTranscode()"
+    *ngIf="awaitingTranscode | async"
   >
     This video is waiting to be transcoded.
   </span>
