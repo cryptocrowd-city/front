@@ -47,24 +47,22 @@ export class SettingsV2Service {
   }
 
   async showBoost(): Promise<void> {
-    if (!this.session.getLoggedInUser().plus) {
-      return;
-    }
-    try {
-      await this.client.delete('api/v1/plus/boost');
-    } catch (e) {
-      console.error(e);
+    if (this.session.getLoggedInUser().plus) {
+      try {
+        await this.client.delete('api/v1/plus/boost');
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 
   async hideBoost(): Promise<void> {
-    if (!this.session.getLoggedInUser().plus) {
-      return;
-    }
-    try {
-      await this.client.put('api/v1/plus/boost');
-    } catch (e) {
-      console.error(e);
+    if (this.session.getLoggedInUser().plus) {
+      try {
+        await this.client.put('api/v1/plus/boost');
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 }

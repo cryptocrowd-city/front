@@ -14,7 +14,7 @@
   </div>
 </m-settingsV2__header>
 
-<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+<form *ngIf="init" [formGroup]="form" class="m-formLayout--buttonRight">
   <div class="m-form__fieldsContainer">
     <!-- ------------------------------------ -->
     <!-- ENABLE BOOST -->
@@ -36,7 +36,7 @@
       </div>
       <div class="m-form__row--input">
         <label
-          for="enable_boost"
+          for="boost_on"
           class="m-form__customInputWrapper__radio"
           [ngClass]="{
             'm-form__customInputWrapper__radio--disabled readonly': !plus
@@ -50,7 +50,7 @@
             [value]="false"
             formControlName="disabled_boost"
             class="form-control"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
           />
           <span class="m-form__customInput__radio"></span>
         </label>
@@ -70,7 +70,7 @@
             [value]="true"
             formControlName="disabled_boost"
             class="form-control"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
           />
           <span class="m-form__customInput__radio"></span>
         </label>
@@ -100,6 +100,7 @@
             name="boost_autorotate"
             formControlName="boost_autorotate"
             class="form-control"
+            [readonly]="inProgress"
           />
           <span class="m-form__customInput__radio"></span>
         </label>
@@ -112,6 +113,7 @@
             name="boost_autorotate"
             formControlName="boost_autorotate"
             class="form-control"
+            [readonly]="inProgress"
           />
           <span class="m-form__customInput__radio"></span>
         </label>
@@ -142,6 +144,7 @@
             name="boost_rating"
             formControlName="boost_rating"
             class="form-control"
+            [readonly]="inProgress"
           />
           <span class="m-form__customInput__radio"></span>
         </label>
@@ -153,6 +156,7 @@
             [value]="1"
             name="boost_rating"
             formControlName="boost_rating"
+            [readonly]="inProgress"
             class="form-control"
           />
           <span class="m-form__customInput__radio"></span>

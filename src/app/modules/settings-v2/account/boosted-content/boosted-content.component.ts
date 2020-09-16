@@ -44,7 +44,7 @@ export class SettingsV2BoostedContentComponent implements OnInit {
     this.user = this.session.getLoggedInUser();
 
     this.form = new FormGroup({
-      disabled_boost: new FormControl({ value: '' }),
+      disabled_boost: new FormControl(''),
       boost_autorotate: new FormControl(''),
       boost_rating: new FormControl(''),
     });
@@ -61,12 +61,13 @@ export class SettingsV2BoostedContentComponent implements OnInit {
         if (!this.initForm && settings.guid) {
           this.initForm = JSON.parse(JSON.stringify(this.form.value));
         }
+
         this.init = true;
         this.detectChanges();
       }
     );
 
-    this.form.valueChanges.subscribe(val => {
+    this.form.valueChanges.subscribe(() => {
       this.formChanged =
         JSON.stringify(this.form.value) !== JSON.stringify(this.initForm);
       this.detectChanges();
@@ -94,11 +95,14 @@ export class SettingsV2BoostedContentComponent implements OnInit {
      * Enable/disable boost goes to a different endpoint
      * than the other settings
      */
-    if (this.disabled_boost !== this.initForm.disabled_boost) {
-      if (this.disabled_boost) {
-        this.settingsService.hideBoost();
+
+    if (this.disabled_boost.value !== this.initForm.disabled_boost) {
+      if (this.disabled_boost.value) {
+        await this.settingsService.hideBoost();
+        this.user.disabled_boost = true;
       } else {
-        this.settingsService.showBoost();
+        await this.settingsService.showBoost();
+        this.user.disabled_boost = false;
       }
     }
 
@@ -107,6 +111,9 @@ export class SettingsV2BoostedContentComponent implements OnInit {
         boost_autorotate: this.boost_autorotate.value,
         boost_rating: this.boost_rating.value,
       };
+
+      this.user.boost_autorotate = this.boost_autorotate.value;
+      this.user.boost_rating = this.boost_rating.value;
 
       const response: any = await this.settingsService.updateSettings(
         this.user.guid,
