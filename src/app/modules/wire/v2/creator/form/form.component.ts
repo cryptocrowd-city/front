@@ -41,12 +41,10 @@ export class WireCreatorFormComponent {
    * @param { WireType } the currency e.g. 'eth', 'btc'.
    * @returns { void }
    */
-  setType(type: WireType): void {
+  public setType(type: WireType): void {
     if (type === 'eth' || type === 'btc') {
-      console.log('eth');
       this.service.amount$.next(0.1);
     } else {
-      console.log('not eth');
       this.service.amount$.next(1);
     }
     this.service.setType(type);
