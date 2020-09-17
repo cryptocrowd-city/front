@@ -43,7 +43,7 @@ export class WireCreatorFormComponent {
    */
   public setType(type: WireType): void {
     if (type === 'eth' || type === 'btc') {
-      this.service.amount$.next(0.1);
+      this.service.amount$.next(0.01);
     } else {
       this.service.amount$.next(1);
     }
