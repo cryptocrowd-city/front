@@ -6,9 +6,14 @@ import {
 
 import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
-import { SignupModalService } from '../../../modals/signup/service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { RemindComposerModalComponent } from '../../../modals/remind-composer-v2/reminder-composer.component';
+import { AuthModalService } from '../../../auth/modal/auth-modal.service';
+import {
+  StackableModalEvent,
+  StackableModalService,
+  StackableModalState,
+} from '../../../../services/ux/stackable-modal.service';
 
 @Component({
   selector: 'minds-button-remind',
@@ -35,8 +40,9 @@ export class RemindButton {
     public overlayModal: OverlayModalService,
     public session: Session,
     public client: Client,
-    private modal: SignupModalService,
-    private cd: ChangeDetectorRef
+    private authModal: AuthModalService,
+    private cd: ChangeDetectorRef,
+    private stackableModal: StackableModalService
   ) {}
 
   set _object(value: any) {
@@ -45,26 +51,26 @@ export class RemindButton {
     this.reminded = !!this.object.reminded;
   }
 
-  remind() {
+  async remind(): Promise<boolean> {
     if (this.object.reminded) return false;
 
     if (!this.session.isLoggedIn()) {
-      this.modal.open();
-      return false;
+      await this.authModal.open();
     }
 
     this.remindOpen = true;
-    this.overlayModal
-      .create(RemindComposerModalComponent, this.object, {
+
+    const stackableModalEvent: StackableModalEvent = await this.stackableModal
+      .present(RemindComposerModalComponent, this.object, {
         class: 'm-overlayModal--remind',
       })
-      .onDidDismiss(() => {
-        this.remindOpen = false;
-        this.counter = this.object.reminds;
-        this.reminded = this.object.reminded;
-        this.detectChanges();
-      })
-      .present();
+      .toPromise();
+    if (stackableModalEvent.state === StackableModalState.Dismissed) {
+      this.remindOpen = false;
+      this.counter = this.object.reminds;
+      this.reminded = this.object.reminded;
+      this.detectChanges();
+    }
   }
 
   private detectChanges() {

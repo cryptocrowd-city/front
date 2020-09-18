@@ -1,5 +1,6 @@
 <div class="m-pageLayout__container m-channel__feed">
   <div class="m-channelFeed__list" m-pageLayout__pane="main">
+    <m-composer *ngIf="service.isOwner$ | async"></m-composer>
     <m-feedFilter
       class="m-channelFeedList__filter"
       [options]="['type']"
@@ -38,11 +39,16 @@
     <div class="m-pageLayoutPane__inner">
       <m-channelAbout__brief></m-channelAbout__brief>
       <ng-container *mIfBrowser>
-        <m-channelShop__brief
-          *mIfFeature="'support-tiers'; else wireRewardsBrief"
-        ></m-channelShop__brief>
+        <ng-container *mIfFeature="'paywall-2020'; else wireRewardsBrief">
+          <m-channelShop__lazy
+            component="m-channelShop__brief"
+          ></m-channelShop__lazy>
+        </ng-container>
+
         <ng-template #wireRewardsBrief>
-          <m-channelShop__briefWireRewards></m-channelShop__briefWireRewards>
+          <m-channelShop__lazy
+            component="m-channelShop__briefWireRewards"
+          ></m-channelShop__lazy>
         </ng-template>
       </ng-container>
     </div>

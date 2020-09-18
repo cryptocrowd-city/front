@@ -5,10 +5,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MarketingModule } from '../marketing/marketing.module';
 
 const routes: Routes = [
   {
-    path: 'canary',
+    path: '',
     component: CanaryPageComponent,
     data: {
       title: 'Canary',
@@ -25,6 +26,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    MarketingModule,
   ],
   declarations: [CanaryPageComponent],
   exports: [CanaryPageComponent],

@@ -24,6 +24,9 @@
           "fr": {
             "translation": "src/locale/Minds.fr.xliff"
           },
+          "hi": {
+            "translation": "src/locale/Minds.hi.xliff"
+          },
           "it": {
             "translation": "src/locale/Minds.it.xliff"
           },
@@ -79,13 +82,17 @@
             "styles": [
               "node_modules/material-design-lite/dist/material.blue_grey-amber.min.css",
               "node_modules/plyr/dist/plyr.css",
+              "node_modules/highlight.js/styles/github.css",
               "src/main.css"
             ],
             "scripts": [
               "node_modules/material-design-lite/dist/material.min.js",
               "node_modules/medium-editor/dist/js/medium-editor.min.js",
               "src/shims/jitsi-api.min.js"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/stylesheets"]
+            }
           },
           "configurations": {
             "production": {
@@ -101,7 +108,7 @@
               "aot": true,
               "localize": true,
               "extractLicenses": true,
-              "vendorChunk": false,
+              "vendorChunk": true,
               "buildOptimizer": true,
               "fileReplacements": [
                 {
@@ -166,7 +173,10 @@
               "src/shims/jitsi-api.min.js"
             ],
             "assets": ["src/assets", "src/favicon.ico"],
-            "polyfills": "src/polyfills.ts"
+            "polyfills": "src/polyfills.ts",
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/stylesheets"]
+            }
           }
         },
         "lint": {
@@ -181,7 +191,10 @@
           "options": {
             "outputPath": "dist/server",
             "main": "server.ts",
-            "tsConfig": "tsconfig.server.json"
+            "tsConfig": "tsconfig.server.json",
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/stylesheets"]
+            }
           },
           "configurations": {
             "production": {
@@ -224,7 +237,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "m",
-      "styleext": ".ng.scss"
+      "styleext": "ng.scss"
     },
     "@schematics/angular:directive": {
       "prefix": "m"

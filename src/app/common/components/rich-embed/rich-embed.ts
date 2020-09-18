@@ -36,6 +36,14 @@ export class MindsRichEmbed {
   private lastInlineEmbedParsed: string;
   public isPaywalled: boolean = false;
 
+  @Input() set isModal(value: boolean) {
+    if (value) {
+      this.modalRequestSubscribed = false;
+      if (this.mediaSource !== 'minds') this.embeddedInline = true;
+      this.detectChanges();
+    }
+  }
+
   constructor(
     private sanitizer: DomSanitizer,
     private session: Session,
@@ -52,23 +60,27 @@ export class MindsRichEmbed {
       return;
     }
 
+    /**
+     * Make a copy of the source entity
+     */
     this.src = Object.assign({}, value);
     this.type = 'src';
 
     if (this.src.thumbnail_src) {
-      this.src.thumbnail_src = this.mediaProxy.proxy(this.src.thumbnail_src);
+      this.src.thumbnail_src = this.mediaProxy.proxy(
+        this.src.thumbnail_src,
+        800
+      );
     }
 
     const isOwner =
       this.src.ownerObj.guid === this.session.getLoggedInUser().guid;
 
-    if (
+    this.isPaywalled =
       this.src.paywall &&
+      !this.src.paywall_unlocked &&
       !isOwner &&
-      this.featureService.has('paywall-2020')
-    ) {
-      this.isPaywalled = true;
-    }
+      this.featureService.has('paywall-2020');
 
     this.init();
   }
@@ -82,17 +94,20 @@ export class MindsRichEmbed {
     this.type = 'preview';
 
     if (this.preview.thumbnail) {
-      this.preview.thumbnail = this.mediaProxy.proxy(this.preview.thumbnail);
+      this.preview.thumbnail = this.mediaProxy.proxy(
+        this.preview.thumbnail,
+        800
+      );
     }
 
     this.init();
   }
 
   init() {
-    // Inline Embedding
+    // Create inline embed object
     let inlineEmbed = this.parseInlineEmbed(this.inlineEmbed);
 
-    if (this.mediaSource === 'youtube' || this.mediaSource === 'minds') {
+    if (this.mediaSource === 'minds' || this.mediaSource === 'youtube') {
       this.modalRequestSubscribed =
         this.mediaModalRequested.observers.length > 0;
     }
@@ -158,7 +173,7 @@ export class MindsRichEmbed {
     }
   }
 
-  parseInlineEmbed(current?: any) {
+  parseInlineEmbed(current?: any): any {
     if (!this.src || !this.src.perma_url) {
       return null;
     }
