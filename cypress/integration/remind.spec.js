@@ -1,6 +1,6 @@
 context('Remind', () => {
   const remindText = 'remind test text';
-  const textArea = 'm-text-input--autocomplete-container textarea';
+  const textArea = '.m-modalRemindComposer__title m-text-input--autocomplete-container textarea';
   const sendButton = '.m-modalRemindComposer__send';
 
   before(() => {
@@ -34,6 +34,7 @@ context('Remind', () => {
     //fill out text box in modal
     cy.get(textArea)
       .focus()
+      .eq(1)
       .clear()
       .type(remindText);
 

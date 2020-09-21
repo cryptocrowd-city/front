@@ -14,8 +14,8 @@ context('Blogs', () => {
   const tagsToggle = '[data-cy=data-minds-blog-editor-tags-toggle]';
   const metaToggle = '[data-cy=data-minds-blog-editor-meta-toggle]';
 
-  const tagsInput = '[data-cy=data-minds-blog-editor-tags-input]';
-  const tagsContainer = '[data-cy=data-minds-blog-editor-tags-container]';
+  const tagsInput = '.m-hashtagsTypeaheadInput__input';
+  const tagsContainer = '.m-composerTags__list';
 
   const metaSlugInput = '[data-cy=data-minds-meta-slug-input]';
   const metaTitleInput = '[data-cy=data-minds-meta-title-input]';
@@ -94,21 +94,17 @@ context('Blogs', () => {
     cy.get(tagsInput).type('tag3\r');
     cy.get(tagsInput).type('tag4\r');
     cy.get(tagsInput).type('tag5\r');
-    cy.get(tagsInput).type('tag6\r');
 
     cy.get(tagsContainer).within($list => {
-      cy.contains('#tag1');
+      cy.contains('#tag1')
       cy.contains('#tag2');
       cy.contains('#tag3');
       cy.contains('#tag4');
       cy.contains('#tag5');
 
-      // limit reached
-      cy.contains('#tag6')
-        .should('not.exist');
-      
       // remove tag
-      cy.contains('#tag1')
+      cy.get('.m-composerTags__item .m-composerTagsItem__remove')
+        .first()
         .click();
 
       cy.contains('#tag1')
@@ -179,7 +175,7 @@ context('Blogs', () => {
     cy.contains('attribution-cc');
 
     cy.get('head meta[name="og:title"]')
-      .should("have.attr", "content", "meta-title");
+      .should("have.attr", "content", titleText);
     
     cy.get('head title')
       .contains("meta-title");
@@ -221,8 +217,8 @@ context('Blogs', () => {
       cy.get(publishButton).click({force: true});
     }
 
-    cy.completeCaptcha();
-    cy.get(captchaSubmitButton)
+    cy.completeCaptcha()
+      .get(captchaSubmitButton)
       .click()
       .wait('@postBlog').then((xhr) => {
         expect(xhr.status).to.equal(200);

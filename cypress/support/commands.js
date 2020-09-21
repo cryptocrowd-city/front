@@ -136,15 +136,15 @@ Cypress.Commands.add(
 
     // We need an XSRF token before login can work
     cy.route('POST', '/api/v2/mwa/pv').as('initXsrf');
-
+    cy.log(`----`);
     cy.visit('/register')
       .location('pathname')
       .should('eq', `/register`);
-
+    cy.log(`----`);
     cy.wait('@initXsrf', { timeout: 30000 });
 
     cy.setCookie('staging', '1');
-    cy.server();
+    cy.server(); //dupe?
     cy.route('POST', '**/api/v1/register').as('registerPOST');
 
     cy.get(registerForm.username)
