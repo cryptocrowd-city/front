@@ -14,6 +14,7 @@ import { featuresServiceMock } from '../../../../../tests/features-service-mock.
 import { themeServiceMock } from '../../../../mocks/common/services/theme.service-mock.spec';
 import { By } from '@angular/platform-browser';
 import { UserMenuService } from './user-menu.service';
+import { userMenuServiceMock } from './user-menu.service-mock.spec';
 
 describe('UserMenuV3Component', () => {
   let comp: UserMenuV3Component;
@@ -37,7 +38,7 @@ describe('UserMenuV3Component', () => {
           provide: ThemeService,
           useValue: themeServiceMock,
         },
-        { provide: UserMenuService, useValue: MockService(UserMenuService) },
+        { provide: UserMenuService, useValue: userMenuServiceMock },
       ],
     }).compileComponents(); // compile template and css
   }));
