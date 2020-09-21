@@ -57,12 +57,14 @@ import { FeaturesService } from '../../../../../services/features.service';
 import { BlockListService } from '../../../../../common/services/block-list.service';
 import { AutocompleteSuggestionsService } from '../../../../suggestions/services/autocomplete-suggestions.service';
 import { SiteService } from '../../../../../common/services/site.service';
+import { CodeHighlightModule } from '../../../../../modules/code-highlight/code-highlight.module';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { TagsPipeMock } from '../../../../../mocks/pipes/tagsPipe.mock';
 import { RedirectService } from '../../../../../common/services/redirect.service';
 import { ModalService } from '../../../../composer/components/modal/modal.service';
 import { ComposerService } from '../../../../composer/services/composer.service';
 import { WireModalService } from '../../../../wire/wire-modal.service';
+import { ActivityModalCreatorService } from '../../../../newsfeed/activity/modal/modal-creator.service';
 
 /* tslint:disable */
 // START MOCKS
@@ -482,7 +484,12 @@ describe('Activity', () => {
           inputs: ['mIfFeatureElse'],
         }),
       ], // declare the test component
-      imports: [RouterTestingModule, FormsModule /*, CommonModule*/],
+      imports: [
+        RouterTestingModule,
+        FormsModule,
+        CodeHighlightModule,
+        /*CommonModule*/
+      ],
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },
@@ -525,6 +532,10 @@ describe('Activity', () => {
         {
           provide: ModalService,
           useValue: MockService(ModalService),
+        },
+        {
+          provide: ActivityModalCreatorService,
+          useValue: MockService(ActivityModalCreatorService),
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],

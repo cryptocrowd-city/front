@@ -58,6 +58,8 @@ import { SettingsV2ReferralsComponent } from './other/referrals/referrals.compon
 import { LanguageModule } from '../language/language.module';
 import { SettingsV2I18nHack } from './settings-i18n-hack.component';
 import { SettingsV2HeaderComponent } from './settings-header.component';
+import { SettingsV2BoostedContentComponent } from './account/boosted-content/boosted-content.component';
+import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -116,6 +118,16 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Password',
               description: 'Change account password.',
               id: 'password',
+            },
+          },
+          {
+            path: 'boosted-content',
+            component: SettingsV2BoostedContentComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Boosted Content',
+              description: 'Control how boosted content is displayed.',
+              id: 'boosted-content',
             },
           },
           {
@@ -418,6 +430,7 @@ const SETTINGS_V2_ROUTES: Routes = [
           },
         ],
       },
+      { path: 'canary', redirectTo: 'account' },
       { path: '', component: SettingsV2Component },
       {
         path: '**',
@@ -442,11 +455,12 @@ const SETTINGS_V2_ROUTES: Routes = [
     WireModule,
     MindsFormsModule,
     SettingsModule,
-    WalletV2Module,
+    //WalletV2Module,
     ProModule,
     YoutubeMigrationModule,
     ReferralsV2Module,
     LanguageModule,
+    NewsfeedModule,
   ],
   declarations: [
     SettingsV2Component,
@@ -478,6 +492,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2AutoplayVideosComponent,
     SettingsV2I18nHack,
     SettingsV2HeaderComponent,
+    SettingsV2BoostedContentComponent,
   ],
   providers: [SettingsV2Service],
   exports: [SettingsV2Component],

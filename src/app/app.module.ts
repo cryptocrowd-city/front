@@ -29,21 +29,19 @@ import { AdsModule } from './modules/ads/ads.module';
 import { BoostModule } from './modules/boost/boost.module';
 import { WireModule } from './modules/wire/wire.module';
 import { ReportModule } from './modules/report/report.module';
-import { ChannelsModule } from './modules/channels/channels.module';
+//import { ChannelsModule } from './modules/channels/channels.module';
 import { MindsFormsModule } from './modules/forms/forms.module';
 import { LegacyModule } from './modules/legacy/legacy.module';
 import { ModalsModule } from './modules/modals/modals.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 import { ThirdPartyNetworksModule } from './modules/third-party-networks/third-party-networks.module';
 import { TranslateModule } from './modules/translate/translate.module';
-import { SettingsModule } from './modules/settings/settings.module';
 import { OnboardingModule } from './modules/onboarding/onboarding.module';
 import { NotificationModule } from './modules/notifications/notification.module';
 
 import { GroupsModule } from './modules/groups/groups.module';
 import { PostMenuModule } from './common/components/post-menu/post-menu.module';
 import { BanModule } from './modules/ban/ban.module';
-import { BlogModule } from './modules/blogs/blog.module';
 import { SearchModule } from './modules/search/search.module';
 import { MessengerModule } from './modules/messenger/messenger.module';
 import { NewsfeedModule } from './modules/newsfeed/newsfeed.module';
@@ -55,14 +53,12 @@ import { BrandingModule } from './modules/branding/branding.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { NodesMarketingModule } from './modules/nodes/nodes.module';
 import { JobsMarketingModule } from './modules/jobs/jobs.module';
-import { HelpdeskModule } from './modules/helpdesk/helpdesk.module';
-import { MobileModule } from './modules/mobile/mobile.module';
 import { IssuesModule } from './modules/issues/issues.module';
-import { CanaryModule } from './modules/canary/canary.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ProModule } from './modules/pro/pro.module';
-import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
+//import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
 import { UpgradesModule } from './modules/upgrades/upgrades.module';
+import { CodeHighlightModule } from './modules/code-highlight/code-highlight.module';
 
 import * as Sentry from '@sentry/browser';
 import { CookieModule } from '@gorniv/ngx-universal';
@@ -73,7 +69,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { Pages } from './controllers/pages/pages';
 import { LayoutModule } from './modules/layout/layout.module';
 import { SharedModule } from './common/shared.module';
-import { YoutubeMigrationModule } from './modules/media/youtube-migration/youtube-migration.module';
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -112,7 +107,6 @@ export class SentryErrorHandler implements ErrorHandler {
     ThirdPartyNetworksModule,
     LegacyModule,
     TranslateModule,
-    SettingsModule,
     ModalsModule,
     PaymentsModule,
     MindsFormsModule,
@@ -120,7 +114,6 @@ export class SentryErrorHandler implements ErrorHandler {
     OnboardingV2Module,
     NotificationModule,
     GroupsModule,
-    BlogModule,
     PostMenuModule,
     SearchModule,
     MessengerModule,
@@ -134,18 +127,15 @@ export class SentryErrorHandler implements ErrorHandler {
     BrandingModule,
     CommentsModule,
     JobsMarketingModule,
-    HelpdeskModule,
-    MobileModule,
     IssuesModule,
-    CanaryModule,
-    ChannelsModule,
+    //ChannelsModule,
     UpgradesModule,
+    CodeHighlightModule,
     SharedModule,
-    YoutubeMigrationModule,
 
     //last due to :username route
     AppRoutingModule,
-    ChannelContainerModule,
+    //ChannelContainerModule,
   ],
   providers: [
     { provide: ErrorHandler, useClass: SentryErrorHandler },

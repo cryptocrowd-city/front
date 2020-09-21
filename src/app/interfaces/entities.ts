@@ -30,14 +30,15 @@ export interface MindsBlogEntity {
   time_published?: number;
   access_id?: number;
   license?: string;
-  allow_comments: boolean;
+  allow_comments?: boolean;
   custom_meta?: {
     title: string;
     description: string;
     author: string;
   };
-  perma_url: string;
-  thumbnail: string;
+  perma_url?: string;
+  thumbnail?: string;
+  editor_version?: string;
 }
 
 export interface Message {}
@@ -118,6 +119,7 @@ export interface MindsUser {
     domain: string;
     has_custom_logo?: boolean;
     has_custom_background?: boolean;
+    splash?: boolean;
   };
   mode: ChannelMode;
   nsfw: Array<number>;
@@ -129,6 +131,7 @@ export interface MindsUser {
   enabled?: string | boolean;
   not_found?: boolean;
   email?: string;
+  seed?: boolean;
 }
 
 export interface MindsGroup {

@@ -16,7 +16,6 @@ import { Session } from '../../../../../services/session';
 import { AttachmentService } from '../../../../../services/attachment';
 import { TranslationService } from '../../../../../services/translation';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
-import { MediaModalComponent } from '../../../../media/modal/modal.component';
 import { BoostCreatorComponent } from '../../../../boost/creator/creator.component';
 import { EntitiesService } from '../../../../../common/services/entities.service';
 import { Router } from '@angular/router';
@@ -35,6 +34,7 @@ import { ModalService } from '../../../../composer/components/modal/modal.servic
 import { WireModalService } from '../../../../wire/wire-modal.service';
 import { WireEventType } from '../../../../wire/v2/wire-v2.service';
 import { ClientMetaDirective } from '../../../../../common/directives/client-meta.directive';
+import { ActivityModalCreatorService } from '../../../../newsfeed/activity/modal/modal-creator.service';
 
 @Component({
   selector: 'minds-activity',
@@ -203,7 +203,8 @@ export class Activity implements OnInit {
     protected composer: ComposerService,
     protected composerModal: ModalService,
     protected payModal: WireModalService,
-    protected injector: Injector
+    protected injector: Injector,
+    private activityModalCreator: ActivityModalCreatorService
   ) {
     this.cdnUrl = configs.get('cdn_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -448,22 +449,19 @@ export class Activity implements OnInit {
         this.router.navigate(['/newsfeed', this.activity.guid]);
         break;
       case 'edit':
-        if (this.featuresService.has('activity-composer')) {
-          this.composer.load(this.activity);
+        this.composer.load(this.activity);
 
-          this.composerModal
-            .setInjector(this.injector)
-            .present()
-            .toPromise()
-            .then(activity => {
-              if (activity) {
-                this.activity = activity;
-                this.detectChanges();
-              }
-            });
-        } else {
-          this.editing = true;
-        }
+        this.composerModal
+          .setInjector(this.injector)
+          .present()
+          .toPromise()
+          .then(activity => {
+            if (activity) {
+              this.activity = activity;
+              this.detectChanges();
+            }
+          });
+
         break;
       case 'delete':
         this.delete();
@@ -638,17 +636,7 @@ export class Activity implements OnInit {
   }
 
   openModal() {
-    this.activity.modal_source_url = this.router.url;
-
-    this.overlayModal
-      .create(
-        MediaModalComponent,
-        { entity: this.activity },
-        {
-          class: 'm-overlayModal--media',
-        }
-      )
-      .present();
+    this.activityModalCreator.create(this.activity, this.injector);
   }
 
   detectChanges() {
