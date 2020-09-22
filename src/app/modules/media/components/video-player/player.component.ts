@@ -19,9 +19,10 @@ import { VideoPlayerService, VideoSource } from './player.service';
 import * as Plyr from 'plyr';
 import { PlyrComponent } from 'ngx-plyr';
 import { isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { AutoProgressVideoService } from '../video/auto-progress-overlay/auto-progress-video.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'm-videoPlayer',
@@ -107,6 +108,8 @@ export class MindsVideoPlayerComponent
     this.cd.detectChanges();
   });
 
+  private timerSubscription: Subscription;
+
   constructor(
     public elementRef: ElementRef,
     private service: VideoPlayerService,
@@ -127,7 +130,12 @@ export class MindsVideoPlayerComponent
   }
 
   ngOnDestroy(): void {
-    this.onReadySubscription.unsubscribe();
+    if (this.onReadySubscription) {
+      this.onReadySubscription.unsubscribe();
+    }
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
     //this.autoplayService.unregisterPlayer(this);
   }
 
@@ -151,7 +159,7 @@ export class MindsVideoPlayerComponent
     this.service.setShouldPlayInModal(shouldPlayInModal);
   }
 
-  get sources$(): BehaviorSubject<VideoSource> {
+  get sources$(): BehaviorSubject<VideoSource[]> {
     return this.service.sources$;
   }
 
@@ -161,6 +169,10 @@ export class MindsVideoPlayerComponent
 
   get isModal(): boolean {
     return this.service.isModal;
+  }
+
+  get awaitingTranscode(): Observable<boolean> {
+    return this.service.awaitingTranscode();
   }
 
   onPlayed(event: Plyr.PlyrEvent): void {
@@ -305,5 +317,18 @@ export class MindsVideoPlayerComponent
 
   onEnded($event: any): void {
     this.autoProgress.next();
+  }
+
+  /**
+   * Called on Plyr seek.
+   */
+  onSeeking(): void {
+    this.timerSubscription = this.autoProgress.timer$
+      .pipe(take(1))
+      .subscribe(timer => {
+        if (timer > 0) {
+          this.autoProgress.cancel();
+        }
+      });
   }
 }

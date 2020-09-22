@@ -69,6 +69,18 @@ export class AutoProgressVideoService {
     );
   }
 
+  /**
+   * Gets the thumbnail_src string of the next video.
+   * @returns { Observable<string> } The thumbnail_src of the next video.
+   */
+  public get nextThumbnailSrc$(): Observable<string> {
+    return this.nextEntity$.pipe(
+      map(entity => {
+        return entity && entity.thumbnail_src ? entity.thumbnail_src : null;
+      })
+    );
+  }
+
   constructor(private horizontalFeed: HorizontalFeedService) {}
 
   /**
@@ -101,6 +113,8 @@ export class AutoProgressVideoService {
    * @returns { AutoProgressVideoService } - chainable.
    */
   private delayed(seconds: number = 5): AutoProgressVideoService {
+    seconds = 7;
+
     this.timer$ = timer(0, 1000).pipe(
       scan(acc => --acc, seconds),
       tap(x => {

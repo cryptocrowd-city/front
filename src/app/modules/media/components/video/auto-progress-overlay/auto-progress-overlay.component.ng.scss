@@ -1,59 +1,122 @@
 @import 'defaults.scss';
 
+$fixed-container-height: 120px;
+
 :host {
-  .m-videoPlayer__autoProgressOverlay {
-    height: 100%;
-    width: 100%;
+  .m-autoProgressPanel {
+    height: $fixed-container-height;
+    width: 294px;
     position: absolute;
-    top: 0;
-    left: 0;
+    bottom: 0;
+    right: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: 62px 48px;
 
-    @include m-theme() {
-      color: themed($m-white-always);
-      background-color: themed($m-black-always);
+    div,
+    span {
+      line-height: initial !important;
     }
 
-    .m-videoPlayer__autoProgressPanel {
-      align-items: center;
+    .m-upNextText {
+      position: absolute;
+      top: -22px;
+      left: 0;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      font-size: 15px;
+
+      @include m-theme() {
+        color: themed($m-white-always);
+      }
+    }
+
+    .m-autoProgressPanel__container {
+      width: 100%;
+      height: 100%;
       display: flex;
-      align-items: center;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      line-height: initial !important;
+      justify-content: flex-start;
 
-      i,
-      span {
-        margin: 8px;
-        font-size: 31pt;
+      @include m-theme() {
+        color: themed($m-white-always);
+        background-color: themed($m-bgColor--primary);
+      }
+      .m-autoProgressPanel__left {
+        width: 100%;
+        position: relative;
+        background-size: cover; // background added in template
+        max-width: $fixed-container-height;
+        min-width: $fixed-container-height;
+
+        .m-autoProgressPanel__playButton {
+          position: absolute;
+          font-size: 46px;
+          bottom: calc(60% - 23px);
+          left: calc(50% - 23px);
+          cursor: pointer;
+        }
+
+        .m-progressPanel__countdownContainer {
+          height: 100%;
+
+          svg {
+            width: 100%;
+            max-height: 100%;
+            transform: rotateY(-180deg) rotateZ(-90deg) translateY(12px)
+              translateX(12px);
+
+            circle {
+              stroke-dasharray: 112%;
+              stroke-dashoffset: 0px;
+              stroke-linecap: round;
+              stroke-width: 4px;
+              fill-opacity: 0.4;
+              animation: countdown 6s linear infinite forwards;
+              cursor: pointer;
+
+              @include m-theme() {
+                stroke: white;
+                fill: white;
+              }
+            }
+          }
+        }
       }
 
-      i {
-        cursor: pointer;
-      }
-
-      .m-videoPlayer__playingNextText {
-        font-size: 12pt;
-      }
-      .m-videoPlayer__nextVideoTitle {
-        font-size: 21pt;
-        font-weight: bold;
-      }
-      .m-videoPlayer__nextVideoOwner {
-        font-size: 14pt;
-      }
-      .m-videoPlayer__countdown {
-        font-weight: bold;
-        font-size: 31pt;
-      }
       .m-videoPlayer__cancelText {
-        font-size: 14pt;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        position: absolute;
+        bottom: 16px;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 0.6px;
         cursor: pointer;
       }
+
+      .m-autoProgressPanel__right {
+        margin: 16px 8px;
+        margin: 16px 8px;
+        font-weight: 700;
+        font-size: 14px;
+        text-align: left;
+
+        .m-videoPlayer__nextVideoTitle {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  @keyframes countdown {
+    from {
+      stroke-dashoffset: 0px;
+    }
+    to {
+      stroke-dashoffset: 100%;
     }
   }
 }
