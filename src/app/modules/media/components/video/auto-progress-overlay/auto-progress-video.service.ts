@@ -34,7 +34,7 @@ export class AutoProgressVideoService {
    * @returns { void }
    */
   public updateNextEntity(): void {
-    this.nextEntity$.next(this.horizontalFeed.updateNextEntity());
+    this.nextEntity$.next(this.horizontalFeed.getNextEntity());
   }
 
   /**
