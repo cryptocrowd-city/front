@@ -23,7 +23,7 @@
       }
 
       @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
-        padding: 0 60px 30px;
+        padding: 0 60px 60px;
         margin-left: 30px;
       }
 
@@ -171,8 +171,7 @@
           bottom: 0;
           right: 0;
           transform: translate(45px, 32px);
-          background: url('<%= APP_CDN %>/assets/marketing/deco_1.svg')
-            no-repeat;
+          background: url('<%= APP_CDN %>/assets/marketing/deco_1.svg') no-repeat;
           z-index: -1;
 
           @media screen and (max-width: $m-grid-max-mobile) {
@@ -190,8 +189,7 @@
           width: 284px;
           height: 262px;
           transform: translate(35px, -35px);
-          background: url('<%= APP_CDN %>/assets/marketing/deco_2-straight.svg')
-            no-repeat;
+          background: url('<%= APP_CDN %>/assets/marketing/deco_2-straight.svg') no-repeat;
           z-index: -1;
 
           @media screen and (max-width: $m-grid-max-mobile) {
