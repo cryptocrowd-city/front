@@ -126,7 +126,16 @@
           align-items: center;
           flex-direction: row;
           justify-content: space-between;
-          max-width: 400px;
+
+          .m-login__formError {
+            margin-right: 20%;
+          }
+
+          ::ng-deep {
+            m-shadowboxsubmitbutton {
+              flex-shrink: 0;
+            }
+          }
 
           button.mf-button {
             width: 132px;
