@@ -101,9 +101,11 @@ export class WalletProEarningsCashComponent {
       case 'wire-all':
         return 'Memberships & Tips';
       case 'partner':
-        return 'Minds Pro';
+        return 'Revenue Share';
       case 'plus':
         return 'Minds+ Content';
+      case 'wire_referral':
+        return 'Minds Pay Commissions';
     }
 
     return id;
