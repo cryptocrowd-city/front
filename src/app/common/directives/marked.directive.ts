@@ -15,7 +15,7 @@ import * as marked from 'marked';
  * ```
  */
 @Directive({
-  selector: '[markdown]',
+  selector: '[mMarkdown]',
 })
 export class MarkedDirective implements OnInit {
   constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
