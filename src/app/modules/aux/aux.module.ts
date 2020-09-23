@@ -9,6 +9,7 @@ import { AuxDmcaComponent } from './pages/dmca/dmca.component';
 import { AuxTermsComponent } from './pages/terms/terms.component';
 import { AuxRightsComponent } from './pages/rights/rights.component';
 import { AuxContactComponent } from './pages/contact/contact.component';
+import { AuxProTermsComponent } from './pages/pro-terms/pro-terms.component';
 
 const AUX_ROUTES: Routes = [
   {
@@ -67,6 +68,16 @@ const AUX_ROUTES: Routes = [
           description:
             'Minds is officially adopting the Manila Principles On Intermediary Liability, a digital bill of rights...',
           ogImage: '/assets/product-pages/token/token-2.jpg',
+        },
+      },
+      {
+        path: 'pro-terms',
+        component: AuxProTermsComponent,
+        data: {
+          title: 'Minds Pro Terms of Service',
+          description:
+            'If  you  have  been  invited  to  or  joined  Minds  Pro  ("Minds Pro"),  and  your  participation  in  Minds Pro has  not  been  terminated,  then  the  following  terms  shall  apply.',
+          ogImage: '/assets/product-pages/pro/pro-1.jpg',
         },
       },
       {
