@@ -1,6 +1,8 @@
 @import 'defaults.scss';
 
 $fixed-container-height: 120px;
+$m-textColor--fixed: #fff;
+$m-bgColor--fixed: #202527;
 
 :host {
   .m-autoProgressPanel {
@@ -27,10 +29,7 @@ $fixed-container-height: 120px;
       font-weight: 700;
       letter-spacing: 0.6px;
       font-size: 15px;
-
-      @include m-theme() {
-        color: themed($m-white-always);
-      }
+      color: $m-textColor--fixed;
     }
 
     .m-autoProgressPanel__container {
@@ -40,8 +39,8 @@ $fixed-container-height: 120px;
       justify-content: flex-start;
 
       @include m-theme() {
-        color: themed($m-white-always);
-        background-color: themed($m-bgColor--primary);
+        color: $m-textColor--fixed;
+        background-color: $m-bgColor--fixed;
       }
       .m-autoProgressPanel__left {
         width: 100%;
@@ -77,8 +76,8 @@ $fixed-container-height: 120px;
               cursor: pointer;
 
               @include m-theme() {
-                stroke: white;
-                fill: white;
+                stroke: $m-textColor--fixed;
+                fill: $m-textColor--fixed;
               }
             }
           }
