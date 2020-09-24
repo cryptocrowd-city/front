@@ -276,25 +276,21 @@ export class HorizontalFeedService {
    * @returns { ActivityEntity } - next fetched entity.
    */
   getNextEntity(): ActivityEntity {
-    // const entitiesPool = this.cursor < 0 ? this.pools.prev.entities : this.pools.next.entities;
-    // const nextIndex = this.cursor;
-
-    // console.log('entitiesPool', entitiesPool);
-    // console.log(this.cursor < 0 ? 'prev' : 'next')
-    // console.log('cursor', this.cursor)
-
-    // const entity = entitiesPool[Math.abs(nextIndex)] || null;
-
-    // TODO: Fix it so when you go into prev pool, things still work in order
-
     try {
-      return this.pools.next.entities[this.cursor].entity;
-    } catch (e) {
-      try {
-        return this.pools.prev.entities[this.cursor].entity;
-      } catch (e) {
-        return null;
+      const index = this.cursor + 1;
+
+      if (index === 0) {
+        return this.baseEntity;
       }
+
+      const entities =
+        index < 0 ? this.pools.prev.entities : this.pools.next.entities;
+
+      const entity = entities[Math.abs(index) - 1] || null;
+
+      return entity.entity;
+    } catch (e) {
+      return null;
     }
   }
 
