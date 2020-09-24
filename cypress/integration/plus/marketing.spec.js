@@ -16,7 +16,7 @@ context('Plus Product Page', () => {
   });
 
   const upgradeButton = 'm-plus--subscription .mf-button';
-  const wirePaymentsComponent = 'm-wire__paymentscreator .m-wire--creator';
+  const wirePaymentsComponent = '.m-wireCreator';
 
   it('should automatically open the register modal if not logged in', () => {
     cy.visit('/plus?i=yearly&c=tokens')

@@ -44,6 +44,7 @@ context('Blogs', () => {
     cy.preserveCookies();
     cy.server();
     cy.route('POST', '**/api/v1/blog/**').as('postBlog');
+    cy.route('GET', '**/api/v2/captcha**').as('getCaptcha')
   });
 
   it('should show editor toolbar on text highlight', () => {
@@ -113,7 +114,7 @@ context('Blogs', () => {
   });
 
   it('should allow the user to set metadata', () => {
-    cy.get(metaToggle).click();
+    cy.contains('Meta').click();
     cy.get(metaSlugInput).type('my-slug');
     cy.get(metaTitleInput).type('meta-title');
     cy.get(metaAuthorInput).type('meta-author');
@@ -175,7 +176,7 @@ context('Blogs', () => {
     cy.contains('attribution-cc');
 
     cy.get('head meta[name="og:title"]')
-      .should("have.attr", "content", titleText);
+      .should("have.attr", "content", 'meta-title');
     
     cy.get('head title')
       .contains("meta-title");
@@ -211,11 +212,11 @@ context('Blogs', () => {
   }
 
   const saveBlog = (draft = false) => { 
-    if (draft) {
-      cy.get(saveDraftButton).click({force: true});
-    } else {
-      cy.get(publishButton).click({force: true});
-    }
+    const saveButton = draft ? saveDraftButton : publishButton;
+
+    cy.get(saveButton)
+      .click({force: true})
+      .wait('@getCaptcha');
 
     cy.completeCaptcha()
       .get(captchaSubmitButton)
