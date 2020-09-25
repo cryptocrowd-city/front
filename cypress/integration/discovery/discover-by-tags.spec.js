@@ -9,22 +9,10 @@ context('Discovery -> Discover by tags', () => {
 
   beforeEach(() => {
     cy.preserveCookies();
-    cy.overrideFeatureFlags({
-      navigation: true,
-    });
-    cy.reload();
 
     cy.server();
     cy.route('GET', '**/api/v3/discovery/tags*').as('getTags');
     cy.route('POST', '**/api/v3/discovery/tags').as('postTags');
-
-    cy.visit('/discovery/tags');
-  });
-
-  after(() => {
-    cy.overrideFeatureFlags({
-      navigation: false,
-    });
   });
 
   const discoverySettingsButton =
@@ -45,7 +33,16 @@ context('Discovery -> Discover by tags', () => {
   };
 
   it('should navigate to discovery by tags', () => {
-    cy.visit('/discovery');
+    cy.get('m-sidebar--navigation')
+      .contains('Discovery')
+      .click()
+      .location('href')
+      .should('contain', '/discovery/overview');
+      
+    cy.contains('Your tags')
+      .click()
+      .location('href')
+      .should('contain', '/tags/your')
 
     cy.get('[data-cy="discovery-tab-link-tags"]')
       .should('be.visible')
@@ -99,7 +96,7 @@ context('Discovery -> Discover by tags', () => {
     });
   });
 
-  it('should remove a tag', () => {
+  it.skip('should remove a tag', () => {
     openSettingsModal().then(({ tags, trending }) => {
       const firstTag = cy.get(
         '[data-cy="discovery-settings-section--selected"] > ul > li:first-of-type'
@@ -134,7 +131,7 @@ context('Discovery -> Discover by tags', () => {
     });
   });
 
-  it('should add a manual tag', () => {
+  it.skip('should add a manual tag', () => {
     openSettingsModal().then(({ tags, trending }) => {
       // Wait until lenght is resolved
       cy.get(
