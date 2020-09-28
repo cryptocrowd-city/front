@@ -1,13 +1,13 @@
-// credit to Jamie Cockrill @ https://www.jamiecockrill.com/2018-04-30-marked-directive/
+// Credit to Jamie Cockrill @ https://www.jamiecockrill.com/2018-04-30-marked-directive/
 
-import { Directive, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Renderer2 } from '@angular/core';
 import * as marked from 'marked';
 
 /**
  * Convert the contents of the decorated element from Markdown into HTML.
  *
  * Usage:
- * <div appMarked>
+ * <div mMarkdown>
  * # I am a header!
  *
  * I am a paragraph!
@@ -17,17 +17,21 @@ import * as marked from 'marked';
 @Directive({
   selector: '[mMarkdown]',
 })
-export class MarkedDirective implements OnInit {
-  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
+export class MarkedDirective {
+  constructor(private el: ElementRef, private renderer: Renderer2) {
+    setTimeout(() => {
+      this.parse();
+    });
+  }
 
-  ngOnInit() {
-    // deliberate use of innerHTML because we might have HTML and markdown
-    // mixed together
-    const markText = this.elementRef.nativeElement.innerHTML;
+  parse(): void {
+    // deliberate use of innerHTML because we might have HTML
+    // and markdown mixed together
+    const markText = this.el.nativeElement.innerHTML;
     if (markText && markText.length > 0) {
       const markdownHtml = marked(markText);
       this.renderer.setProperty(
-        this.elementRef.nativeElement,
+        this.el.nativeElement,
         'innerHTML',
         markdownHtml
       );
