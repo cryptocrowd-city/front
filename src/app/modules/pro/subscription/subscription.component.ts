@@ -115,7 +115,7 @@ export class ProSubscriptionComponent implements OnInit {
             wrapperClass: 'm-modalV2__wrapper',
             default: {
               type: this.currency === 'usd' ? 'money' : 'tokens',
-              upgradeType: 'plus',
+              upgradeType: 'pro',
               upgradeInterval: this.interval,
             },
             onComplete: () => {
@@ -140,7 +140,7 @@ export class ProSubscriptionComponent implements OnInit {
     this.detectChanges();
   }
 
-  paymentComplete() {
+  paymentComplete(): void {
     this.active = true;
     this.session.getLoggedInUser().plus = true;
     this.onEnable.emit(Date.now());
