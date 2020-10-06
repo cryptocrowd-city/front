@@ -30,7 +30,7 @@ context('Plus Product Page', () => {
 
     cy.get(upgradeButton)
       .should('be.visible')
-      .should('contain', 'Upgrade to Plus')
+      .should('contain', 'Upgrade to Minds+')
       .click();
 
     cy.get(wirePaymentsComponent).should('be.visible');
