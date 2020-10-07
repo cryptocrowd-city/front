@@ -6,6 +6,7 @@
 <div
   class="m-sidebarNavigation"
   [class.m-sidebarNavigation--slide]="layoutMode === 'phone'"
+  (click)="onSidebarNavClick()"
 >
   <nav>
     <div class="m-sidebarNavigation__top">
@@ -41,7 +42,7 @@
           <m-tooltip
             icon="home"
             i18n="@@COMMON__NEWSFEED"
-            [enabled]="layoutMode === 'tablet'"
+            [enabled]="!showLabels"
             [anchor]="'left'"
             [useParentPosition]="true"
           >
@@ -61,7 +62,7 @@
       >
         <a routerLink="/discovery" (click)="toggle()">
           <m-tooltip
-            [enabled]="layoutMode === 'tablet'"
+            [enabled]="!showLabels"
             [anchor]="'left'"
             [useParentPosition]="true"
           >
@@ -82,11 +83,11 @@
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
         routerLinkActiveOptions="{ exact: true }"
-        *mIfFeature="'plus-2020'"
+        *mIfFeature="'nav-plus-2020'"
       >
         <a routerLink="/discovery/plus" (click)="toggle()">
           <m-tooltip
-            [enabled]="layoutMode === 'tablet'"
+            [enabled]="!showLabels"
             [anchor]="'left'"
             [useParentPosition]="true"
           >
@@ -106,7 +107,7 @@
       >
         <a [routerLink]="['/wallet/canary']" (click)="toggle()">
           <m-tooltip
-            [enabled]="layoutMode === 'tablet'"
+            [enabled]="!showLabels"
             [anchor]="'left'"
             [useParentPosition]="true"
           >
@@ -198,7 +199,7 @@
           <m-tooltip
             icon="more_horiz"
             i18n="@@COMMON__SETTINGS"
-            [enabled]="layoutMode === 'tablet'"
+            [enabled]="!showLabels"
             [anchor]="'left'"
             [useParentPosition]="true"
           >

@@ -23,6 +23,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { UserMenuService } from '../v3-topbar/user-menu/user-menu.service';
 
 @Component({
   selector: 'm-sidebar--navigation',
@@ -42,6 +43,7 @@ export class SidebarNavigationComponent
   groupsSidebar: GroupsSidebarMarkersComponent;
 
   layoutMode: 'phone' | 'tablet' | 'desktop' = 'desktop';
+  showLabels: boolean = false;
 
   settingsLink: string = '/settings';
 
@@ -65,7 +67,8 @@ export class SidebarNavigationComponent
     @Inject(PLATFORM_ID) private platformId: Object,
     private featuresService: FeaturesService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private userMenu: UserMenuService
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -153,14 +156,24 @@ export class SidebarNavigationComponent
     }
   }
 
+  /**
+   * Closes the user menu if it's open
+   */
+  onSidebarNavClick(): void {
+    this.userMenu.isOpen$.next(false);
+  }
+
   @HostListener('window:resize')
   onResize() {
-    if (window.innerWidth > 1000) {
+    this.showLabels = window.innerWidth >= 1220 ? true : false;
+
+    if (window.innerWidth > 1040) {
       this.layoutMode = 'desktop';
-    } else if (window.innerWidth > 480 && window.innerWidth <= 1000) {
+    } else if (window.innerWidth >= 480) {
       this.layoutMode = 'tablet';
     } else {
       this.layoutMode = 'phone';
+      this.showLabels = true;
     }
 
     if (this.layoutMode !== 'phone') {
@@ -168,7 +181,7 @@ export class SidebarNavigationComponent
     }
 
     if (this.groupsSidebar) {
-      this.groupsSidebar.showLabels = this.layoutMode !== 'tablet';
+      this.groupsSidebar.showLabels = this.showLabels;
     }
   }
 }

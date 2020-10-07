@@ -96,11 +96,9 @@ import { AndroidAppDownloadComponent } from './components/android-app-download-b
 import { SwitchComponent } from './components/switch/switch.component';
 import { FeaturedContentComponent } from './components/featured-content/featured-content.component';
 import { FeaturedContentService } from './components/featured-content/featured-content.service';
-import { BoostedContentService } from './services/boosted-content.service';
 import { FeedsService } from './services/feeds.service';
 import { EntitiesService } from './services/entities.service';
 import { BlockListService } from './services/block-list.service';
-import { SettingsService } from '../modules/settings/settings.service';
 import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';
 import { ChannelModeSelectorComponent } from './components/channel-mode-selector/channel-mode-selector.component';
@@ -173,11 +171,14 @@ import { StickySidebarDirective } from './components/sticky-sidebar/sticky-sideb
 import { RemindComposerModalComponent } from '../modules/modals/remind-composer-v2/reminder-composer.component';
 import { LanguageModule } from '../modules/language/language.module';
 import { PaywallBadgeComponent } from './components/paywall-badge/paywall-badge.component';
-import { FeedsUpdateService } from './services/feeds-update.service';
 import { ClientMetaDirective } from './directives/client-meta.directive';
 import { ClientMetaService } from './services/client-meta.service';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { UserMenuService } from './layout/v3-topbar/user-menu/user-menu.service';
 import { PoweredByComponent } from './components/powered-by/powered-by.component';
+import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-ellipsis.component';
+import { MarkedDirective } from './directives/marked.directive';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 
 const routes: Routes = [
   {
@@ -328,6 +329,9 @@ const routes: Routes = [
     ClientMetaDirective,
     CarouselComponent,
     PoweredByComponent,
+    LoadingEllipsisComponent,
+    MarkedDirective,
+    DragAndDropDirective,
   ],
   exports: [
     MINDS_PIPES,
@@ -456,6 +460,9 @@ const routes: Routes = [
     ClientMetaDirective,
     CarouselComponent,
     PoweredByComponent,
+    LoadingEllipsisComponent,
+    MarkedDirective,
+    DragAndDropDirective,
   ],
   providers: [
     SiteService,
@@ -479,30 +486,6 @@ const routes: Routes = [
     NSFWSelectorCreatorService,
     NSFWSelectorConsumerService,
     {
-      provide: BoostedContentService,
-      useFactory: (
-        client,
-        session,
-        entitiesService,
-        blockListService,
-        settingsService
-      ) =>
-        new BoostedContentService(
-          client,
-          session,
-          entitiesService,
-          blockListService,
-          settingsService
-        ),
-      deps: [
-        Client,
-        Session,
-        EntitiesService,
-        BlockListService,
-        SettingsService,
-      ],
-    },
-    {
       provide: FeaturedContentService,
       useFactory: boostedContentService =>
         new FeaturedContentService(boostedContentService),
@@ -525,8 +508,8 @@ const routes: Routes = [
     RegexService,
     ApiService,
     AttachmentApiService,
-    FeedsUpdateService,
     ClientMetaService,
+    UserMenuService,
   ],
 })
 export class CommonModule {}
