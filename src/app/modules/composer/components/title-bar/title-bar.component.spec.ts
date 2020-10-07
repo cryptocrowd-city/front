@@ -2,13 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { TitleBarComponent } from './title-bar.component';
 import { ComposerService } from '../../services/composer.service';
-import { FeaturesService } from '../../../../services/features.service';
-import { Session } from '../../../../services/session';
-import { PopupService } from '../popup/popup.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
-import { featuresServiceMock } from '../../../../../tests/features-service-mock.spec';
-import { sessionMock } from '../../../../../tests/session-mock.spec';
-import { BehaviorSubject } from 'rxjs';
 
 describe('Composer Title Bar', () => {
   let comp: TitleBarComponent;
@@ -33,22 +26,6 @@ describe('Composer Title Bar', () => {
         {
           provide: ComposerService,
           useValue: composerServiceMock,
-        },
-        {
-          provide: FeaturesService,
-          useValue: featuresServiceMock,
-        },
-        {
-          provide: Session,
-          useValue: sessionMock,
-        },
-        {
-          provide: PopupService,
-          useValue: MockService(PopupService),
-        },
-        {
-          provide: FormToastService,
-          useValue: MockService(FormToastService),
         },
       ],
     }).compileComponents();

@@ -177,7 +177,6 @@ export class ComposerTitleBarDropdownComponent implements OnDestroy {
    * @returns { boolean } true if option should be shown.
    */
   public shouldShowPermawebOption(): boolean {
-    console.log('should show?');
     return (
       this.features.has('permaweb') &&
       this.session.getLoggedInUser().plus &&
