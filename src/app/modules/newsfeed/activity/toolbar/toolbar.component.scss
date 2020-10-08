@@ -85,7 +85,8 @@ m-activity__toolbar {
     height: auto;
     min-width: unset;
     border-radius: 0;
-
+    text-transform: unset;
+    font-size: 13px;
     font-weight: 500;
     padding: 0;
     @include m-theme() {
