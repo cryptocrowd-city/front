@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   OnDestroy,
@@ -10,7 +11,7 @@ import {
 import { ChannelsV2Service } from './channels-v2.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
+import { BehaviorSubject, combineLatest, fromEvent, Subscription } from 'rxjs';
 import { ChannelEditIntentService } from './services/edit-intent.service';
 import { WireModalService } from '../../wire/wire-modal.service';
 import { SeoService } from './seo.service';
@@ -40,6 +41,7 @@ type ChannelView =
   selector: 'm-channel-v2',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'channel.component.html',
+  styleUrls: ['channel.component.ng.scss'],
   providers: [ChannelsV2Service, ChannelEditIntentService, SeoService],
 })
 export class ChannelComponent implements OnInit, OnDestroy {
@@ -60,9 +62,24 @@ export class ChannelComponent implements OnInit, OnDestroy {
   >('activities');
 
   /**
+   * Active layout
+   */
+  public layout: string = 'list';
+
+  /**
+   * Subscription to current view
+   */
+  protected viewSubscription: Subscription;
+
+  /**
    * Subscription to current active route
    */
   protected routeSubscription: Subscription;
+
+  /**
+   * Query param subscription
+   */
+  protected queryParamSubscription: Subscription;
 
   /**
    * Subscription to user
@@ -73,6 +90,11 @@ export class ChannelComponent implements OnInit, OnDestroy {
    * Last user GUID that emitted an Analytics beacon
    */
   protected lastChannel: string;
+
+  /**
+   * True if the selected tab is 'feed'
+   */
+  isFeedView: boolean = true;
 
   /**
    * Constructor
@@ -97,7 +119,8 @@ export class ChannelComponent implements OnInit, OnDestroy {
     protected wireModal: WireModalService,
     protected recent: RecentService,
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
-    protected clientMetaService: ClientMetaService
+    protected clientMetaService: ClientMetaService,
+    protected cd: ChangeDetectorRef
   ) {}
 
   /**
@@ -121,6 +144,27 @@ export class ChannelComponent implements OnInit, OnDestroy {
           }
         }
       }
+    });
+
+    this.viewSubscription = this.view$.subscribe(view => {
+      this.isFeedView = ['activities', 'images', 'videos', 'blogs'].includes(
+        view
+      );
+      if (this.isFeedView) {
+        this.updateQueryParams();
+      } else {
+        this.router.navigate([], {
+          queryParams: { layout: null },
+        });
+      }
+    });
+
+    this.queryParamSubscription = this.route.queryParamMap.subscribe(params => {
+      if (params.has('layout')) {
+        this.layout = params.get('layout');
+        this.detectChanges();
+      }
+      this.updateQueryParams();
     });
 
     // Initialize SEO
@@ -162,6 +206,18 @@ export class ChannelComponent implements OnInit, OnDestroy {
     }
   }
 
+  toggleLayout(layout: string) {
+    this.layout = layout;
+    this.detectChanges();
+    this.updateQueryParams();
+  }
+
+  updateQueryParams(): void {
+    this.router.navigate([], {
+      queryParams: { layout: this.layout },
+    });
+  }
+
   /**
    * Component destruction
    */
@@ -173,6 +229,14 @@ export class ChannelComponent implements OnInit, OnDestroy {
     if (this.userSubscription) {
       this.userSubscription.unsubscribe();
     }
+
+    if (this.viewSubscription) {
+      this.viewSubscription.unsubscribe();
+    }
+
+    if (this.queryParamSubscription) {
+      this.queryParamSubscription.unsubscribe();
+    }
   }
 
   /**
@@ -181,5 +245,10 @@ export class ChannelComponent implements OnInit, OnDestroy {
   canDeactivate(): boolean {
     // TODO
     return true;
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }

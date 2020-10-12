@@ -1,0 +1,31 @@
+<div
+  class="m-activity__minimalMetrics"
+  [ngClass]="{ addTopSpacing: addTopSpacing }"
+>
+  <span class="m-activityMinimalMetrics__views" *ngIf="views$ | async as views"
+    >{{ views | abbr }} views</span
+  >
+  <ng-container *ngIf="entity.time_created && (views$ | async)">
+    ·
+  </ng-container>
+  <a href="canonicalUrl" target="_blank"
+    ><span
+      *ngIf="!isScheduled()"
+      class="m-activityMinimalMetrics__timestamp"
+      [title]="entity.time_created * 1000 | date: 'medium'"
+    >
+      {{ entity.time_created * 1000 | friendlydatediff }}
+    </span></a
+  >
+  <div
+    *ngIf="isScheduled()"
+    class="m-activityMinimalMetrics__timestamp--scheduled"
+  >
+    <i class="material-icons">schedule</i>
+    <a href="canonicalUrl" target="_blank"
+      ><span>
+        {{ toReadableDate(entity.time_created) }}
+      </span></a
+    >
+  </div>
+</div>

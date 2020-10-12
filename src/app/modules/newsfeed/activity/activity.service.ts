@@ -20,6 +20,8 @@ export type ActivityDisplayOptions = {
   fixedHeight: boolean;
   fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height
   isModal: boolean;
+  minimalMode: boolean; // For grid layouts
+  bypassMediaModal: boolean; // Temporary - go to media page instead
 };
 
 export type ActivityEntity = {
@@ -63,6 +65,9 @@ export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 600;
 export const ACTIVITY_FIXED_HEIGHT_WIDTH = 500;
 export const ACTIVITY_FIXED_HEIGHT_RATIO =
   ACTIVITY_FIXED_HEIGHT_WIDTH / ACTIVITY_FIXED_HEIGHT_HEIGHT;
+
+// Constants for grid layout
+export const ACTIVITY_GRID_LAYOUT_MAX_HEIGHT = 200;
 
 //export const ACTIVITY_FIXED_HEIGHT_CONTENT_HEIGHT = ACTIVITY_FIXED_HEIGHT_HEIGHT - ACTIVITY_OWNERBLOCK_HEIGHT;
 
@@ -237,6 +242,8 @@ export class ActivityService {
     fixedHeight: false,
     fixedHeightContainer: false,
     isModal: false,
+    minimalMode: false,
+    bypassMediaModal: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
