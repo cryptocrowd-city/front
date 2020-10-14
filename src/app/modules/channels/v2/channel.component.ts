@@ -152,19 +152,6 @@ export class ChannelComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.viewSubscription = this.view$.subscribe(view => {
-      this.isFeedView = ['activities', 'images', 'videos', 'blogs'].includes(
-        view
-      );
-      if (this.isFeedView) {
-        this.updateQueryParams();
-      } else {
-        this.router.navigate([], {
-          queryParams: { layout: null },
-        });
-      }
-    });
-
     // Initialize SEO
     this.seo.set('Channel');
 
@@ -183,7 +170,6 @@ export class ChannelComponent implements OnInit, OnDestroy {
         this.layout = params.get('layout');
         this.detectChanges();
       }
-      this.updateQueryParams();
     });
 
     // update seo on navigation events
@@ -222,12 +208,6 @@ export class ChannelComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateQueryParams(): void {
-    this.router.navigate([], {
-      queryParams: { layout: this.layout },
-    });
-  }
-
   /**
    * Component destruction
    */
@@ -238,10 +218,6 @@ export class ChannelComponent implements OnInit, OnDestroy {
 
     if (this.userSubscription) {
       this.userSubscription.unsubscribe();
-    }
-
-    if (this.viewSubscription) {
-      this.viewSubscription.unsubscribe();
     }
 
     if (this.queryParamSubscription) {

@@ -57,15 +57,15 @@
             <a
               [routerLink]="['.']"
               [queryParams]="{ layout: 'list' }"
-              routerLinkActive="m-channelFeedLayoutBtn--selected"
               class="m-channelFeedLayoutBtn"
+              [class.m-channelFeedLayoutBtn--selected]="layout === 'list'"
               ><i class="material-icons">list</i></a
             >
             <a
               [routerLink]="['.']"
               [queryParams]="{ layout: 'grid' }"
-              routerLinkActive="m-channelFeedLayoutBtn--selected"
               class="m-channelFeedLayoutBtn"
+              [class.m-channelFeedLayoutBtn--selected]="layout === 'grid'"
               ><i class="material-icons">view_module</i></a
             >
           </div>
