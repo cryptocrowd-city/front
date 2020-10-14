@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { ChannelsV2Service } from './channels-v2.service';
 import { MindsUser } from '../../../interfaces/entities';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, fromEvent, Subscription } from 'rxjs';
 import { ChannelEditIntentService } from './services/edit-intent.service';
 import { WireModalService } from '../../wire/wire-modal.service';
@@ -77,6 +77,11 @@ export class ChannelComponent implements OnInit, OnDestroy {
   protected routeSubscription: Subscription;
 
   /**
+   * Subscription to router events
+   */
+  protected routerSubscription: Subscription;
+
+  /**
    * Query param subscription
    */
   protected queryParamSubscription: Subscription;
@@ -91,6 +96,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
    */
   protected lastChannel: string;
 
+  protected currentChannel: MindsUser;
   /**
    * True if the selected tab is 'feed'
    */
@@ -159,14 +165,6 @@ export class ChannelComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.queryParamSubscription = this.route.queryParamMap.subscribe(params => {
-      if (params.has('layout')) {
-        this.layout = params.get('layout');
-        this.detectChanges();
-      }
-      this.updateQueryParams();
-    });
-
     // Initialize SEO
     this.seo.set('Channel');
 
@@ -176,8 +174,26 @@ export class ChannelComponent implements OnInit, OnDestroy {
       this.service.username$,
       this.session.user$,
     ]).subscribe(([user, username, currentUser]) => {
+      this.currentChannel = user;
       this.onChannelChange(user, username, currentUser);
     });
+
+    this.queryParamSubscription = this.route.queryParamMap.subscribe(params => {
+      if (params.has('layout')) {
+        this.layout = params.get('layout');
+        this.detectChanges();
+      }
+      this.updateQueryParams();
+    });
+
+    // update seo on navigation events
+    this.routerSubscription = this.router.events.subscribe(
+      (navigationEvent: NavigationEnd) => {
+        if (navigationEvent instanceof NavigationEnd) {
+          this.seo.set(this.currentChannel);
+        }
+      }
+    );
   }
 
   /**
@@ -204,12 +220,6 @@ export class ChannelComponent implements OnInit, OnDestroy {
         );
       }
     }
-  }
-
-  toggleLayout(layout: string) {
-    this.layout = layout;
-    this.detectChanges();
-    this.updateQueryParams();
   }
 
   updateQueryParams(): void {

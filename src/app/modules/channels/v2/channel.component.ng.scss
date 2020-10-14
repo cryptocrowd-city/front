@@ -25,10 +25,6 @@
       @media screen and (max-width: $layoutMin3ColWidth) {
         display: block;
       }
-
-      // @media screen and (max-width: $max-mobile) {
-      //   padding: 25px 20px 0;
-      // }
     }
 
     .m-channel__tabs {
@@ -79,6 +75,8 @@
       }
 
       .m-channelFeedLayoutBtn {
+        text-decoration: none;
+        display: inline-block;
         cursor: pointer;
         margin-left: 10px;
       }

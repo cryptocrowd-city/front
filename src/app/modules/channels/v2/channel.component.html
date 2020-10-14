@@ -54,17 +54,19 @@
         </div>
         <ng-container *mIfFeature="'channel-grid'">
           <div class="m-channel__feedLayoutToggle" *ngIf="isFeedView">
-            <i
-              class="material-icons m-channelFeedLayoutBtn"
-              [class.m-channelFeedLayoutBtn--selected]="layout === 'list'"
-              (click)="toggleLayout('list')"
-              >list</i
+            <a
+              [routerLink]="['.']"
+              [queryParams]="{ layout: 'list' }"
+              routerLinkActive="m-channelFeedLayoutBtn--selected"
+              class="m-channelFeedLayoutBtn"
+              ><i class="material-icons">list</i></a
             >
-            <i
-              class="material-icons m-channelFeedLayoutBtn"
-              [class.m-channelFeedLayoutBtn--selected]="layout === 'grid'"
-              (click)="toggleLayout('grid')"
-              >view_module</i
+            <a
+              [routerLink]="['.']"
+              [queryParams]="{ layout: 'grid' }"
+              routerLinkActive="m-channelFeedLayoutBtn--selected"
+              class="m-channelFeedLayoutBtn"
+              ><i class="material-icons">view_module</i></a
             >
           </div>
         </ng-container>

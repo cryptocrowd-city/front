@@ -3,6 +3,7 @@ import { Observable, Subscription } from 'rxjs';
 
 import { ActivityService, ActivityEntity } from '../activity.service';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Component({
   selector: 'm-activity__minimalMetrics',
@@ -16,6 +17,8 @@ export class ActivityMinimalMetricsComponent implements OnInit, OnDestroy {
   entity: ActivityEntity;
   canonicalUrl: string;
   contentType: string;
+  recentlyCreated: boolean = true;
+  formattedCreateDate: string = '';
 
   views$: Observable<number> = this.service.entity$.pipe(
     map((entity: ActivityEntity) => {
@@ -31,6 +34,20 @@ export class ActivityMinimalMetricsComponent implements OnInit, OnDestroy {
         this.entity = entity;
         if (entity.content_type) {
           this.contentType = entity.content_type;
+        }
+        // Only display year if post was created before this year
+        if (this.entity.time_created) {
+          this.recentlyCreated =
+            Math.floor(Date.now() / 1000) - this.entity.time_created <= 172800;
+
+          if (!this.recentlyCreated) {
+            const createdMoment = moment(this.entity.time_created * 1000);
+            const startOfThisYear = moment().startOf('year');
+            const formatStr =
+              createdMoment > startOfThisYear ? 'MMM Do' : 'MMM Do, YYYY';
+
+            this.formattedCreateDate = createdMoment.format(formatStr);
+          }
         }
       }
     );

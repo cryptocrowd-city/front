@@ -1,5 +1,6 @@
 <div
   class="m-activity__minimalMetrics"
+  *ngIf="entity"
   [ngClass]="{ addTopSpacing: addTopSpacing }"
 >
   <span class="m-activityMinimalMetrics__views" *ngIf="views$ | async as views"
@@ -14,7 +15,12 @@
       class="m-activityMinimalMetrics__timestamp"
       [title]="entity.time_created * 1000 | date: 'medium'"
     >
-      {{ entity.time_created * 1000 | friendlydatediff }}
+      <ng-container *ngIf="recentlyCreated">{{
+        entity.time_created * 1000 | friendlydatediff
+      }}</ng-container>
+      <ng-container *ngIf="!recentlyCreated">{{
+        formattedCreateDate
+      }}</ng-container>
     </span></a
   >
   <div
