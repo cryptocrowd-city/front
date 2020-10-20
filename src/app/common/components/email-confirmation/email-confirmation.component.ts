@@ -67,11 +67,11 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
    * @param {Object} user
    */
   setShouldShow(user): void {
-    this.shouldShow = true;
-    // !(this.location.path().indexOf('/onboarding') === 0) &&
-    // !this.fromEmailConfirmation &&
-    // user &&
-    // user.email_confirmed === false;
+    this.shouldShow =
+      !(this.location.path().indexOf('/onboarding') === 0) &&
+      !this.fromEmailConfirmation &&
+      user &&
+      user.email_confirmed === false;
   }
 
   /**
