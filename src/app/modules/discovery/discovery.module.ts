@@ -30,8 +30,6 @@ import { DiscoveryBoostFeedComponent } from './boost/boost-feed.component';
 import { DiscoveryTabsComponent } from './tabs/tabs.component';
 import { DiscoveryFeedsService } from './feeds/feeds.service';
 import { FeedsService } from '../../common/services/feeds.service';
-import { DiscoveryTagButtonComponent } from './tags/tag-button/tag-button.component';
-import { DiscoveryTagWidgetComponent } from './tags/tag-widget/tag-widget.component';
 
 @NgModule({
   imports: [
@@ -198,8 +196,6 @@ import { DiscoveryTagWidgetComponent } from './tags/tag-widget/tag-widget.compon
     DiscoveryBoostFeedComponent,
     DiscoveryFeedsComponent,
     DiscoverySidebarTagsComponent,
-    DiscoveryTagButtonComponent,
-    DiscoveryTagWidgetComponent,
   ],
 })
 export class DiscoveryModule {}
