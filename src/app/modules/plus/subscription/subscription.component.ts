@@ -30,6 +30,7 @@ import { WireCreatorComponent } from '../../wire/v2/creator/wire-creator.compone
 @Component({
   selector: 'm-plus--subscription',
   templateUrl: 'subscription.component.html',
+  styleUrls: ['./subscription.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlusSubscriptionComponent implements OnInit {
@@ -130,9 +131,6 @@ export class PlusSubscriptionComponent implements OnInit {
           WireCreatorComponent,
           await this.wirePaymentHandlers.get('plus'),
           {
-            //interval: this.interval,
-            //currency: this.currency,
-            //amount: this.upgrades.plus[this.interval][this.currency],
             wrapperClass: 'm-modalV2__wrapper',
             default: {
               type: this.currency === 'usd' ? 'money' : 'tokens',
@@ -217,6 +215,14 @@ export class PlusSubscriptionComponent implements OnInit {
         offerFrom: null,
       };
     }
+  }
+
+  get canHaveTrial(): boolean {
+    return (
+      this.currency === 'usd' &&
+      (this.upgrades.plus[this.interval].can_have_trial ||
+        !this.session.isLoggedIn())
+    );
   }
 
   setCurrency(currency: UpgradeOptionCurrency) {
