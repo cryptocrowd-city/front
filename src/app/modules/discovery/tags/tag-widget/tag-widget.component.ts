@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { RegexService } from '../../../../common/services/regex.service';
@@ -15,7 +15,7 @@ import { DiscoveryTag, DiscoveryTagsService } from '../tags.service';
   templateUrl: './tag-widget.component.html',
   styleUrls: ['./tag-widget.component.ng.scss'],
 })
-export class DiscoveryTagWidgetComponent implements OnInit {
+export class DiscoveryTagWidgetComponent implements OnInit, OnDestroy {
   querySubscription: Subscription;
 
   tagRegex: RegExp = new RegExp(this.regexService.getRegex('hash'));
@@ -47,7 +47,7 @@ export class DiscoveryTagWidgetComponent implements OnInit {
   parseQuery(q: string): void {
     if (q) {
       const matchArr = q.match(this.tagRegex);
-      if (matchArr.length === 1) {
+      if (matchArr && matchArr.length === 1) {
         this.tag = matchArr[0]
           .trim()
           .toLowerCase()
@@ -63,5 +63,9 @@ export class DiscoveryTagWidgetComponent implements OnInit {
 
     this.tag = '';
     return;
+  }
+
+  ngOnDestroy() {
+    if (this.querySubscription) this.querySubscription.unsubscribe();
   }
 }
