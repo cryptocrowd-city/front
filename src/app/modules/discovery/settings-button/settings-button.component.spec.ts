@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import { By } from '@angular/platform-browser';
 import { MockService } from '../../../utils/mock';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { Client } from '../../../services/api';
@@ -13,6 +12,28 @@ import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service
 import { DiscoverySettingsButtonComponent } from './settings-button.component';
 import { TooltipComponent } from '../../../common/components/tooltip/tooltip.component';
 import { DiscoveryFeedsService } from '../feeds/feeds.service';
+import { EntitiesService } from '../../../common/services/entities.service';
+import { BlockListService } from '../../../common/services/block-list.service';
+import { FeedsService } from '../../../common/services/feeds.service';
+import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-selector/nsfw-selector.service';
+import { DiscoveryService } from '../discovery.service';
+import { of } from 'rxjs';
+
+const blockListServiceMock: any = MockService(BlockListService, {
+  has: ['blocked'],
+  props: {
+    blocked: { get: () => of(false) },
+  },
+});
+
+const nsfwSelectorConsumerServiceMock: any = MockService(
+  NSFWSelectorConsumerService,
+  {
+    build: () => {
+      return true;
+    },
+  }
+);
 
 describe('DiscoverySettingsButtonComponent', () => {
   let component: DiscoverySettingsButtonComponent;
@@ -34,6 +55,30 @@ describe('DiscoverySettingsButtonComponent', () => {
         {
           provide: DiscoveryFeedsService,
           useValue: MockService(DiscoveryFeedsService),
+        },
+        {
+          provide: EntitiesService,
+          useValue: MockService(EntitiesService),
+        },
+        {
+          provide: BlockListService,
+          useValue: blockListServiceMock,
+        },
+        {
+          provide: DiscoveryFeedsService,
+          useValue: MockService(DiscoveryFeedsService),
+        },
+        {
+          provide: FeedsService,
+          useValue: MockService(FeedsService),
+        },
+        {
+          provide: NSFWSelectorConsumerService,
+          useValue: nsfwSelectorConsumerServiceMock,
+        },
+        {
+          provide: DiscoveryService,
+          useValue: MockService(DiscoveryService),
         },
       ],
     }).compileComponents();

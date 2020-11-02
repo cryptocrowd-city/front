@@ -1,13 +1,15 @@
-import { Component, Injector, SkipSelf, Input, Output } from '@angular/core';
+import { Component, Injector, Input } from '@angular/core';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { DiscoveryFeedsSettingsComponent } from '../feeds/settings.component';
 import { DiscoveryTagSettingsComponent } from '../tags/settings.component';
 import { DiscoveryTagsService } from '../tags/tags.service';
 import { DiscoveryFeedsService } from '../feeds/feeds.service';
+import { FeedsService } from '../../../common/services/feeds.service';
 
 @Component({
   selector: 'm-discovery__settingsButton',
   templateUrl: './settings-button.component.html',
+  providers: [DiscoveryFeedsService, FeedsService],
 })
 export class DiscoverySettingsButtonComponent {
   @Input() modalType: 'feed' | 'tags';
