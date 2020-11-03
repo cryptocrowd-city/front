@@ -4,6 +4,9 @@ const noOp = () => {};
 const DEFAULT_TITLE = 'Confirm';
 const DEFAULT_BODY = 'Are you sure?';
 
+/**
+ * Generic confirmation modal with changeable title and body
+ */
 @Component({
   selector: 'm-modal-confirmV2',
   template: `
@@ -23,17 +26,28 @@ const DEFAULT_BODY = 'Are you sure?';
   styleUrls: ['./confirm.ng.scss'],
 })
 export class ConfirmV2Component {
+  /**
+   * Title displayed at top of modal
+   */
   public title: string = DEFAULT_TITLE;
 
+  /**
+   * Body of text displayed within the modal
+   */
   public body: string = DEFAULT_BODY;
 
-  onConfirm: () => any = noOp;
-
-  onDismiss: () => void = noOp;
+  /**
+   * Triggered on confirm click
+   */
+  public onConfirm: () => any = noOp;
 
   /**
-   * Modal options
-   *
+   * Triggered on cancel click
+   */
+  public onDismiss: () => void = noOp;
+
+  /**
+   * Modal options.
    * @param { string } title - title of the modal
    * @param { string } body - text body of the component
    * @param { function } onConfirm - callback on call for confirmation.

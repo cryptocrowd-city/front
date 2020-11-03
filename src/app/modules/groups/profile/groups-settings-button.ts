@@ -410,7 +410,7 @@ export class GroupsSettingsButton {
           wrapperClass: 'm-modalV2__wrapper',
           title: 'Confirm',
           body:
-            'Are you sure you want to delete this? This action cannot be undone.', // TODO: REMOVE
+            'Are you sure you want to delete this? This action cannot be undone.',
           onConfirm: () => {
             this.delete();
             this.router.navigate(['/']);
