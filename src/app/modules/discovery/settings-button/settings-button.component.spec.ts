@@ -56,30 +56,6 @@ describe('DiscoverySettingsButtonComponent', () => {
           provide: DiscoveryFeedsService,
           useValue: MockService(DiscoveryFeedsService),
         },
-        // {
-        //   provide: EntitiesService,
-        //   useValue: MockService(EntitiesService),
-        // },
-        // {
-        //   provide: BlockListService,
-        //   useValue: blockListServiceMock,
-        // },
-        // {
-        //   provide: DiscoveryFeedsService,
-        //   useValue: MockService(DiscoveryFeedsService),
-        // },
-        // {
-        //   provide: FeedsService,
-        //   useValue: MockService(FeedsService),
-        // },
-        // {
-        //   provide: NSFWSelectorConsumerService,
-        //   useValue: nsfwSelectorConsumerServiceMock,
-        // },
-        // {
-        //   provide: DiscoveryService,
-        //   useValue: MockService(DiscoveryService),
-        // },
       ],
     }).compileComponents();
   }));

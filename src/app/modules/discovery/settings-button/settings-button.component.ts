@@ -8,7 +8,6 @@ import { DiscoveryFeedsService } from '../feeds/feeds.service';
 @Component({
   selector: 'm-discovery__settingsButton',
   templateUrl: './settings-button.component.html',
-  // providers: [FeedsService],
 })
 export class DiscoverySettingsButtonComponent {
   @Input() modalType: 'feed' | 'tags';
