@@ -129,8 +129,8 @@ m-comments__entityOutlet,
       text-align: left;
       margin: 0 0 $minds-padding;
       @include m-theme() {
-        background-color: themed($m-white);
-        border: 1px solid themed($m-grey-100);
+        background-color: themed($m-bgColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
       }
 
       minds-rich-embed .m-rich-embed-src {
@@ -260,7 +260,7 @@ m-comments__entityOutlet,
     padding: $minds-padding ($minds-padding + 88px) $minds-padding
       $minds-padding * 2;
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primary);
     }
   }
 

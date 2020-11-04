@@ -155,7 +155,7 @@ m-proSettings {
       border-radius: 2px;
       @include m-theme() {
         box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
-        border: 1px solid themed($m-grey-50);
+        border: 1px solid themed($m-borderColor--primary);
       }
       &:focus {
         &:not(:read-only) {
@@ -210,8 +210,8 @@ m-proSettings {
         margin-left: auto;
         @include m-theme() {
           color: themed($m-grey-800);
-          border: 1px solid themed($m-grey-50);
-          background-color: themed($m-white);
+          border: 1px solid themed($m-borderColor--primary);
+          background-color: themed($m-bgColor--primary);
         }
         &:hover {
           transform: scale(1.04);
@@ -238,7 +238,7 @@ m-proSettings {
           }
           &:hover {
             @include m-theme() {
-              border-color: themed($m-grey-50);
+              border-color: themed($m-borderColor--primary);
             }
           }
         }
@@ -255,7 +255,7 @@ m-proSettings {
     transition: background-color 0.2s ease;
     @include m-theme() {
       box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
-      border: 1px solid themed($m-grey-50);
+      border: 1px solid themed($m-borderColor--primary);
     }
     input {
       visibility: hidden;
@@ -410,13 +410,13 @@ m-proSettings {
       width: 20px;
       transition: all 0.3s ease;
       @include m-theme() {
-        background-color: themed($m-white);
-        border: 1px solid themed($m-grey-100);
+        background-color: themed($m-bgColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
       }
       &[class*='--checkbox'] {
         border-radius: 2px;
         @include m-theme() {
-          background-color: themed($m-white);
+          background-color: themed($m-bgColor--primary);
         }
         &:after {
           left: 7px;

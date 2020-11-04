@@ -13,7 +13,7 @@ m-analytics__search {
     }
     input {
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
         border: 1px solid rgba(themed($m-black), 0.12);
       }
       &::placeholder {

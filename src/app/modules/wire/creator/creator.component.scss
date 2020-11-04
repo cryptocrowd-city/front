@@ -389,7 +389,7 @@
         font-weight: 500;
         @include m-theme() {
           color: themed($m-black);
-          background-color: themed($m-white);
+          background-color: themed($m-bgColor--primary);
         }
       }
     }
@@ -759,7 +759,7 @@
 
     &:after {
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
       }
     }
   }
@@ -836,7 +836,7 @@
       &:hover,
       &:focus {
         @include m-theme() {
-          background-color: themed($m-white);
+          background-color: themed($m-bgColor--primary);
           color: themed($m-black);
         }
       }

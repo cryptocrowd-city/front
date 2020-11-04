@@ -120,7 +120,7 @@
     padding: 18px 0 30px 0;
     hr {
       @include m-theme() {
-        color: themed($m-borderColor--secondary);
+        color: themed($m-borderColor--primary);
       }
     }
   }
@@ -278,7 +278,7 @@
     min-height: 42px;
     appearance: none;
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primary);
     }
   }
 
@@ -332,7 +332,7 @@
       transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
       @include m-theme() {
         color: themed($m-textColor--primary);
-        background-color: themed($m-bgColor--secondary);
+        background-color: themed($m-bgColor--primary);
         border: 1px solid themed($m-borderColor--primary);
       }
       > div {
@@ -531,7 +531,7 @@
 
     @include m-theme() {
       color: themed($m-textColor--primary) !important;
-      background-color: themed($m-bgColor--secondary) !important;
+      background-color: themed($m-bgColor--primary) !important;
     }
     &::placeholder {
       @include m-theme() {
@@ -619,13 +619,13 @@
       width: 20px;
       transition: all 0.3s ease;
       @include m-theme() {
-        background-color: themed($m-bgColor--secondary);
+        background-color: themed($m-bgColor--primary);
         border: 1px solid themed($m-borderColor--primary);
       }
       &[class*='__checkbox'] {
         border-radius: 2px;
         @include m-theme() {
-          background-color: themed($m-bgColor--secondary);
+          background-color: themed($m-bgColor--primary);
         }
         &:after {
           left: 7px;
@@ -642,7 +642,7 @@
       &[class*='__radio'] {
         border-radius: 50%;
         @include m-theme() {
-          background-color: themed($m-borderColor--tertiary);
+          background-color: themed($m-borderColor--primary);
         }
         &:after {
           border-radius: 50%;
@@ -784,7 +784,7 @@
   font-size: 14px;
   width: 100%;
   @include m-theme() {
-    border: 1px solid themed($m-grey-50);
+    border: 1px solid themed($m-borderColor--primary);
     background-color: themed($m-bgColor--primary) !important;
     color: rgba(themed($m-textColor--primary), 0.87) !important;
   }

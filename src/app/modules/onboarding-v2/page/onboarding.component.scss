@@ -87,7 +87,7 @@ m-onboarding {
       color: #9b9b9b;
 
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
       }
 
       &::before {
@@ -238,7 +238,7 @@ m-onboarding {
           display: flex;
           flex-direction: row;
           flex-flow: row wrap;
-          //background-color: themed($m-white);
+          //background-color: themed($m-bgColor--primary);
           max-width: 1280px;
           margin: auto;
 
@@ -327,7 +327,7 @@ m-onboarding {
                 height: 64px;
                 border-radius: 50%;
                 @include m-theme() {
-                  border: 1px solid themed($m-grey-50);
+                  border: 1px solid themed($m-borderColor--primary);
                 }
 
                 .overlay {
@@ -366,15 +366,15 @@ m-onboarding {
               z-index: 1;
 
               @include m-theme() {
-                background-color: themed($m-white);
-                border: 1px solid themed($m-grey-50);
+                background-color: themed($m-bgColor--primary);
+                border: 1px solid themed($m-borderColor--primary);
               }
 
               li {
                 padding: 8px 0;
                 cursor: pointer;
                 @include m-theme() {
-                  border-bottom: 1px solid themed($m-grey-50);
+                  border-bottom: 1px solid themed($m-borderColor--primary);
                 }
               }
             }

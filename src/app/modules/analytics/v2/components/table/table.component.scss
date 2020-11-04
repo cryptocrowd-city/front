@@ -58,8 +58,7 @@
 .m-analyticsTable__row--data {
   &:hover {
     @include m-theme() {
-      background-color: rgba(themed($m-bgColor--tertiary), 0.4);
-      // background-color: rgba(themed($m-blue-grey-50), 0.5);
+      background-color: rgba(themed($m-bgColor--secondary), 0.4);
     }
     .m-analyticsTable__col--entity .m-analyticsTable__entityTitle i {
       visibility: visible;

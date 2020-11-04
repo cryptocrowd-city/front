@@ -411,7 +411,7 @@ m-walletDashboard {
     .m-walletForm__row--input {
       input {
         @include m-theme() {
-          background-color: themed($m-bgColor--secondary);
+          background-color: themed($m-bgColor--primary);
           color: themed($m-textColor--primary);
         }
       }
@@ -600,7 +600,7 @@ m-walletDashboard {
       line-height: 20px;
       font-weight: 300;
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
         color: themed($m-textColor--primary);
       }
     }
