@@ -44,7 +44,7 @@ export class DiscoverySettingsButtonComponent {
               const tags = payload;
               this.service.tags$.next(tags);
 
-              if (this.feeds !== undefined) {
+              if (this.feeds !== null) {
                 this.feeds.load();
               }
             }
