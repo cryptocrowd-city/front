@@ -1,15 +1,14 @@
-import { Component, Injector, Input } from '@angular/core';
+import { Component, Injector, Input, Optional, SkipSelf } from '@angular/core';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { DiscoveryFeedsSettingsComponent } from '../feeds/settings.component';
 import { DiscoveryTagSettingsComponent } from '../tags/settings.component';
 import { DiscoveryTagsService } from '../tags/tags.service';
 import { DiscoveryFeedsService } from '../feeds/feeds.service';
-import { FeedsService } from '../../../common/services/feeds.service';
 
 @Component({
   selector: 'm-discovery__settingsButton',
   templateUrl: './settings-button.component.html',
-  providers: [DiscoveryFeedsService, FeedsService],
+  // providers: [FeedsService],
 })
 export class DiscoverySettingsButtonComponent {
   @Input() modalType: 'feed' | 'tags';
@@ -17,8 +16,8 @@ export class DiscoverySettingsButtonComponent {
   constructor(
     private service: DiscoveryTagsService,
     private overlayModal: OverlayModalService,
-    private feeds: DiscoveryFeedsService,
-    private injector: Injector
+    private injector: Injector,
+    @Optional() @SkipSelf() private feeds: DiscoveryFeedsService
   ) {}
 
   openSettingsModal(e: MouseEvent): void {
@@ -45,7 +44,10 @@ export class DiscoverySettingsButtonComponent {
             if (this.modalType === 'tags') {
               const tags = payload;
               this.service.tags$.next(tags);
-              this.feeds.load();
+
+              if (this.feeds !== undefined) {
+                this.feeds.load();
+              }
             }
             this.overlayModal.dismiss();
           },
@@ -56,7 +58,7 @@ export class DiscoverySettingsButtonComponent {
         this.injector
       )
       .onDidDismiss(() => {
-        console.log('closed tag settings');
+        // Do nothing.
       })
       .present();
   }
