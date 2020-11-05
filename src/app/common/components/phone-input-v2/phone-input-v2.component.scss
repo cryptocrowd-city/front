@@ -162,7 +162,6 @@ m-phoneInput {
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
     @include m-theme() {
-      box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
       background-color: themed($m-bgColor--primary);
       border: 1px solid themed($m-blue);
       border-top: none;
@@ -1302,7 +1301,6 @@ m-phoneInput {
     background-position: 20px 0;
     @include m-theme() {
       background-color: themed($m-grey-100);
-      box-shadow: 0px 0px 1px 0px themed($m-grey-400);
     }
   }
   @media only screen and (-webkit-min-device-pixel-ratio: 2),
