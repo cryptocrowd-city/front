@@ -300,6 +300,7 @@ export class HorizontalFeedService {
       from_timestamp: baseEntityTimestamp,
     };
 
+    //
     // TODO: Make this less convoluted
     const [prev, next] = await Promise.all([
       this.pools.prev.moreData
@@ -313,6 +314,7 @@ export class HorizontalFeedService {
         : Promise.resolve(null),
     ]);
 
+    // Remove falsy values so you end up with the relevant baseGuid
     const baseGuids = [
       this.baseEntity.guid,
       this.baseEntity.entity_guid,
@@ -320,6 +322,8 @@ export class HorizontalFeedService {
       this.baseEntity.remind_object &&
         this.baseEntity.remind_object.entity_guid,
     ].filter(Boolean);
+
+    console.log('ojm baseGuids', baseGuids);
 
     let changed = false;
 
