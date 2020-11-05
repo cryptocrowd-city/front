@@ -193,6 +193,22 @@ export class MetaService {
     return this;
   }
 
+  setAuthor(value: string): MetaService {
+    this.metaService.updateTag({
+      property: 'author',
+      content: value,
+    });
+    return this;
+  }
+
+  setOgAuthor(value: string): MetaService {
+    this.metaService.updateTag({
+      property: 'og:author',
+      content: value,
+    });
+    return this;
+  }
+
   reset(
     data: {
       title?: string;

@@ -148,10 +148,14 @@ export class BlogViewInfinite {
       blog.description.length > 140
         ? blog.excerpt.substr(0, 140) + '...'
         : blog.excerpt;
+
+    const author = blog.custom_meta['author'] || `@${blog.ownerObj.username}`;
+
     this.metaService
       .setTitle(blog.custom_meta['title'] || blog.title)
       .setDescription(description)
-      //.setAuthor(this.blog.custom_meta['author'] || `@${this.blog.ownerObj.username}`)
+      .setAuthor(author)
+      .setOgAuthor(author)
       .setOgType('article')
       .setCanonicalUrl(blog.perma_url)
       .setOgUrl(blog.perma_url)
