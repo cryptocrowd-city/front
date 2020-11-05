@@ -134,7 +134,7 @@ m-onboarding {
         margin-top: 0;
 
         @include m-theme() {
-          color: themed($m-textcolor--primary);
+          color: themed($m-textColor--primary);
         }
       }
 
