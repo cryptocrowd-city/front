@@ -32,7 +32,13 @@
             class="m-v3Topbar__logo--bulb"
           />
           <img
+            *ngIf="!isDarkTheme"
             [src]="cdnAssetsUrl + 'assets/logos/logo.svg'"
+            class="m-v3Topbar__logo--full"
+          />
+          <img
+            *ngIf="isDarkTheme"
+            [src]="cdnAssetsUrl + 'assets/logos/logo-dark.svg'"
             class="m-v3Topbar__logo--full"
           />
         </a>
