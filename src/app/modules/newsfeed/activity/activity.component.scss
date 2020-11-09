@@ -9,11 +9,6 @@ m-activity {
   &,
   &.m-border {
     border-radius: $m-borderRadius;
-    box-shadow: 0 $m-boxShadowOffset $m-boxShadowBlur rgba(0, 0, 0, 0.05);
-  }
-
-  &.m-activity--minimalMode {
-    box-shadow: none;
   }
 
   @include m-theme() {

@@ -15,14 +15,14 @@
   }
   &.active {
     @include m-theme() {
-      background-color: rgba(themed($m-bgColor--secondary), 0.8);
+      background-color: themed($m-bgColor--primaryDarker);
       border-bottom: 8px solid themed($m-blue);
     }
   }
   &:hover:not(.active) {
     transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primaryDarker);
       border-bottom: 8px solid rgba(0, 0, 0, 0);
     }
   }

@@ -142,7 +142,6 @@ m-dropdownSelector {
     &:hover:not(.unavailable) {
       @include m-theme() {
         color: themed($m-textColor--primary);
-        background-color: rgba(themed($m-bgColor--secondary), 0.7);
       }
     }
     &:first-child {

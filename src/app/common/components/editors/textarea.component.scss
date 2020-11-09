@@ -26,6 +26,9 @@ minds-textarea {
 
     -webkit-user-modify: read-write-plaintext-only;
     -moz-user-modify: read-write;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
 
     &.m-editor-disabled {
       @include m-theme() {
@@ -49,7 +52,7 @@ minds-textarea {
     width: 100%;
 
     @include m-theme() {
-      color: themed($m-textColor--tertiary);
+      color: themed($m-textColor--secondary);
     }
 
     pointer-events: none;

@@ -515,7 +515,7 @@
       }
       &::placeholder {
         @include m-theme() {
-          color: themed($m-grey-400);
+          color: themed($m-textColor--secondary);
         }
       }
     }

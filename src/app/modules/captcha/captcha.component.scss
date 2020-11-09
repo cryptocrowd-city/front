@@ -11,7 +11,7 @@ m-captcha {
       font-weight: 400 !important;
       font-size: 14px !important;
       @include m-theme() {
-        color: themed($m-textColor--tertiary);
+        color: themed($m-textColor--secondary);
       }
     }
   }

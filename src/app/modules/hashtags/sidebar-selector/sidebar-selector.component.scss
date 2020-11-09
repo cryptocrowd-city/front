@@ -163,7 +163,7 @@ m-hashtags--sidebar-selector {
 
       &::placeholder {
         @include m-theme() {
-          color: themed($m-grey-200);
+          color: themed($m-textColor--secondary);
         }
       }
     }

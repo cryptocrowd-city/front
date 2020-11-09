@@ -191,7 +191,7 @@ m-pro--channel-login {
 
         &::placeholder {
           @include m-theme() {
-            color: themed($m-grey-800);
+            color: themed($m-textColor--secondary);
           }
         }
       }

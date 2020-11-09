@@ -16,7 +16,7 @@
     box-sizing: border-box;
     @include m-theme() {
       border-top: 1px solid themed($m-borderColor--primary);
-      background-color: themed($m-bgColor--primary);
+      background-color: themed($m-bgColor--primaryDarker);
     }
 
     > i {
