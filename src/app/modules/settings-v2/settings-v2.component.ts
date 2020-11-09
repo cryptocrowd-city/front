@@ -351,7 +351,7 @@ export class SettingsV2Component implements OnInit {
     this.loadSettings().then(() => {
       if (this.settingsService.settings$.getValue().telno) {
         const mfaMenuItem = {
-          label: 'Two-factor Authentication',
+          label: $localize`:@@SETTINGS__SECURITY__2FA__LABEL:Two-factor Authentication`,
           id: 'two-factor',
         };
         this.secondaryMenus.security[0].items.splice(0, 0, mfaMenuItem);
