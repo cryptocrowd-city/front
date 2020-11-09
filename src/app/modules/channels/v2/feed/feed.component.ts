@@ -121,10 +121,6 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     );
   }
 
-  get hasPosts$(): boolean {
-    this.feed.service.inProgress;
-  }
-
   ngOnInit() {
     this.feedsUpdatedSubscription = this.feedsUpdate.postEmitter.subscribe(
       newPost => {

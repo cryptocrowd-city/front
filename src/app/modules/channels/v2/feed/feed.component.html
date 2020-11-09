@@ -70,12 +70,13 @@
     <!-- LAYOUT : NO POSTS  -->
     <!-- ----------------------------------------- -->
     <div
-      *ngIf="(feed.service.feed | async).length < 1"
+      *ngIf="
+        !(feed.service.inProgress | async) &&
+        (feed.service.feed | async).length < 1
+      "
       class="m-channelFeed__emptyFeedContainer"
     >
-      <ng-container
-        *ngIf="!(feed.service.inProgress | async) && !isOwnedChannel"
-      >
+      <ng-container *ngIf="!isOwnedChannel">
         <span
           class="m-channelFeed__emptyFeedTitle"
           i18n="@@M__CHANNEL_FEED__NO_CONTENT"
@@ -87,9 +88,7 @@
           >This channel hasn't posted anything yet</span
         >
       </ng-container>
-      <ng-container
-        *ngIf="!(feed.service.inProgress | async) && isOwnedChannel"
-      >
+      <ng-container *ngIf="isOwnedChannel">
         <div
           class="m-channelFeed__emptyFeedContainer m-channelFeed__emptyFeedContainer--bordered"
         >
