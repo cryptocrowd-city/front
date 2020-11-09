@@ -6,7 +6,10 @@
     <!-- ----------------------------------------- -->
     <!-- TOOLBAR -->
     <!-- ----------------------------------------- -->
-    <div class="m-channelFeed__toolbar">
+    <div
+      class="m-channelFeed__toolbar"
+      *ngIf="(feed.service.feed | async).length > 0"
+    >
       <m-feedFilter
         class="m-channelFeed__filter"
         [options]="['type']"
@@ -47,7 +50,10 @@
     <!-- ----------------------------------------- -->
     <!-- LAYOUT : LIST  -->
     <!-- ----------------------------------------- -->
-    <div class="m-channelFeed__list" *ngIf="!isGrid">
+    <div
+      class="m-channelFeed__list"
+      *ngIf="!isGrid && (feed.service.feed | async).length > 0"
+    >
       <m-composer *ngIf="service.isOwner$ | async"></m-composer>
       <div class="m-channelFeedList__entities">
         <m-newsfeed__entity
@@ -58,6 +64,49 @@
         ></m-newsfeed__entity>
       </div>
       <ng-container [ngTemplateOutlet]="infiniteScroll"></ng-container>
+    </div>
+
+    <!-- ----------------------------------------- -->
+    <!-- LAYOUT : NO POSTS  -->
+    <!-- ----------------------------------------- -->
+    <div
+      *ngIf="(feed.service.feed | async).length < 1"
+      class="m-channelFeed__emptyFeedContainer"
+    >
+      <ng-container *ngIf="!isOwnedChannel">
+        <span
+          class="m-channelFeed__emptyFeedTitle"
+          i18n="@@M__CHANNEL_FEED__NO_CONTENT"
+          >No content</span
+        >
+        <span
+          class="m-channelFeed__emptyFeedSubtitle"
+          i18n="@@M__CHANNEL_FEED__CHANNEL_HAS_NO_POSTS"
+          >This channel hasn't posted anything yet</span
+        >
+      </ng-container>
+      <ng-container *ngIf="isOwnedChannel">
+        <div
+          class="m-channelFeed__emptyFeedContainer m-channelFeed__emptyFeedContainer--bordered"
+        >
+          <span
+            class="m-channelFeed__emptyFeedTitle"
+            i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_YET"
+            >Looks like you haven't posted yet.</span
+          >
+          <button
+            class="m-channelFeed__firstPostButton"
+            i18n="@@M__CHANNEL_FEED__CREATE_YOUR_FIRST_POST"
+            (click)="openComposerModal()"
+            [ngClass]="{
+              'm-channelFeed__firstPostButton--dark': isDarkTheme$ | async,
+              'm-channelFeed__firstPostButton--light': !(isDarkTheme$ | async)
+            }"
+          >
+            Create your first post
+          </button>
+        </div>
+      </ng-container>
     </div>
   </div>
 

@@ -7,6 +7,7 @@ import {
   PLATFORM_ID,
   OnInit,
   ChangeDetectorRef,
+  Injector,
 } from '@angular/core';
 import { FeedService } from './feed.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,9 +15,12 @@ import { ChannelsV2Service } from '../channels-v2.service';
 import { FeedFilterType } from '../../../../common/components/feed-filter/feed-filter.component';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { FeedsUpdateService } from '../../../../common/services/feeds-update.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { Session } from '../../../../services/session';
+import { ThemeService } from '../../../../common/services/theme.service';
+import { ModalService } from '../../../composer/components/modal/modal.service';
+import { ComposerService } from '../../../composer/services/composer.service';
 
 /**
  * Channel feed component
@@ -26,7 +30,7 @@ import { Session } from '../../../../services/session';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'feed.component.html',
   styleUrls: ['feed.component.ng.scss'],
-  providers: [FeedService, FeedsService],
+  providers: [FeedService, FeedsService, ComposerService],
 })
 export class ChannelFeedComponent implements OnDestroy, OnInit {
   isGrid: boolean = false;
@@ -87,6 +91,9 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     public feedsUpdate: FeedsUpdateService,
     private session: Session,
     protected cd: ChangeDetectorRef,
+    private themesService: ThemeService,
+    private composerModal: ModalService,
+    private injector: Injector,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     if (isPlatformBrowser(platformId)) {
@@ -94,6 +101,24 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
         this.feed.guid$.next(guid)
       );
     }
+  }
+
+  /**
+   * True if current theme is dark.
+   * @returns { Observable<boolean> } - true if theme is dark, else false.
+   */
+  get isDarkTheme$(): Observable<boolean> {
+    return this.themesService.isDark$;
+  }
+
+  /**
+   * Determines whether current channel is users own channel.
+   * @returns { boolean } - True if user owns channel.
+   */
+  get isOwnedChannel(): boolean {
+    return (
+      this.session.getLoggedInUser().guid === this.service.guid$.getValue()
+    );
   }
 
   ngOnInit() {
@@ -154,6 +179,21 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     this.router.navigate(['/', this.service.username$.getValue(), filter], {
       preserveQueryParams: true,
     });
+  }
+
+  /**
+   * Open composer modal
+   * @returns { Promise<void> } - awaitable.
+   */
+  public async openComposerModal(): Promise<void> {
+    try {
+      await this.composerModal
+        .setInjector(this.injector)
+        .present()
+        .toPromise();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   detectChanges() {
