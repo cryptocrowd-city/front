@@ -349,7 +349,7 @@ export class SettingsV2Component implements OnInit {
     this.setProRoutes();
     this.setSecondaryPane();
     this.loadSettings().then(() => {
-      if (this.settingsService.settings$.getValue().telno) {
+      if (this.settingsService.settings$.getValue().has2fa) {
         const mfaMenuItem = {
           label: $localize`:@@SETTINGS__SECURITY__2FA__LABEL:Two-factor Authentication`,
           id: 'two-factor',
