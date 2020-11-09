@@ -167,7 +167,7 @@
       &:hover {
         @include m-theme() {
           color: themed($m-textColor--secondary);
-          background-color: themed($m-bgColor--secondaryLighter);
+          background-color: themed($m-bgColor--secondaryAlt);
         }
       }
 

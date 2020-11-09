@@ -60,7 +60,7 @@
 
       &:hover {
         @include m-theme() {
-          background-color: themed($m-bgColor--secondaryLighter);
+          background-color: themed($m-bgColor--secondaryAlt);
         }
       }
 

@@ -93,9 +93,9 @@ $themes: (
     m-textColor--secondary: #72727c,
     m-textColor--tertiary: #9b9b9b,
     m-bgColor--primary: #ffffff,
-    m-bgColor--primaryDarker: #e7edf3,
-    m-bgColor--secondary: #fbfcfd,
-    m-bgColor--secondaryLighter: #e7edf3,
+    m-bgColor--primaryAlt: #e7edf3,
+    m-bgColor--secondary: #f6f7f7,
+    m-bgColor--secondaryAlt: #e6ebed,
     m-bgColor--contrast: #d8d8d8,
     m-borderColor--primary: #d3dbe3,
     m-borderColor--secondary: #979797,
@@ -167,9 +167,9 @@ $themes: (
     m-textColor--secondary: #b8c1ca,
     m-textColor--tertiary: #797b82,
     m-bgColor--primary: #242a30,
-    m-bgColor--primaryDarker: #1e242a,
+    m-bgColor--primaryAlt: #1e242a,
     m-bgColor--secondary: #1a2025,
-    m-bgColor--secondaryLighter: #232b31,
+    m-bgColor--secondaryAlt: #232b31,
     m-bgColor--contrast: #d8d8d8,
     m-borderColor--primary: #414c57,
     m-borderColor--secondary: #979797,
@@ -303,9 +303,9 @@ $m-textColor--primary: 'm-textColor--primary';
 $m-textColor--secondary: 'm-textColor--secondary';
 $m-textColor--tertiary: 'm-textColor--tertiary';
 $m-bgColor--primary: 'm-bgColor--primary';
-$m-bgColor--primaryDarker: 'm-bgColor--primaryDarker';
+$m-bgColor--primaryAlt: 'm-bgColor--primaryAlt';
 $m-bgColor--secondary: 'm-bgColor--secondary';
-$m-bgColor--secondaryLighter: 'm-bgColor--secondaryLighter';
+$m-bgColor--secondaryAlt: 'm-bgColor--secondaryAlt';
 $m-bgColor--contrast: 'm-bgColor--contrast';
 $m-borderColor--primary: 'm-borderColor--primary';
 $m-borderColor--secondary: 'm-borderColor--secondary';
