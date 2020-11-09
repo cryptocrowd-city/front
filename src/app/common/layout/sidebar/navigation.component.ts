@@ -24,6 +24,8 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { UserMenuService } from '../v3-topbar/user-menu/user-menu.service';
+import { BuyTokensModalService } from '../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
+import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
 
 @Component({
   selector: 'm-sidebar--navigation',
@@ -68,7 +70,9 @@ export class SidebarNavigationComponent
     private featuresService: FeaturesService,
     private route: ActivatedRoute,
     private router: Router,
-    private userMenu: UserMenuService
+    private userMenu: UserMenuService,
+    private buyTokensModalService: BuyTokensModalService,
+    private web3WalletService: Web3WalletService
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -142,6 +146,12 @@ export class SidebarNavigationComponent
     if (this.layoutMode === 'phone') {
       this.isOpened = !this.isOpened;
     }
+  }
+
+  async buyTokens() {
+    this.toggle();
+    await this.web3WalletService.getCurrentWallet(true);
+    await this.buyTokensModalService.open();
   }
 
   setVisible(value: boolean): void {

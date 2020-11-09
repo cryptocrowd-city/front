@@ -49,6 +49,7 @@
     "@portis/web3": "^2.0.0-beta.59",
     "@sentry/browser": "^5.11.1",
     "@toruslabs/torus-embed": "^1.8.5",
+    "@transak/transak-sdk": "^1.0.25",
     "@walletconnect/web3-provider": "^1.2.2",
     "angular-plotly.js": "^2.0.0",
     "authereum": "^0.1.0",

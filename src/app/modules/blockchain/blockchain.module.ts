@@ -30,6 +30,8 @@ import { ModalsModule } from '../modals/modals.module';
 import { ConfigsService } from '../../common/services/configs.service';
 import { Web3ModalModule, Web3ModalService } from '@dorgtech/web3modal-angular';
 import { createWeb3ModalConfig } from '../../helpers/web3modal-configuration';
+import { BuyTokensModalService } from './token-purchase/v2/buy-tokens-modal.service';
+import { BuyTokensModalModule } from './token-purchase/v2/buy-tokens-modal.module';
 
 const cryptoRoutes: Routes = [
   {
@@ -51,6 +53,7 @@ const cryptoRoutes: Routes = [
     ReactiveFormsModule,
     ModalsModule,
     Web3ModalModule,
+    BuyTokensModalModule,
   ],
   declarations: [
     BlockchainConsoleComponent,
@@ -76,6 +79,7 @@ const cryptoRoutes: Routes = [
     TokenDistributionEventService,
     OffchainPaymentService,
     SendWyreService,
+    BuyTokensModalService,
   ],
   exports: [
     BlockchainWalletSelector,
