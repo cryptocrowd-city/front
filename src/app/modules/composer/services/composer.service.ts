@@ -771,6 +771,7 @@ export class ComposerService implements OnDestroy {
 
     // Priority service state elements
 
+    this.remind$.next(activity.remind_object || null);
     this.attachment$.next(attachment);
     this.richEmbed$.next(richEmbed);
     this.videoPoster$.next(videoPoster);
