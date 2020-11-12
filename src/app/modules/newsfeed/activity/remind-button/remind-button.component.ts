@@ -78,6 +78,7 @@ export class ActiviyRemindButtonComponent implements OnInit, OnDestroy {
     this.dismissPopover();
 
     const entity = this.service.entity$.getValue();
+    this.composerService.reset(); // Avoid dirty data https://gitlab.com/minds/engine/-/issues/1792
     this.composerService.remind$.next(entity);
     await this.composerService.post();
 
@@ -90,6 +91,7 @@ export class ActiviyRemindButtonComponent implements OnInit, OnDestroy {
     const entity = this.service.entity$.getValue();
     entity.boosted = false; // Set boosted to false to avoid compsoer showing boost label
 
+    this.composerService.reset(); // Avoid dirty data https://gitlab.com/minds/engine/-/issues/1792
     this.composerService.remind$.next(entity);
 
     if (this.service.displayOptions.isModal) {
