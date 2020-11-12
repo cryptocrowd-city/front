@@ -34,7 +34,7 @@
           height: 17px;
           width: 17px;
           @include m-theme() {
-            background-color: themed($m-bgColor--quinary);
+            background-color: themed($m-bgColor--contrast);
           }
           i {
             font-weight: 700;
@@ -140,7 +140,7 @@
     font-weight: normal;
 
     @include m-theme() {
-      color: themed($m-textColor--tertiary);
+      color: themed($m-textColor--secondary);
     }
 
     .material-icons {
@@ -155,7 +155,7 @@
     padding: 10px $activity-padding-lr;
 
     @include m-theme() {
-      border-bottom: 1px solid themed($m-borderColor--tertiary);
+      border-bottom: 1px solid themed($m-borderColor--primary);
     }
 
     > * {
