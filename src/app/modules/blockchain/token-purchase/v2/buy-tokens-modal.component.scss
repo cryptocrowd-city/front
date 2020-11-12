@@ -1,0 +1,122 @@
+@import 'defaults.scss';
+
+.m-buyTokens__body {
+  overflow: auto !important;
+  padding-top: 0px !important;
+}
+
+.m-buyTokens__header {
+  padding: 0 40px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  background-size: cover;
+  background-image: url('assets/photos/concert-color.png');
+}
+
+.m-buyTokensHeader__title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.m-buyTokensBody__footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 35px;
+}
+
+.m-buyTokensBody__termsCheck {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  & > input {
+    margin-left: 0;
+    margin-right: 10px;
+  }
+}
+
+.m-buyTokensBody__paymentMethod {
+  margin: 26px 0 15px 0;
+}
+
+.m-buyTokensBodyPaymentMethod__text {
+  font-weight: 500;
+  font-size: 16px;
+
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
+}
+
+.m-buyTokensBody__estimate {
+  margin: 20px 0;
+  font-size: 15px;
+  font-weight: 500;
+
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
+}
+
+.m-buyTokensBody__estimate--primary {
+  margin: 25px 0;
+
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+  }
+}
+
+.m-buyTokensBody__buttons {
+  width: 100%;
+  display: flex;
+}
+
+.m-buyTokensBodyTermsCheck__label {
+  font-size: 15px;
+}
+
+.m-buyTokensFooter_btn {
+  font-size: 16px;
+  font-weight: 500;
+
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+  }
+}
+
+.m-buyTokensBody__button--selected {
+  @include m-theme() {
+    background-color: themed($m-bgColor--primary) !important;
+  }
+}
+
+.m-buyTokensButtons__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  height: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 500;
+  -webkit-: background-color 0.2s ease;
+  transition: background-color 0.2s ease;
+
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--secondary);
+    color: themed($m-textColor--primary);
+    background-color: themed($m-bgColor--tertiary);
+  }
+
+  &:first-child {
+    border-radius: 5px 0 0 5px;
+  }
+
+  &:last-child {
+    border-left: 0 !important;
+    border-radius: 0 5px 5px 0;
+  }
+}

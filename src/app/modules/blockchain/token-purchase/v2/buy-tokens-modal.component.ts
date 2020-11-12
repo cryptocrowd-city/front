@@ -1,59 +1,40 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TransakService } from './transak.service';
 import { UniswapModalService } from './uniswap/uniswap-modal.service';
 
+type PaymentMethod = 'fiat' | 'crypto' | '';
+
 @Component({
-  selector: 'm-buy_tokens',
+  selector: 'm-buyTokens__modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'buy-tokens-modal.component.html',
-  styleUrls: ['./buy-tokens-modal.component.scss'],
 })
-export class BuyTokensModalComponent implements OnInit {
-  ofac: boolean = false;
-  use: boolean = false;
+export class BuyTokensModalComponent {
   terms: boolean = false;
+  paymentMethod: PaymentMethod = '';
 
   constructor(
     private transakService: TransakService,
     private uniswapModalService: UniswapModalService
-  ) {
-    console.log('HEY');
-  }
-
-  /**
-   * Modal options
-   *
-   * @param onSave
-   * @param onDismissIntent
-   */
-  set opts({ onSave, onDismissIntent }) {
-    this.onSave = onSave || (() => {});
-    this.onDismissIntent = onDismissIntent || (() => {});
-  }
-
-  ngOnInit() {
-    console.log('ON INIT');
-  }
-
-  /**
-   * Modal save handler
-   */
-  onSave: (any) => any = () => {};
-
-  /**
-   * Modal dismiss intent handler
-   */
-  onDismissIntent: () => void = () => {};
+  ) {}
 
   canContinue() {
-    return this.terms;
+    return this.terms && this.paymentMethod;
   }
 
-  async payWithTransak() {
-    await this.transakService.open();
+  choosePaymentMethod(paymentMethod: PaymentMethod) {
+    if (paymentMethod === this.paymentMethod) {
+      this.paymentMethod = '';
+    } else {
+      this.paymentMethod = paymentMethod;
+    }
   }
 
-  async payWithCrypto() {
-    await this.uniswapModalService.open();
+  async openPaymentModal() {
+    if (this.paymentMethod === 'crypto') {
+      await this.uniswapModalService.open();
+    } else {
+      await this.transakService.open();
+    }
   }
 }

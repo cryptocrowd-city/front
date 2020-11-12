@@ -17,7 +17,7 @@ export class TransakService {
       themeColor: '000000',
       hostURL: window.location.origin,
       widgetHeight: '650px',
-      widgetWidth: '450px',
+      widgetWidth: '350px',
     });
 
     return await new Promise((resolve, reject) => {

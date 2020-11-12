@@ -3,7 +3,6 @@ import { Subject } from 'rxjs';
 import {
   StackableModalEvent,
   StackableModalService,
-  StackableModalState,
 } from '../../../../services/ux/stackable-modal.service';
 import { BuyTokensModalComponent } from './buy-tokens-modal.component';
 
@@ -40,10 +39,6 @@ export class BuyTokensModalService {
         },
       })
       .toPromise();
-
-    if (evt.state === StackableModalState.Dismissed && !onSuccess$.isStopped) {
-      throw 'Dismissed modal';
-    }
 
     return onSuccess$.toPromise();
   }

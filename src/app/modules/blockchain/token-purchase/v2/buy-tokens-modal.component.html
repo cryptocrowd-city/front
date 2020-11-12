@@ -1,43 +1,62 @@
 <div class="m-modalV2__inner">
-  <div class="m-modalV2__header">
-    Buy Tokens
+  <div class="m-buyTokens__header">
+    <span class="m-buyTokensHeader__title">Buy Tokens</span>
   </div>
-  <div class="m-modalV2__body">
-    <div>
-      <span>Payment Method</span>
+  <div class="m-modalV2__body m-buyTokens__body">
+    <div class="m-buyTokensBody__paymentMethod">
+      <span class="m-buyTokensBodyPaymentMethod__text">Payment Method</span>
     </div>
-    <button (click)="payWithTransak()">Card</button>
-    <button>Bank</button>
-    <button (click)="payWithCrypto()">Crypto</button>
-    <div>
-      <table>
-        <tr>
-          <td>
-            <input id="terms-check" type="checkbox" [(ngModel)]="terms" />
-          </td>
-          <td class="m-blockchain--marketing--pledge--check-label">
-            <label for="terms-check" i18n="@@M__PURCHASE_TERMS">
-              I have read and accept the
-              <a
-                href="https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf"
-                target="_blank"
-                >Terms Of Sale</a
-              >
-              for the Minds Token
-            </label>
-          </td>
-        </tr>
-      </table>
+    <div class="m-buyTokensBody__buttons">
+      <div
+        class="m-buyTokensButtons__button"
+        [ngClass]="{
+          'm-buyTokensBody__button--selected': paymentMethod === 'fiat'
+        }"
+        (click)="choosePaymentMethod('fiat')"
+      >
+        Card/Bank
+      </div>
+      <div
+        class="m-buyTokensButtons__button"
+        [ngClass]="{
+          'm-buyTokensBody__button--selected': paymentMethod === 'crypto'
+        }"
+        (click)="choosePaymentMethod('crypto')"
+      >
+        Crypto
+      </div>
     </div>
-  </div>
-  <div class="m-modalV2__toolbar">
-    <a href="/tokens">Learn more</a>
-    <button
-      class="m-btn m-btn--slim m-btn--action"
-      [disabled]="!canContinue()"
-      i18n="@@M__PURCHASE_BUTTON"
-    >
-      Continue
-    </button>
+    <div class="m-buyTokensBody__estimate">
+      Delivery estimate:
+      <span class="m-buyTokensBody__estimate--primary">
+        1-2 mins
+      </span>
+    </div>
+    <div class="m-buyTokensBody__termsCheck">
+      <input id="terms-check" type="checkbox" [(ngModel)]="terms" />
+      <label
+        class="m-buyTokensBodyTermsCheck__label"
+        for="terms-check"
+        i18n="@@M__PURCHASE_TERMS"
+      >
+        I have read and accept the
+        <a
+          href="https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf"
+          target="_blank"
+          >Terms Of Sale
+        </a>
+        for the Minds Token
+      </label>
+    </div>
+    <div class="m-buyTokensBody__footer">
+      <button
+        class="m-btn m-btn--action m-buyTokensFooter_btn"
+        [disabled]="!canContinue()"
+        (click)="openPaymentModal()"
+        i18n="@@M__PURCHASE_BUTTON"
+      >
+        Continue
+      </button>
+    </div>
   </div>
 </div>
