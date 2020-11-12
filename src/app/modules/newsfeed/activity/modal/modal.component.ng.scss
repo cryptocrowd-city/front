@@ -237,7 +237,7 @@ $modal-padding: 20px;
     word-wrap: break-word;
     box-sizing: border-box;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
       border-left: 1px solid themed($m-borderColor--primary);
     }
 
