@@ -22,6 +22,7 @@ import {
   ACTIVITY_OWNERBLOCK_HEIGHT,
   ACTIVITY_TOOLBAR_HEIGHT,
   ACTIVITY_GRID_LAYOUT_MAX_HEIGHT,
+  ACTIVITY_SHORT_STATUS_MAX_LENGTH,
   ActivityEntity,
   ActivityService,
 } from '../activity.service';
@@ -415,6 +416,10 @@ export class ActivityContentComponent
     this.activityModalCreator.create(this.entity, this.injector);
   }
 
+  onTranslate(e: Event): void {
+    this.service.displayOptions.showTranslation === false;
+  }
+
   onImageError(e: Event): void {}
 
   get maxMessageHeight(): number {
@@ -434,5 +439,12 @@ export class ActivityContentComponent
     } else {
       return this.service.displayOptions.fixedHeight ? 80 : 320;
     }
+  }
+
+  get shortStatus(): boolean {
+    return (
+      this.entity.content_type === 'status' &&
+      this.message.length <= ACTIVITY_SHORT_STATUS_MAX_LENGTH
+    );
   }
 }

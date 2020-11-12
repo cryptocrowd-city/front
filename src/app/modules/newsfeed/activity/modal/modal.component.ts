@@ -12,7 +12,11 @@ import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
 import { BehaviorSubject, Subscription, Observable } from 'rxjs';
 import { SlowFadeAnimation } from '../../../../animations';
-import { ActivityService, ActivityEntity } from '../activity.service';
+import {
+  ActivityService,
+  ActivityEntity,
+  ACTIVITY_SHORT_STATUS_MAX_LENGTH,
+} from '../activity.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
@@ -71,13 +75,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     this.horizontalFeed.setBaseEntity(params.entity);
   }
 
-  private readonly allowedActivityTypes = [
-    // No status posts or reminds
-    'rich-embed', // includes blogs
-    'video',
-    'image',
-  ];
-
   entity: any;
   entitySubscription: Subscription;
   routerSubscription: Subscription;
@@ -107,8 +104,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   entityWidth: number = 0;
   entityHeight: number = 0;
 
-  isPaywall2020: boolean = false;
-
   constructor(
     @Self() public activityService: ActivityService,
     public client: Client,
@@ -134,24 +129,14 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     // Prevent dismissal of modal when it's just been opened
     this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
 
-    this.isPaywall2020 = this.features.has('paywall-2020');
-
     this.entitySubscription = this.activityService.entity$.subscribe(
       (entity: ActivityEntity) => {
         /**
-         * Modal doesn't handle reminds or status posts
+         * Modal doesn't handle reminds
          */
 
         if (!entity) {
           return;
-        }
-
-        if (
-          entity.activity_type &&
-          !this.allowedActivityTypes.includes(entity.activity_type)
-        ) {
-          // TODO this should go to next activity in horizontal feed instead
-          this.service.dismiss();
         }
 
         this.entity = entity;
@@ -372,6 +357,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
         break;
       case 'video':
       case 'rich-embed':
+      case 'status':
         let providedCustomWidth,
           providedCustomHeight,
           providedWidth,
@@ -581,5 +567,31 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
 
   get modalWidth(): number {
     return this.stageWidth + ACTIVITY_MODAL_CONTENT_WIDTH;
+  }
+
+  get showContentMessageOnRight(): boolean {
+    return (
+      (this.entity.content_type === 'image' ||
+        this.entity.content_type === 'video') &&
+      (this.entity.title || this.entity.message)
+    );
+  }
+
+  get mediaWrapperHeight(): string {
+    if (this.entity.activity_type === 'status') {
+      return '100%';
+    }
+    return this.mediaHeight === 0
+      ? ACTIVITY_MODAL_MIN_STAGE_HEIGHT + 'px'
+      : this.mediaHeight + 'px';
+  }
+
+  get shortStatus(): boolean {
+    return (
+      this.entity &&
+      this.entity.content_type === 'status' &&
+      this.entity.message &&
+      this.entity.message.length <= ACTIVITY_SHORT_STATUS_MAX_LENGTH
+    );
   }
 }

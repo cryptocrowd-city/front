@@ -37,15 +37,18 @@
         <div class="m-activityModal__stage">
           <div
             class="m-activityModal__mediaWrapper"
-            [style.width]="mediaWidth + 'px'"
-            [style.height]="
-              mediaHeight === 0
-                ? ACTIVITY_MODAL_MIN_STAGE_HEIGHT + 'px'
-                : mediaHeight + 'px'
+            [style.width]="
+              entity.activity_type !== 'status' ? mediaWidth + 'px' : '100%'
             "
+            [style.height]="mediaWrapperHeight"
             [ngClass]="{
               'm-activityModal__mediaWrapper--image':
                 entity.activity_type === 'image',
+              'm-activityModal__mediaWrapper--status':
+                entity.activity_type === 'status',
+              'm-activityModal__mediaWrapper--statusShort': shortStatus,
+              'm-activityModal__mediaWrapper--statusLong':
+                entity.activity_type === 'status' && !shortStatus,
               'm-activityModal__mediaWrapper--video':
                 entity.activity_type === 'video',
               'm-activityModal__mediaWrapper--richEmbed':
@@ -55,7 +58,7 @@
           >
             <m-activity__content
               *ngIf="activityService.shouldShowContent$ | async"
-              [hideText]="true"
+              [hideText]="entity.content_type !== 'status'"
               [showPaywall]="activityService.shouldShowPaywall$ | async"
               [showPaywallBadge]="
                 activityService.shouldShowPaywallBadge$ | async
@@ -64,12 +67,6 @@
               [ngClass]="{ missingDimensions: mediaHeight === 0 }"
             ></m-activity__content>
           </div>
-          <!-- this shows the old paywall -->
-          <ng-container *mIfFeature="'!paywall-2020'">
-            <m-activity__paywall
-              *ngIf="activityService.shouldShowPaywall$ | async"
-            ></m-activity__paywall
-          ></ng-container>
           <m-activity__nsfwConsent
             *ngIf="activityService.shouldShowNsfwConsent$ | async"
           >
@@ -88,34 +85,49 @@
       <!-- -------------------------------------------------- -->
       <div class="m-activityModal__contentContainer">
         <div class="m-activityModal__contentBody">
+          <!-- OWNER BLOCK -->
+          <m-activity__ownerBlock>
+            <ng-container class="m-activityOwnerBlock__right">
+              <m-activity__metrics></m-activity__metrics>
+
+              <ng-container *ngIf="entity">
+                <span
+                  *ngIf="entity.pinned"
+                  class="m-activity__flag m-activity__flag--pinned"
+                  data-cy="m-activity__pinnedFlag"
+                >
+                  <span>Pinned</span>
+                </span>
+              </ng-container>
+
+              <m-activity__menu
+                (deleted)="delete()"
+                *ngIf="activityService.isLoggedIn$ | async"
+              ></m-activity__menu>
+            </ng-container>
+          </m-activity__ownerBlock>
+
+          <!-- TOOLBAR -->
+          <div class="m-activityModal__toolbarWrapper">
+            <m-activity__toolbar
+              *ngIf="activityService.displayOptions.showToolbar"
+            ></m-activity__toolbar>
+          </div>
+          <!-- --------------- -->
+          <!-- SCROLLABLE AREA -->
+          <!-- --------------- -->
           <div
             class="m-activityModal__scrollableAreaContainer m-activityModal__contentAfter"
           >
-            <div class="m-activityModal__scrollableAreaWrapper">
-              <!-- OWNER BLOCK -->
-              <m-activity__ownerBlock>
-                <ng-container class="m-activityOwnerBlock__right">
-                  <m-activity__metrics></m-activity__metrics>
-
-                  <ng-container *ngIf="entity">
-                    <span
-                      *ngIf="entity.pinned"
-                      class="m-activity__flag m-activity__flag--pinned"
-                      data-cy="m-activity__pinnedFlag"
-                    >
-                      <span>Pinned</span>
-                    </span>
-                  </ng-container>
-
-                  <m-activity__menu
-                    (deleted)="delete()"
-                    *ngIf="activityService.isLoggedIn$ | async"
-                  ></m-activity__menu>
-                </ng-container>
-              </m-activity__ownerBlock>
+            <div
+              class="m-activityModal__scrollableAreaBody m-disableScrollbars"
+            >
               <!-- MESSAGE -->
               <m-activity__content
-                *ngIf="activityService.shouldShowContent$ | async"
+                *ngIf="
+                  (activityService.shouldShowContent$ | async) &&
+                  showContentMessageOnRight
+                "
                 [hideMedia]="true"
                 [showPaywall]="activityService.shouldShowPaywall$ | async"
                 [showPaywallBadge]="
@@ -123,26 +135,41 @@
                 "
               >
               </m-activity__content>
-              <!-- TOOLBAR -->
-              <div class="m-activityModal__toolbarWrapper">
-                <m-activity__toolbar
-                  *ngIf="activityService.displayOptions.showToolbar"
-                ></m-activity__toolbar>
-              </div>
-              <!-- COMMENTS -->
-              <div class="m-activityModal__comments" *ngIf="entity.guid">
+
+              <!-- COMMENTS TREE -->
+              <div
+                class="m-activityModal__comments m-activityModal__comments--tree"
+                *ngIf="entity.guid"
+              >
                 <ng-container *mIfBrowser>
                   <m-comments__entityOutlet
                     *ngIf="activityService.displayOptions.showComments"
                     [entity]="activityService.entity$ | async"
                     [canDelete]="activityService.canDelete$ | async"
                     [showOnlyPoster]="false"
+                    [showOnlyTree]="true"
                     [fixedHeight]="false"
                   >
                   </m-comments__entityOutlet>
                 </ng-container>
               </div>
             </div>
+          </div>
+          <!-- COMMENTS POSTER -->
+          <div
+            class="m-activityModal__comments m-activityModal__comments--poster"
+            *ngIf="entity.guid"
+          >
+            <ng-container *mIfBrowser>
+              <m-comments__entityOutlet
+                *ngIf="activityService.displayOptions.showComments"
+                [entity]="activityService.entity$ | async"
+                [canDelete]="activityService.canDelete$ | async"
+                [showOnlyPoster]="true"
+                [fixedHeight]="false"
+              >
+              </m-comments__entityOutlet>
+            </ng-container>
           </div>
         </div>
       </div>

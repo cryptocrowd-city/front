@@ -70,6 +70,9 @@ export const ACTIVITY_FIXED_HEIGHT_RATIO =
 // Constants for grid layout
 export const ACTIVITY_GRID_LAYOUT_MAX_HEIGHT = 200;
 
+// Constants for content-specific displays
+export const ACTIVITY_SHORT_STATUS_MAX_LENGTH = 300;
+
 //export const ACTIVITY_FIXED_HEIGHT_CONTENT_HEIGHT = ACTIVITY_FIXED_HEIGHT_HEIGHT - ACTIVITY_OWNERBLOCK_HEIGHT;
 
 @Injectable()

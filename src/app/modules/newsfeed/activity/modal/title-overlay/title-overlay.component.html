@@ -12,7 +12,7 @@
     *ngIf="entity.activity_type !== 'rich-embed'"
   >
     <!-- TITLE -->
-    <span
+    <!-- <span
       class="m-activityModal__overlayTitle m-activityModal__overlayTitle--notFullscreen"
       *ngIf="!(service.isFullscreen$ | async)"
     >
@@ -21,7 +21,7 @@
         (click)="$event.stopPropagation()"
         >{{ title }}</a
       >
-    </span>
+    </span> -->
     <!-- PAYWALL BADGE -->
     <m-paywallBadge [entity]="entity"></m-paywallBadge>
     <!-- FULLSCREEN -->
