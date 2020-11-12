@@ -37,7 +37,7 @@ export class ActivityToolbarComponent {
 
     this.paywallBadgeSubscription = this.service.shouldShowPaywallBadge$.subscribe(
       (showBadge: boolean) => {
-        this.allowReminds = !showBadge;
+        // this.allowReminds = !showBadge;
       }
     );
   }
