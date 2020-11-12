@@ -9,7 +9,7 @@ const DEFAULT_META_TITLE = 'Minds';
 const DEFAULT_META_DESCRIPTION = '...';
 export const MIN_METRIC_FOR_ROBOTS = 5;
 const DEFAULT_META_AUTHOR = 'Minds';
-const DEFAULT_META_OG_AUTHOR = 'Minds';
+
 @Injectable()
 export class MetaService {
   private counter: number;
@@ -228,7 +228,7 @@ export class MetaService {
       .setOgUrl(data.ogUrl || this.location.path())
       .setOgImage(data.ogImage || null, { width: 0, height: 0 })
       .setAuthor(data.author || DEFAULT_META_AUTHOR)
-      .setOgAuthor(data.ogAuthor || DEFAULT_META_OG_AUTHOR)
+      .setOgAuthor(data.ogAuthor || DEFAULT_META_AUTHOR)
       .setCanonicalUrl(data.canonicalUrl || '') // Only use canonical when required
       .setRobots(data.robots || 'all')
       .setNsfw(false)
