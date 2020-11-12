@@ -120,3 +120,13 @@
     border-radius: 0 5px 5px 0;
   }
 }
+
+.m-buyTokensBody__uniswapWarning {
+  font-size: 15px;
+  margin-top: 20px;
+  display: block;
+
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+  }
+}
