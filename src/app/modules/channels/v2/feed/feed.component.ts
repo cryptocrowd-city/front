@@ -15,12 +15,13 @@ import { ChannelsV2Service } from '../channels-v2.service';
 import { FeedFilterType } from '../../../../common/components/feed-filter/feed-filter.component';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { FeedsUpdateService } from '../../../../common/services/feeds-update.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { Session } from '../../../../services/session';
 import { ThemeService } from '../../../../common/services/theme.service';
 import { ModalService } from '../../../composer/components/modal/modal.service';
 import { ComposerService } from '../../../composer/services/composer.service';
+import { catchError, take } from 'rxjs/operators';
 
 /**
  * Channel feed component
@@ -33,6 +34,8 @@ import { ComposerService } from '../../../composer/services/composer.service';
   providers: [FeedService, FeedsService, ComposerService],
 })
 export class ChannelFeedComponent implements OnDestroy, OnInit {
+  private subscriptions: Subscription[] = [];
+
   isGrid: boolean = false;
 
   @Input('layout') set _layout(layout: string) {
@@ -68,16 +71,6 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
   }
 
   /**
-   * Subscription to channel's GUID
-   */
-  protected guidSubscription: Subscription;
-
-  /**
-   * Listening for new posts.
-   */
-  private feedsUpdatedSubscription: Subscription;
-
-  /**
    * Constructor
    * @param feed
    * @param service
@@ -97,8 +90,8 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     if (isPlatformBrowser(platformId)) {
-      this.guidSubscription = this.service.guid$.subscribe(guid =>
-        this.feed.guid$.next(guid)
+      this.subscriptions.push(
+        this.service.guid$.subscribe(guid => this.feed.guid$.next(guid))
       );
     }
   }
@@ -122,14 +115,14 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    this.feedsUpdatedSubscription = this.feedsUpdate.postEmitter.subscribe(
-      newPost => {
+    this.subscriptions.push(
+      this.feedsUpdate.postEmitter.subscribe(newPost => {
         if (
           this.feed.guid$.getValue() === this.session.getLoggedInUser().guid
         ) {
           this.prepend(newPost);
         }
-      }
+      })
     );
   }
 
@@ -162,11 +155,8 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
    * Destroy lifecycle hook
    */
   ngOnDestroy(): void {
-    if (this.guidSubscription) {
-      this.guidSubscription.unsubscribe();
-    }
-    if (this.feedsUpdatedSubscription) {
-      this.feedsUpdatedSubscription.unsubscribe();
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
   }
 
@@ -179,6 +169,30 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     this.router.navigate(['/', this.service.username$.getValue(), filter], {
       preserveQueryParams: true,
     });
+  }
+
+  /**
+   * Either opens composer modal or opens blogs
+   * @returns { Promise<void> } - awaitable.
+   */
+  public async onFirstPostButtonClick(): Promise<void> {
+    this.subscriptions.push(
+      this.feed.type$
+        .pipe(
+          take(1),
+          catchError(error => {
+            console.error(error);
+            return of(null);
+          })
+        )
+        .subscribe((filter: FeedFilterType) => {
+          if (filter === 'blogs') {
+            this.router.navigate(['/blog/v2/edit/new']);
+            return;
+          }
+          this.openComposerModal();
+        })
+    );
   }
 
   /**
