@@ -41,7 +41,7 @@ export class ActiviyRemindButtonComponent implements OnInit, OnDestroy {
       entity.remind_users &&
       entity.remind_users.filter(
         user => user.guid === this.session.getLoggedInUser().guid
-      )
+      ).length > 0
     );
   }
 
