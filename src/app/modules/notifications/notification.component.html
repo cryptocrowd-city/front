@@ -599,9 +599,7 @@
       >
         <p *ngIf="notification.entityObj.title">
           <ng-container *ngTemplateOutlet="remindPrefix"></ng-container>
-          <ng-container
-            i18n="@@NOTIFICATIONS__NOTIFICATION__REMIND__REMINDED_ACTIVITY"
-          >
+          <ng-container>
             <span class="pseudo-link mdl-color-text--blue-grey-400">{{
               notification.entityObj.title | excerpt
             }}</span></ng-container
@@ -611,7 +609,7 @@
         <p *ngIf="!notification.entityObj.title">
           <ng-container *ngTemplateOutlet="remindPrefix"></ng-container>
           <ng-container
-            i18n="@@NOTIFICATIONS__NOTIFICATION__REMIND__REMINDED_OWN_ACTIVITY"
+            i18n="@@NOTIFICATIONS__NOTIFICATION__REMIND__REMINDED_YOUR_POST"
           >
             <span class="pseudo-link mdl-color-text--blue-grey-400"
               >your post</span
