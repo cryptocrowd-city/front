@@ -4,21 +4,30 @@ import {
   StackableModalEvent,
   StackableModalService,
 } from '../../../../../services/ux/stackable-modal.service';
-import { UniswapModalComponent } from './uniswap-modal.component';
+import { OrderReceivedModalComponent } from './order-received-modal.component';
+
+export interface OrderData {
+  paymentMethod: 'Card' | 'Bank';
+  tokenAmount: number;
+  paymentAmount: number;
+  currency: string;
+}
 
 @Injectable()
-export class UniswapModalService {
+export class OrderReceivedModalService {
   constructor(
     private stackableModal: StackableModalService,
     private compiler: Compiler,
     private injector: Injector
   ) {}
 
-  async open(): Promise<any> {
-    const { UniswapModalModule } = await import('./uniswap-modal.module');
+  async open(orderData: OrderData): Promise<any> {
+    const { OrderReceivedModalModule } = await import(
+      './order-received-modal.module'
+    );
 
     const moduleFactory = await this.compiler.compileModuleAsync(
-      UniswapModalModule
+      OrderReceivedModalModule
     );
     const moduleRef = moduleFactory.create(this.injector);
 
@@ -27,7 +36,7 @@ export class UniswapModalService {
     const onSuccess$: Subject<any> = new Subject();
 
     const evt: StackableModalEvent = await this.stackableModal
-      .present(UniswapModalComponent, null, {
+      .present(OrderReceivedModalComponent, orderData, {
         wrapperClass: 'm-modalV2__wrapper',
         onComplete: (result: any) => {
           onSuccess$.next(result);

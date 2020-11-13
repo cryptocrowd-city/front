@@ -179,6 +179,7 @@ import { PoweredByComponent } from './components/powered-by/powered-by.component
 import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-ellipsis.component';
 import { MarkedDirective } from './directives/marked.directive';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
+import { ConcertColorsModalComponent } from './components/concert-colors-modal/concert-colors-modal.component';
 
 const routes: Routes = [
   {
@@ -332,6 +333,7 @@ const routes: Routes = [
     LoadingEllipsisComponent,
     MarkedDirective,
     DragAndDropDirective,
+    ConcertColorsModalComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -463,6 +465,7 @@ const routes: Routes = [
     LoadingEllipsisComponent,
     MarkedDirective,
     DragAndDropDirective,
+    ConcertColorsModalComponent,
   ],
   providers: [
     SiteService,

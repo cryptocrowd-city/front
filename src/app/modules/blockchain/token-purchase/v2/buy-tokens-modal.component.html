@@ -1,7 +1,4 @@
-<div class="m-modalV2__inner">
-  <div class="m-buyTokens__header">
-    <span class="m-buyTokensHeader__title">Buy Tokens</span>
-  </div>
+<m-concertColors__modal title="Buy Tokens">
   <div class="m-modalV2__body m-buyTokens__body">
     <div class="m-buyTokensBody__paymentMethod">
       <span class="m-buyTokensBodyPaymentMethod__text">Payment Method</span>
@@ -10,11 +7,20 @@
       <div
         class="m-buyTokensButtons__button"
         [ngClass]="{
-          'm-buyTokensBody__button--selected': paymentMethod === 'fiat'
+          'm-buyTokensBody__button--selected': paymentMethod === 'card'
         }"
-        (click)="choosePaymentMethod('fiat')"
+        (click)="choosePaymentMethod('card')"
       >
-        Card/Bank
+        Card
+      </div>
+      <div
+        class="m-buyTokensButtons__button"
+        [ngClass]="{
+          'm-buyTokensBody__button--selected': paymentMethod === 'bank'
+        }"
+        (click)="choosePaymentMethod('bank')"
+      >
+        Bank
       </div>
       <div
         class="m-buyTokensButtons__button"
@@ -29,7 +35,7 @@
     <div class="m-buyTokensBody__estimate">
       Delivery estimate:
       <span class="m-buyTokensBody__estimate--primary">
-        1-2 mins
+        1-2 {{ paymentMethod === 'bank' ? 'days' : 'mins' }}
       </span>
     </div>
     <div class="m-buyTokensBody__termsCheck">
@@ -56,8 +62,11 @@
       Please check your wallet for transaction updates
     </span>
     <div class="m-buyTokensBody__footer">
+      <a class="m-buyTokensFooter__learnMoreText" href="/tokens">
+        Learn more about tokens
+      </a>
       <button
-        class="m-btn m-btn--action m-buyTokensFooter_btn"
+        class="m-btn m-btn--action m-buyTokensFooter__btn"
         [disabled]="!canContinue()"
         (click)="openPaymentModal()"
         i18n="@@M__PURCHASE_BUTTON"
@@ -66,4 +75,4 @@
       </button>
     </div>
   </div>
-</div>
+</m-concertColors__modal>

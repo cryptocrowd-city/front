@@ -1,0 +1,16 @@
+@import 'defaults.scss';
+
+.m-concertColors__header {
+  padding: 0 40px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  background-size: cover;
+  background-image: url('assets/photos/concert-color.png');
+}
+
+.m-concertColorsHeader__title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff;
+}
