@@ -38,9 +38,9 @@ export class ActivityNsfwConsentComponent {
     })
   );
 
-  // @HostBinding('m-activityNsfwConsent--minimalMode') get minimalMode() {
-  //   return this.service.displayOptions.minimalMode;
-  // }
+  @HostBinding('class.m-activityNsfwConsent--minimalMode') get minimalMode() {
+    return this.service.displayOptions.minimalMode;
+  }
 
   constructor(public service: ActivityService) {}
 
