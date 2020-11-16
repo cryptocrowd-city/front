@@ -86,6 +86,9 @@ $modal-padding: 20px;
             span {
               font-size: 24px;
             }
+            m-read-more--button {
+              display: none;
+            }
           }
           &:not(.m-activityContent__message--short) {
             line-height: 21px;
@@ -104,12 +107,66 @@ $modal-padding: 20px;
 
   .m-activityModal__mediaWrapper--richEmbed {
     width: 100%;
+    overflow-y: scroll;
+    overflow-y: overlay;
 
-    // Don't show youtube meta
-    &:not(.isBlog) {
-      ::ng-deep {
+    @extend %disable-scrollbars;
+
+    ::ng-deep {
+      m-activity__content {
+        line-height: initial;
+
+        .m-activityContent__media--richEmbed {
+          img {
+            max-height: 400px; //ojm this is just a test
+          }
+        }
+
         .meta {
-          display: none;
+          padding: $modal-padding $modal-padding * 3;
+
+          @include m-theme() {
+            background-color: themed($m-bgColor--secondary);
+          }
+        }
+        .m-rich-embed--title {
+          @include m-theme() {
+            color: themed($m-textColor--primary) !important;
+          }
+        }
+        .m-activityContent__messageWrapper {
+          line-height: 22px;
+          text-align: left;
+          padding: $modal-padding $modal-padding * 3;
+        }
+      }
+    }
+
+    &.isBlog {
+      ::ng-deep {
+        m-activity__content {
+          .meta {
+            @include m-theme() {
+              background-color: themed($m-bgColor--primary);
+            }
+            .m-rich-embed--title {
+              font-size: 24px;
+              font-weight: 800;
+              margin-bottom: 15px;
+            }
+            .m-blurb {
+              display: block;
+              font-size: 17px;
+              line-height: 20px;
+              margin-bottom: 0;
+              @include m-theme() {
+                color: themed($m-textColor--secondary);
+              }
+            }
+            .m-url {
+              display: none;
+            }
+          }
         }
       }
     }
@@ -200,6 +257,10 @@ $modal-padding: 20px;
       }
 
       ::ng-deep minds-rich-embed {
+        .m-rich-embed {
+          display: flex;
+          flex-direction: column;
+        }
         .m-rich-embed-src a:first-child {
           cursor: default;
         }
@@ -312,9 +373,15 @@ $modal-padding: 20px;
 
     ::ng-deep {
       m-activity__content {
+        overflow: visible; //ojm debatable
+
         box-sizing: border-box;
         margin-top: 5px;
         padding: $modal-padding;
+
+        .m-read-more--button {
+          padding-bottom: 0;
+        }
         .m-activityContent__descriptionWrapper,
         .m-activityContent__message {
           padding: 0;
@@ -356,6 +423,16 @@ $modal-padding: 20px;
           }
         }
       }
+      ::ng-deep m-comment {
+        .m-comment {
+          .minds-avatar {
+            margin-left: 0;
+            @include m-theme() {
+              background-color: none;
+            }
+          }
+        }
+      }
       .m-activityModal__comments {
         padding: 0 $modal-padding $modal-padding;
 
@@ -368,6 +445,9 @@ $modal-padding: 20px;
           .m-comment--poster,
           .m-comment--poster > * {
             padding: 0;
+          }
+          textarea {
+            max-height: 80%;
           }
         }
 

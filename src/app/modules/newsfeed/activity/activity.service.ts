@@ -53,6 +53,8 @@ export type ActivityEntity = {
   paywall_unlocked?: boolean;
   permaweb_id?: string;
   type?: string;
+  description?: string; // xml for inline rich-embeds
+  excerpt?: string; // for blogs
 };
 
 // Constants of blocks

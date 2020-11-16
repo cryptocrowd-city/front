@@ -209,14 +209,19 @@ export class ActivityContentComponent
     if (
       this.entity.perma_url &&
       (!this.entity.message || this.entity.title === this.entity.message)
-    )
+    ) {
       return '';
+    }
 
     return this.entity.message || this.entity.title;
   }
 
   get isRichEmbed(): boolean {
     return !!this.entity.perma_url && !this.isVideo && !this.isImage;
+  }
+
+  get isBlog(): boolean {
+    return this.entity.content_type === 'blog';
   }
 
   get mediaTitle(): string {
@@ -405,12 +410,13 @@ export class ActivityContentComponent
       return;
     }
 
+    // Don't open modal for minds links
     if (
       this.entity.perma_url &&
       this.entity.perma_url.indexOf(this.siteUrl) === 0
     ) {
       this.redirectService.redirect(this.entity.perma_url);
-      return; // Don't open modal for minds links
+      return;
     }
 
     this.activityModalCreator.create(this.entity, this.injector);
@@ -436,9 +442,12 @@ export class ActivityContentComponent
   get maxDescHeight(): number {
     if (this.service.displayOptions.minimalMode) {
       return ACTIVITY_GRID_LAYOUT_MAX_HEIGHT;
-    } else {
-      return this.service.displayOptions.fixedHeight ? 80 : 320;
+    } else if (this.service.displayOptions.fixedHeight) {
+      return 80;
+    } else if (this.isModal) {
+      return 115;
     }
+    return 320;
   }
 
   get shortStatus(): boolean {

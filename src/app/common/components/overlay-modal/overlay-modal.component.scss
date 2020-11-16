@@ -9,7 +9,7 @@ m-overlay-modal {
   height: 100%;
   width: 100%;
   overflow: scroll;
-  overflow: overlay;
+  overflow: overlay !important;
   @include z-index(modal);
 
   .m-overlay-modal--backdrop {

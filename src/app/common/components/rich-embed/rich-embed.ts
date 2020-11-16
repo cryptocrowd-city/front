@@ -1,8 +1,6 @@
 import {
   Component,
-  ElementRef,
   ChangeDetectorRef,
-  ChangeDetectionStrategy,
   Output,
   EventEmitter,
   Input,
@@ -39,7 +37,9 @@ export class MindsRichEmbed {
   @Input() set isModal(value: boolean) {
     if (value) {
       this.modalRequestSubscribed = false;
-      if (this.mediaSource !== 'minds') this.embeddedInline = true;
+      if (this.mediaSource !== 'minds') {
+        this.embeddedInline = true;
+      }
       this.detectChanges();
     }
   }

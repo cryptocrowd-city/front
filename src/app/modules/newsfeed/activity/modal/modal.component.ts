@@ -98,7 +98,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   stageHeight: number;
   maxStageWidth: number;
 
-  mediaWidth: number;
+  mediaWidth: number = 0;
   mediaHeight: number;
 
   entityWidth: number = 0;
@@ -352,7 +352,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
         this.entityHeight = this.entity.custom_data[0].height;
         break;
       case 'blog':
-        this.entityWidth = window.innerWidth * 0.6;
+        this.entityWidth = window.innerWidth * 0.4; //ojm address this
         this.entityHeight = window.innerHeight * 0.6;
         break;
       case 'video':
@@ -454,8 +454,11 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
           this.mediaWidth = windowWidth;
       }
 
-      this.mediaWidth =
-        this.entity.content_type === 'blog' ? windowWidth : this.scaleWidth();
+      if (this.entity.content_type === 'blog') {
+        this.mediaWidth = windowWidth;
+      } else if (this.mediaWidth >= 1) {
+        this.scaleWidth;
+      }
 
       if (this.mediaWidth > windowWidth) {
         // Width was too wide, need to rescale heights so width fits
@@ -577,15 +580,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     );
   }
 
-  get mediaWrapperHeight(): string {
-    if (this.entity.activity_type === 'status') {
-      return '100%';
-    }
-    return this.mediaHeight === 0
-      ? ACTIVITY_MODAL_MIN_STAGE_HEIGHT + 'px'
-      : this.mediaHeight + 'px';
-  }
-
   get shortStatus(): boolean {
     return (
       this.entity &&
@@ -593,5 +587,31 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
       this.entity.message &&
       this.entity.message.length <= ACTIVITY_SHORT_STATUS_MAX_LENGTH
     );
+  }
+
+  get mediaWrapperWidth(): string {
+    if (
+      this.entity.activity_type === status ||
+      !this.mediaWidth ||
+      this.mediaWidth <= 0
+    ) {
+      return '100%';
+    } else {
+      return `${this.mediaWidth}px`;
+    }
+  }
+
+  get mediaWrapperHeight(): string {
+    if (this.entity.activity_type === 'status') {
+      return '100%';
+    }
+
+    if (this.entity.activity_type === 'rich-embed') {
+      return `${this.stageHeight}px`;
+    }
+
+    return this.mediaHeight === 0
+      ? ACTIVITY_MODAL_MIN_STAGE_HEIGHT + 'px'
+      : this.mediaHeight + 'px';
   }
 }

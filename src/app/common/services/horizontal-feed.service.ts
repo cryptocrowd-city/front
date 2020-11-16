@@ -298,7 +298,7 @@ export class HorizontalFeedService {
     const params = {
       sync: 1,
       force_public: 1,
-      limit: this.limit * 2,
+      limit: this.limit,
       from_timestamp: baseEntityTimestamp,
     };
 
@@ -335,8 +335,6 @@ export class HorizontalFeedService {
 
       changed = true;
     }
-
-    console.log('ojm pools', this.pools);
 
     if (changed) {
       this._emitChange();
@@ -390,7 +388,10 @@ export class HorizontalFeedService {
     // don't return reminds or non-activities
     if (response && response.entities && response.entities.length) {
       const responseEntities = response.entities.filter(
-        e => e.entity && !e.entity.remind_object && e.entity.entity_guid
+        e =>
+          e.entity &&
+          !e.entity.remind_object &&
+          (e.entity.entity_guid || e.entity.message)
       );
 
       if (responseEntities.length) {

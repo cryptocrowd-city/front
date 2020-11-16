@@ -37,9 +37,7 @@
         <div class="m-activityModal__stage">
           <div
             class="m-activityModal__mediaWrapper"
-            [style.width]="
-              entity.activity_type !== 'status' ? mediaWidth + 'px' : '100%'
-            "
+            [style.width]="mediaWrapperWidth"
             [style.height]="mediaWrapperHeight"
             [ngClass]="{
               'm-activityModal__mediaWrapper--image':
@@ -58,7 +56,10 @@
           >
             <m-activity__content
               *ngIf="activityService.shouldShowContent$ | async"
-              [hideText]="entity.content_type !== 'status'"
+              [hideText]="
+                entity.activity_type !== 'status' &&
+                entity.activity_type !== 'rich-embed'
+              "
               [showPaywall]="activityService.shouldShowPaywall$ | async"
               [showPaywallBadge]="
                 activityService.shouldShowPaywallBadge$ | async

@@ -224,6 +224,9 @@ m-activity__content {
     padding: 20px $activity-padding-lr;
     display: block;
     text-decoration: none;
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+    }
 
     &:hover {
       text-decoration: underline;
@@ -233,18 +236,18 @@ m-activity__content {
     font-size: 15px;
     text-decoration: none;
     @include m-theme() {
-      color: themed($m-textColor--secondary) !important;
+      color: themed($m-textColor--primary) !important;
     }
   }
   .m-blurb {
-    display: none;
+    // display: none; ojm temp - need to keep for rich-embeds
   }
   .m-url {
     font-size: 13px;
     padding: 0;
     margin: 0;
     @include m-theme() {
-      color: themed($m-textColor--tertiary) !important;
+      color: themed($m-textColor--secondary) !important;
     }
   }
 
