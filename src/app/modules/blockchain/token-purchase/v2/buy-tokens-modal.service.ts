@@ -22,7 +22,7 @@ export class BuyTokensModalService {
     );
     const moduleRef = moduleFactory.create(this.injector);
 
-    const componentFactory = moduleRef.instance.resolveComponent();
+    const componentFactory = moduleRef.instance.resolveBuyTokensComponent();
 
     const onSuccess$: Subject<any> = new Subject();
 

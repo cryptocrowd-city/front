@@ -1,6 +1,3 @@
 <div class="m-modalV2__inner m-uniswapModalBody">
-  <iframe
-    src="https://app.uniswap.org/#/swap?outputCurrency=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
-    id="uniswap_modal"
-  ></iframe>
+  <iframe [src]="iframeUrl | safeUrl" id="uniswap_modal"></iframe>
 </div>

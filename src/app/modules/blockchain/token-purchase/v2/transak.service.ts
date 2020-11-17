@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import transakSDK from '@transak/transak-sdk';
+import { ConfigsService } from '../../../../common/services/configs.service';
 import { Web3WalletService } from '../../web3-wallet.service';
 
 interface TransakResponse {
@@ -25,7 +26,14 @@ interface TransakResponse {
 
 @Injectable()
 export class TransakService {
-  constructor(private web3WalletService: Web3WalletService) {}
+  protected apiKey: string;
+
+  constructor(
+    private web3WalletService: Web3WalletService,
+    private configService: ConfigsService
+  ) {
+    // this.apiKey = configService.get('blockchain').api_keys.transak
+  }
 
   async open(): Promise<TransakResponse> {
     const address = await this.web3WalletService.getCurrentWallet(true);

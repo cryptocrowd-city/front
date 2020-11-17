@@ -22,16 +22,14 @@ export class OrderReceivedModalService {
   ) {}
 
   async open(orderData: OrderData): Promise<any> {
-    const { OrderReceivedModalModule } = await import(
-      './order-received-modal.module'
-    );
+    const { BuyTokensModalModule } = await import('../buy-tokens-modal.module');
 
     const moduleFactory = await this.compiler.compileModuleAsync(
-      OrderReceivedModalModule
+      BuyTokensModalModule
     );
     const moduleRef = moduleFactory.create(this.injector);
 
-    const componentFactory = moduleRef.instance.resolveComponent();
+    const componentFactory = moduleRef.instance.resolveOrderReceivedComponent();
 
     const onSuccess$: Subject<any> = new Subject();
 

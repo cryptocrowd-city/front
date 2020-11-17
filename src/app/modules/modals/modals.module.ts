@@ -16,6 +16,7 @@ import { SignupModal } from './signup/signup';
 import { TOSUpdatedModal } from './tos-updated/tos.component';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 import { RemindComposerModalComponent } from './remind-composer-v2/reminder-composer.component';
+import { ConcertColorsModalComponent } from './concert-colors/concert-colors-modal.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { RemindComposerModalComponent } from './remind-composer-v2/reminder-comp
   declarations: [
     ConfirmModal,
     RemindComposerModal,
+    ConcertColorsModalComponent,
     ShareModalComponent,
     SignupOnActionModal,
     SignupOnScrollModal,
@@ -47,6 +49,7 @@ import { RemindComposerModalComponent } from './remind-composer-v2/reminder-comp
     SignupModal,
     TOSUpdatedModal,
     RemindComposerModalComponent,
+    ConcertColorsModalComponent,
   ],
 })
 export class ModalsModule {}

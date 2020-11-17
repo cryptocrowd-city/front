@@ -6,6 +6,8 @@ import {
 } from '../../../../../services/ux/stackable-modal.service';
 import { UniswapModalComponent } from './uniswap-modal.component';
 
+export type UniswapAction = 'swap' | 'add';
+
 @Injectable()
 export class UniswapModalService {
   constructor(
@@ -14,7 +16,7 @@ export class UniswapModalService {
     private injector: Injector
   ) {}
 
-  async open(): Promise<any> {
+  async open(action: UniswapAction = 'swap'): Promise<any> {
     const { UniswapModalModule } = await import('./uniswap-modal.module');
 
     const moduleFactory = await this.compiler.compileModuleAsync(
@@ -27,7 +29,7 @@ export class UniswapModalService {
     const onSuccess$: Subject<any> = new Subject();
 
     const evt: StackableModalEvent = await this.stackableModal
-      .present(UniswapModalComponent, null, {
+      .present(UniswapModalComponent, action, {
         wrapperClass: 'm-modalV2__wrapper',
         onComplete: (result: any) => {
           onSuccess$.next(result);
