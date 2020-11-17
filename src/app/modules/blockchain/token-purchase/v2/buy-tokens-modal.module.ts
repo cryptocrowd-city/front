@@ -8,7 +8,6 @@ import { CommonModule } from '../../../../common/common.module';
 import { BuyTokensModalComponent } from './buy-tokens-modal.component';
 import { FormsModule } from '@angular/forms';
 import { TransakService } from './transak.service';
-import { UniswapModalService } from './uniswap/uniswap-modal.service';
 import { OrderReceivedModalService } from './order-received/order-received-modal.service';
 import { OrderReceivedModalComponent } from './order-received/order-received-modal.component';
 import { ModalsModule } from '../../../modals/modals.module';
@@ -17,7 +16,7 @@ import { ModalsModule } from '../../../modals/modals.module';
   imports: [NgCommonModule, CommonModule, FormsModule, ModalsModule],
   declarations: [BuyTokensModalComponent, OrderReceivedModalComponent],
   exports: [BuyTokensModalComponent, OrderReceivedModalComponent],
-  providers: [TransakService, UniswapModalService, OrderReceivedModalService],
+  providers: [TransakService, OrderReceivedModalService],
 })
 export class BuyTokensModalModule {
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}

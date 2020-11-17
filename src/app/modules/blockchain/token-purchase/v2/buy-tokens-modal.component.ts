@@ -9,7 +9,7 @@ type PaymentMethod = 'card' | 'bank' | 'crypto' | '';
   selector: 'm-buyTokens__modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'buy-tokens-modal.component.html',
-  styleUrls: ['./buy-tokens-modal.component.scss'],
+  styleUrls: ['./buy-tokens-modal.component.ng.scss'],
 })
 export class BuyTokensModalComponent {
   terms: boolean = false;

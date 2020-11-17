@@ -5,7 +5,7 @@ import { OrderData } from './order-received-modal.service';
   selector: 'm-orderReceived__modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'order-received-modal.component.html',
-  styleUrls: ['./order-received-modal.component.scss'],
+  styleUrls: ['./order-received-modal.component.ng.scss'],
 })
 export class OrderReceivedModalComponent {
   orderData: OrderData;

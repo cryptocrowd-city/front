@@ -15,11 +15,8 @@ export class UniswapModalComponent {
 
   @Input('action') set data(action) {
     this.action = action;
-  }
 
-  constructor(private configService: ConfigsService) {
-    const mindsTokenAddress = this.configService.get('blockchain').token
-      .address;
+    const mindsTokenAddress = this.configService.get('blockchain').token;
 
     if (this.action === 'swap') {
       this.iframeUrl = `${this.baseUrl}/${this.action}?outputCurrency=0x6B175474E89094C44Da98b954EedeAC495271d0F`;
@@ -27,4 +24,6 @@ export class UniswapModalComponent {
       this.iframeUrl = this.iframeUrl = `${this.baseUrl}/${this.action}/0x6B175474E89094C44Da98b954EedeAC495271d0F`;
     }
   }
+
+  constructor(private configService: ConfigsService) {}
 }
