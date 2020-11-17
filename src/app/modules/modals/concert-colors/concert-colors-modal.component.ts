@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   selector: 'm-concertColors__modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'concert-colors-modal.component.html',
-  styleUrls: ['./concert-colors-modal.component.scss'],
+  styleUrls: ['./concert-colors-modal.component.ng.scss'],
 })
 export class ConcertColorsModalComponent {
   @Input() title: string;
