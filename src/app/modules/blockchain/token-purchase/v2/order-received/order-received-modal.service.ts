@@ -15,22 +15,9 @@ export interface OrderData {
 
 @Injectable()
 export class OrderReceivedModalService {
-  constructor(
-    private stackableModal: StackableModalService,
-    private compiler: Compiler,
-    private injector: Injector
-  ) {}
+  constructor(private stackableModal: StackableModalService) {}
 
   async open(orderData: OrderData): Promise<any> {
-    const { BuyTokensModalModule } = await import('../buy-tokens-modal.module');
-
-    const moduleFactory = await this.compiler.compileModuleAsync(
-      BuyTokensModalModule
-    );
-    const moduleRef = moduleFactory.create(this.injector);
-
-    const componentFactory = moduleRef.instance.resolveOrderReceivedComponent();
-
     const onSuccess$: Subject<any> = new Subject();
 
     const evt: StackableModalEvent = await this.stackableModal
