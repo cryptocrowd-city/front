@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Session } from '../../../services/session';
 
 /**
  * Small canary flag to be shown to a user alongside a logo to show they are in Canary mode.
@@ -11,8 +12,9 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./canary-flag.component.ng.scss'],
 })
 export class CanaryFlagComponent {
-  /**
-   * If true show flag.
-   */
-  @Input() isCanaryMode = false;
+  constructor(private session: Session) {}
+
+  get isCanaryMode(): boolean {
+    return this.session.getLoggedInUser().canary;
+  }
 }

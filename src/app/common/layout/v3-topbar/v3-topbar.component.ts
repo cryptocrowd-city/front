@@ -79,10 +79,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     return this.session.getLoggedInUser();
   }
 
-  public isCanaryMode(): boolean {
-    return this.getCurrentUser().canary;
-  }
-
   loadComponent() {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
         NotificationsToasterComponent

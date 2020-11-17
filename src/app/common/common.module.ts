@@ -468,7 +468,6 @@ const routes: Routes = [
     MarkedDirective,
     DragAndDropDirective,
     ConfirmV2Component,
-    CanaryFlagComponent,
   ],
   providers: [
     SiteService,
