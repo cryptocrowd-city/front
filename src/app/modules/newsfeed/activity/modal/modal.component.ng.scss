@@ -55,7 +55,7 @@ $modal-padding: 20px;
     text-align: center;
     z-index: 2;
     @include m-theme() {
-      background-color: themed($m-bgColor--primary);
+      background-color: themed($m-bgColor--primaryDarkAlways);
       box-shadow: 0 0 8px rgba(themed($m-black-always), 0.15);
     }
   }
@@ -118,15 +118,18 @@ $modal-padding: 20px;
 
         .m-activityContent__media--richEmbed {
           img {
-            max-height: 400px; //ojm this is just a test
+            max-height: 400px;
           }
         }
 
         .meta {
-          padding: $modal-padding $modal-padding * 3;
-
+          padding: 15px 25px;
           @include m-theme() {
             background-color: themed($m-bgColor--secondary);
+          }
+
+          .m-blurb {
+            display: none;
           }
         }
         .m-rich-embed--title {
@@ -146,6 +149,8 @@ $modal-padding: 20px;
       ::ng-deep {
         m-activity__content {
           .meta {
+            padding: $modal-padding $modal-padding * 3;
+
             @include m-theme() {
               background-color: themed($m-bgColor--primary);
             }
@@ -316,7 +321,21 @@ $modal-padding: 20px;
     flex-direction: column;
 
     ::ng-deep m-activity__ownerBlock {
-      padding: 30px $modal-padding $modal-padding;
+      padding: 10px 0 0;
+
+      .m-activity__ownerBlock {
+        padding: 20px $modal-padding 0;
+      }
+
+      .m-activity__remindUsers {
+        padding: 0 $modal-padding 10px;
+      }
+
+      m-postmenu--v2 {
+        .m-dropdown--v2 {
+          z-index: 5;
+        }
+      }
 
       .m-postMenu__button {
         padding-right: 0;
@@ -331,7 +350,7 @@ $modal-padding: 20px;
       }
     }
     .m-activityModal__toolbarWrapper {
-      padding: 0 $modal-padding $modal-padding;
+      padding: $modal-padding;
       @include m-theme() {
         border-bottom: 1px solid themed($m-borderColor--primary);
       }
@@ -373,18 +392,28 @@ $modal-padding: 20px;
 
     ::ng-deep {
       m-activity__content {
-        overflow: visible; //ojm debatable
+        overflow: visible;
 
         box-sizing: border-box;
         margin-top: 5px;
-        padding: $modal-padding;
+        padding: $modal-padding $modal-padding 0;
 
         .m-read-more--button {
           padding-bottom: 0;
+          span {
+            @include m-theme() {
+              color: themed($m-textColor--secondary) !important;
+            }
+          }
         }
+
         .m-activityContent__descriptionWrapper,
         .m-activityContent__message {
           padding: 0;
+
+          .m-activityContent__mediaTitle {
+            font-size: 19px;
+          }
 
           .m-activityContent__mediaDescriptionText,
           .m-activityContent__messageWrapper > span {
@@ -428,7 +457,7 @@ $modal-padding: 20px;
           .minds-avatar {
             margin-left: 0;
             @include m-theme() {
-              background-color: none;
+              background-color: transparent;
             }
           }
         }
@@ -448,6 +477,14 @@ $modal-padding: 20px;
           }
           textarea {
             max-height: 80%;
+          }
+        }
+
+        .m-comment__attachment {
+          .mdl-card {
+            @include m-theme() {
+              background-color: transparent;
+            }
           }
         }
 
@@ -489,6 +526,9 @@ $modal-padding: 20px;
         .minds-comment {
           padding-left: 0 !important;
           padding-right: 0 !important;
+        }
+        .m-comments-load-more {
+          margin-top: -14px;
         }
       }
     }
@@ -553,5 +593,14 @@ $modal-padding: 20px;
 
   m-activity__nsfwConsent {
     position: absolute;
+  }
+
+  ::ng-deep {
+    m-activity__content {
+      .m-activityContent__mediaDescription,
+      .m-activityContent__message {
+        cursor: default !important;
+      }
+    }
   }
 }

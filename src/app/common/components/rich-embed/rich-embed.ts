@@ -33,8 +33,10 @@ export class MindsRichEmbed {
   @Output() mediaModalRequested: EventEmitter<any> = new EventEmitter();
   private lastInlineEmbedParsed: string;
   public isPaywalled: boolean = false;
+  _isModal: boolean = false;
 
   @Input() set isModal(value: boolean) {
+    this._isModal = value;
     if (value) {
       this.modalRequestSubscribed = false;
       if (this.mediaSource !== 'minds') {

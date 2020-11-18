@@ -21,7 +21,7 @@
     <!-- ----------------------------------- -->
     <!-- LOADING ANIMATION -->
     <!-- ----------------------------------- -->
-    <ng-container *ngIf="!isModal">
+    <ng-container *ngIf="!_isModal">
       <div
         class="mdl-progress mdl-js-progress mdl-progress__indeterminate m-html-loading"
         *ngIf="embeddedInline && (!inlineEmbed || !inlineEmbed.html)"
@@ -85,7 +85,6 @@
     <p class="m-url">
       {{src.perma_url | domain}}
     </p>
-    <!-- ojm is teaserfadeout used? -->
     <div class="m-activityContent__teaserFadeout" *ngIf="isPaywalled"></div>
   </a>
 </div>

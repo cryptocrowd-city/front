@@ -31,6 +31,7 @@
       [class.m-activityContent__message--minimalMode]="minimalMode"
       [maxHeightAllowed]="maxMessageHeight"
       *ngIf="message"
+      (click)="onMessageClick($event)"
     >
       <div class="m-activityContent__messageWrapper">
         <span [innerHtml]="message | tags | codeHighlight"></span>
@@ -139,6 +140,7 @@
     m-read-more
     *ngIf="mediaDescription || mediaTitle"
     [maxHeightAllowed]="maxDescHeight"
+    (click)="onMessageClick($event)"
   >
     <div
       class="m-activityContent__descriptionWrapper"

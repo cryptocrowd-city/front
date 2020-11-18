@@ -352,7 +352,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
         this.entityHeight = this.entity.custom_data[0].height;
         break;
       case 'blog':
-        this.entityWidth = window.innerWidth * 0.4; //ojm address this
+        this.entityWidth = window.innerWidth * 0.4;
         this.entityHeight = window.innerHeight * 0.6;
         break;
       case 'video':

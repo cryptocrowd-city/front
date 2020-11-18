@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import {
   ACTIVITY_COMMENTS_MORE_HEIGHT,
   ACTIVITY_COMMENTS_POSTER_HEIGHT,
@@ -338,7 +338,7 @@ export class ActivityContentComponent
       return parseInt(imageHeight.slice(0, -2), 10);
     }
     if (this.isVideo) {
-      return parseInt(this.videoHeight.slice(0, -2), 10);
+      return this.videoHeight ? parseInt(this.videoHeight.slice(0, -2), 10) : 0;
     }
     if (this.isRichEmbed) {
       return 400;
@@ -396,6 +396,30 @@ export class ActivityContentComponent
     //this.remindWidth = this.remindHeight * ACTIVITY_FIXED_HEIGHT_RATIO;
   }
 
+  /**
+   * Open the activity in the modal when you click on
+   * its message or description
+   */
+  onMessageClick(event): void {
+    if (this.isModal) {
+      return;
+    }
+
+    /**
+     * Don't open modal if click on link or readmore
+     */
+    if (event.target instanceof HTMLAnchorElement) {
+      return;
+    } else if (
+      event.target.classList.contains('m-readMoreButton--v2') ||
+      event.target.classList.contains('m-readMoreButtonV2__text')
+    ) {
+      return;
+    } else {
+      this.onModalRequested(event);
+    }
+  }
+
   onModalRequested(event: MouseEvent) {
     if (!this.overlayModal.canOpenInModal() || this.isModal) {
       return;
@@ -440,6 +464,7 @@ export class ActivityContentComponent
       const maxMessageHeight = this.service.displayOptions.fixedHeight
         ? 130
         : 320;
+
       return this.isTextOnly ? this.maxFixedHeightContent : maxMessageHeight;
     }
   }
