@@ -56,7 +56,14 @@
       </div>
     </div>
 
-    <div *ngIf="!showLegacyActivity" m-pageLayout__pane="right"></div>
+    <div class="m-newsfeedSingle__sidebar" jm m-pageLayout__pane="right">
+      <div class="m-pageLayoutPane__inner">
+        <div class="m-pageLayoutPane__sticky" m-stickySidebar>
+          <!-- <m-suggestions__sidebar type="user"></m-suggestions__sidebar> -->
+          <m-discovery__sidebarTags></m-discovery__sidebarTags>
+        </div>
+      </div>
+    </div>
   </div>
 
   <m-social-icons
