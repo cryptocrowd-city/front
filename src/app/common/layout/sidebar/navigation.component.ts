@@ -26,6 +26,7 @@ import { filter } from 'rxjs/operators';
 import { UserMenuService } from '../v3-topbar/user-menu/user-menu.service';
 import { BuyTokensModalService } from '../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
+import { UniswapModalService } from '../../../modules/blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 
 @Component({
   selector: 'm-sidebar--navigation',
@@ -72,7 +73,8 @@ export class SidebarNavigationComponent
     private router: Router,
     private userMenu: UserMenuService,
     private buyTokensModalService: BuyTokensModalService,
-    private web3WalletService: Web3WalletService
+    private web3WalletService: Web3WalletService,
+    private uniswapModalService: UniswapModalService
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -152,6 +154,11 @@ export class SidebarNavigationComponent
     this.toggle();
     await this.web3WalletService.getCurrentWallet(true);
     await this.buyTokensModalService.open();
+  }
+
+  async addLiquidity() {
+    this.toggle();
+    await this.uniswapModalService.open('add');
   }
 
   setVisible(value: boolean): void {
