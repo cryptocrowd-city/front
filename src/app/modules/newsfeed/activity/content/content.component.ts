@@ -9,8 +9,9 @@ import {
   ViewChild,
   HostBinding,
   Injector,
+  ChangeDetectorRef,
 } from '@angular/core';
-import { Subscription, timer } from 'rxjs';
+import { Observable, Subscription, timer } from 'rxjs';
 
 import { NavigationStart, Router } from '@angular/router';
 import {
@@ -101,6 +102,7 @@ export class ActivityContentComponent
   activityHeight: number;
   remindWidth: number;
   remindHeight: number;
+  videoHeight: string;
 
   paywallUnlocked: boolean = false;
   canonicalUrl: string;
@@ -128,7 +130,8 @@ export class ActivityContentComponent
     configs: ConfigsService,
     private features: FeaturesService,
     private injector: Injector,
-    private activityModalCreator: ActivityModalCreatorService
+    private activityModalCreator: ActivityModalCreatorService,
+    private cd: ChangeDetectorRef
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -139,6 +142,9 @@ export class ActivityContentComponent
       (entity: ActivityEntity) => {
         this.entity = entity;
         this.calculateFixedContentHeight();
+        setTimeout(() => {
+          this.calculateVideoHeight();
+        });
         this.isPaywalledStatusPost =
           this.showPaywallBadge && entity.content_type === 'status';
         if (
@@ -189,10 +195,13 @@ export class ActivityContentComponent
   }
 
   ngAfterViewInit() {
-    // Run after view initialized
+    // Run after view initialized (as modal uses the same component this doesnt get called)
     timer(0)
       .toPromise()
-      .then(() => this.calculateRemindHeight());
+      .then(() => {
+        this.calculateRemindHeight();
+        this.calculateVideoHeight();
+      });
   }
 
   ngOnDestroy() {
@@ -316,22 +325,6 @@ export class ActivityContentComponent
     );
   }
 
-  get videoHeight(): string {
-    if (!this.mediaEl) return '';
-    let aspectRatio = 16 / 9;
-    if (
-      this.entity.custom_data &&
-      this.entity.custom_data.height &&
-      this.entity.custom_data.height !== '0'
-    ) {
-      aspectRatio =
-        parseInt(this.entity.custom_data.width, 10) /
-        parseInt(this.entity.custom_data.height, 10);
-    }
-    const height = this.mediaEl.nativeElement.clientWidth / aspectRatio;
-    return `${height}px`;
-  }
-
   get mediaHeight(): number | null {
     if (this.isImage) {
       const imageHeight = this.imageHeight || '410px';
@@ -394,6 +387,31 @@ export class ActivityContentComponent
 
     //if (this.entity['remind_object'].)
     //this.remindWidth = this.remindHeight * ACTIVITY_FIXED_HEIGHT_RATIO;
+  }
+
+  /**
+   * Calculates the video height after the video has loaded in
+   */
+  calculateVideoHeight(): void {
+    if (!this.mediaEl) {
+      console.log('no media el');
+      return;
+    }
+    let aspectRatio = 16 / 9;
+    if (
+      this.entity.custom_data &&
+      this.entity.custom_data.height &&
+      this.entity.custom_data.height !== '0'
+    ) {
+      aspectRatio =
+        parseInt(this.entity.custom_data.width, 10) /
+        parseInt(this.entity.custom_data.height, 10);
+    }
+    const height = this.mediaEl.nativeElement.clientWidth / aspectRatio;
+    this.videoHeight = `${height}px`;
+    console.log('height is ' + this.videoHeight);
+
+    this.detectChanges();
   }
 
   /**
@@ -485,5 +503,10 @@ export class ActivityContentComponent
       this.entity.content_type === 'status' &&
       this.message.length <= ACTIVITY_SHORT_STATUS_MAX_LENGTH
     );
+  }
+
+  detectChanges(): void {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }
