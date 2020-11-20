@@ -394,7 +394,6 @@ export class ActivityContentComponent
    */
   calculateVideoHeight(): void {
     if (!this.mediaEl) {
-      console.log('no media el');
       return;
     }
     let aspectRatio = 16 / 9;
@@ -409,7 +408,6 @@ export class ActivityContentComponent
     }
     const height = this.mediaEl.nativeElement.clientWidth / aspectRatio;
     this.videoHeight = `${height}px`;
-    console.log('height is ' + this.videoHeight);
 
     this.detectChanges();
   }
