@@ -1,0 +1,43 @@
+@import 'defaults.scss';
+
+.m-modalV2__inner {
+  max-width: 900px !important;
+}
+
+.m-earnModal__block {
+  cursor: pointer;
+  max-width: 380px;
+  box-sizing: border-box;
+  padding: 20px;
+
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--primary);
+  }
+}
+
+.m-earnModalBlock__title {
+  display: block;
+  font-size: 19px;
+  font-weight: 700;
+
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+  }
+}
+
+.m-earnModalBlock__text {
+  display: block;
+  font-size: 15px;
+  font-weight: 400;
+
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
+}
+
+.m-earnModal__blockContainer {
+  width: 900px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}

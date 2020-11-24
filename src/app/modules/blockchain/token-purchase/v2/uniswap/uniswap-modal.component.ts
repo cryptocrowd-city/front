@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ConfigsService } from '../../../../../common/services/configs.service';
+import { BuyTokensModalService } from '../buy-tokens-modal.service';
 import { UniswapAction } from './uniswap-modal.service';
 
 @Component({
@@ -10,20 +11,28 @@ import { UniswapAction } from './uniswap-modal.service';
 })
 export class UniswapModalComponent {
   private baseUrl = 'https://app.uniswap.org/#';
-  private action: UniswapAction;
+  public action: UniswapAction;
   public iframeUrl: string;
 
   @Input('action') set data(action) {
     this.action = action;
 
-    const mindsTokenAddress = this.configService.get('blockchain').token;
+    const mindsTokenAddress = this.configService.get('blockchain').token
+      .address;
 
     if (this.action === 'swap') {
-      this.iframeUrl = `${this.baseUrl}/${this.action}?outputCurrency=0x6B175474E89094C44Da98b954EedeAC495271d0F`;
+      this.iframeUrl = `${this.baseUrl}/${this.action}?outputCurrency=${mindsTokenAddress}`;
     } else {
-      this.iframeUrl = this.iframeUrl = `${this.baseUrl}/${this.action}/0x6B175474E89094C44Da98b954EedeAC495271d0F`;
+      this.iframeUrl = this.iframeUrl = `${this.baseUrl}/${this.action}/ETH/${mindsTokenAddress}`;
     }
   }
 
-  constructor(private configService: ConfigsService) {}
+  constructor(
+    private configService: ConfigsService,
+    private buyTokensModalService: BuyTokensModalService
+  ) {}
+
+  async openBuyTokens() {
+    await this.buyTokensModalService.open();
+  }
 }
