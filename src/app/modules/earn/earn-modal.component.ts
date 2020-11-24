@@ -1,12 +1,15 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Injector } from '@angular/core';
 import { UniswapModalService } from '../blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 import { Web3WalletService } from '../blockchain/web3-wallet.service';
+import { ModalService } from '../composer/components/modal/modal.service';
+import { ComposerService } from '../composer/services/composer.service';
 
 @Component({
   selector: 'm-earn__modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'earn-modal.component.html',
   styleUrls: ['./earn-modal.component.ng.scss'],
+  providers: [ComposerService],
 })
 export class EarnModalComponent {
   onDismissIntent: () => void = () => {};
@@ -16,13 +19,28 @@ export class EarnModalComponent {
   }
 
   constructor(
+    private composer: ComposerService,
     private uniswapModalService: UniswapModalService,
-    private web3walletService: Web3WalletService
+    private web3walletService: Web3WalletService,
+    private composerModal: ModalService,
+    private injector: Injector
   ) {}
 
   async openAddLiquidity() {
     this.onDismissIntent();
     await this.web3walletService.getCurrentWallet(true);
     await this.uniswapModalService.open('add');
+  }
+
+  async openCompose() {
+    this.onDismissIntent();
+    this.composerModal
+      .setInjector(this.injector)
+      .present()
+      .toPromise();
+  }
+
+  redirectDevelop() {
+    window.location.replace('https://gitlab.com/minds');
   }
 }
