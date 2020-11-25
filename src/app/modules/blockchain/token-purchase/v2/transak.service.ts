@@ -27,20 +27,22 @@ interface TransakResponse {
 @Injectable()
 export class TransakService {
   protected apiKey: string;
+  protected environment: string;
 
   constructor(
     private web3WalletService: Web3WalletService,
     private configService: ConfigsService
   ) {
-    // this.apiKey = configService.get('blockchain').api_keys.transak
+    this.apiKey = this.configService.get('blockchain').api_keys?.transak;
+    this.environment = this.configService.get('blockchain').transak_environment;
   }
 
   async open(): Promise<TransakResponse> {
     const address = await this.web3WalletService.getCurrentWallet(true);
 
     let transak = new transakSDK({
-      apiKey: '4fcd6904-706b-4aff-bd9d-77422813bbb7',
-      environment: 'STAGING',
+      apiKey: this.apiKey || '4fcd6904-706b-4aff-bd9d-77422813bbb7',
+      environment: this.environment || 'STAGING',
       defaultCryptoCurrency: 'ETH',
       walletAddress: address,
       themeColor: '000000',
