@@ -95,12 +95,6 @@
   }
 }
 
-.m-buyTokensBody__button--selected {
-  @include m-theme() {
-    background-color: themed($m-bgColor--primary) !important;
-  }
-}
-
 .m-buyTokensButtons__button {
   display: flex;
   justify-content: center;
@@ -113,9 +107,11 @@
   font-weight: 500;
   -webkit-: background-color 0.2s ease;
   transition: background-color 0.2s ease;
+  border-style: solid;
+  border-width: 1px;
 
   @include m-theme() {
-    border: 1px solid themed($m-borderColor--secondary);
+    border-color: themed($m-borderColor--secondary);
     color: themed($m-textColor--primary);
     background-color: themed($m-bgColor--tertiary);
   }
@@ -128,6 +124,12 @@
   &:last-child {
     border-left: 0 !important;
     border-radius: 0 5px 5px 0;
+  }
+
+  &.m-buyTokensBody__button--selected {
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary) !important;
+    }
   }
 }
 
