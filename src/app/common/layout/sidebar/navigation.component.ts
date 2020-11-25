@@ -28,7 +28,8 @@ import { BuyTokensModalService } from '../../../modules/blockchain/token-purchas
 import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
 import { UniswapModalService } from '../../../modules/blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 import { EarnModalService } from '../../../modules/earn/earn-modal.service';
-
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { BoostCreatorComponent } from '../../../modules/boost/creator/creator.component';
 @Component({
   selector: 'm-sidebar--navigation',
   templateUrl: 'navigation.component.html',
@@ -76,7 +77,8 @@ export class SidebarNavigationComponent
     private buyTokensModalService: BuyTokensModalService,
     private web3WalletService: Web3WalletService,
     private uniswapModalService: UniswapModalService,
-    private earnModalService: EarnModalService
+    private earnModalService: EarnModalService,
+    private overlayModal: OverlayModalService
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -161,6 +163,11 @@ export class SidebarNavigationComponent
   async openEarnModal() {
     this.toggle();
     await this.earnModalService.open();
+  }
+
+  async openBoostModal() {
+    const creator = this.overlayModal.create(BoostCreatorComponent, this.user);
+    creator.present();
   }
 
   setVisible(value: boolean): void {
