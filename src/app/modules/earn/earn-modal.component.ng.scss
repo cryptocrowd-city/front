@@ -6,12 +6,15 @@
 
 .m-earnModal__block {
   cursor: pointer;
-  max-width: 380px;
+  max-width: 420px;
   box-sizing: border-box;
   padding: 20px;
+  border-style: solid;
+  border-width: 1px;
+  margin: 8px 13px;
 
   @include m-theme() {
-    border: 1px solid themed($m-borderColor--primary);
+    border-color: themed($m-borderColor--primary);
   }
 }
 

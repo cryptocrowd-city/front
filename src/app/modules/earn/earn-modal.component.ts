@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Injector } from '@angular/core';
+import { BuyTokensModalService } from '../blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { UniswapModalService } from '../blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 import { Web3WalletService } from '../blockchain/web3-wallet.service';
 import { ModalService } from '../composer/components/modal/modal.service';
@@ -23,7 +24,8 @@ export class EarnModalComponent {
     private uniswapModalService: UniswapModalService,
     private web3walletService: Web3WalletService,
     private composerModal: ModalService,
-    private injector: Injector
+    private injector: Injector,
+    private buyTokensModalService: BuyTokensModalService
   ) {}
 
   async openAddLiquidity() {
@@ -43,4 +45,10 @@ export class EarnModalComponent {
   redirectDevelop() {
     window.location.replace('https://gitlab.com/minds');
   }
+
+  async openReferModal() {
+    this.onDismissIntent();
+    await this.buyTokensModalService.open();
+  }
+
 }
