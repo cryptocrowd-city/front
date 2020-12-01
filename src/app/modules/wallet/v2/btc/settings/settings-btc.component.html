@@ -17,7 +17,7 @@
       You can receive Bitcoin payments by linking your Bitcoin receiver address
       below.
     </p>
-    <m-button (onAction)="showForm = true">
+    <m-button (onAction)="showForm = true" color="blue">
       Add Bitcoin address
     </m-button>
   </div>
@@ -95,6 +95,7 @@
           [saving]="inProgress"
           (onAction)="provideAddress()"
           i18n="@@SETTINGS_BTC__UPDATE_BITCOIN_ADDRESS"
+          color="blue"
         >
           Update Bitcoin Address
         </m-button>

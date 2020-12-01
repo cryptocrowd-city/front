@@ -48,6 +48,7 @@
             [saving]="inProgress || linkingMetamask"
             (onAction)="useExternal()"
             i18n="@@WALLET_V2_SETTINGS_TOKENS__LINK_METAMASK"
+            color="blue"
           >
             Link MetaMask
           </m-button>
@@ -112,6 +113,7 @@
         [saving]="inProgress"
         (onAction)="createAddress()"
         i18n="@@WALLET_V2_SETTINGS_TOKENS__CREATE_ADDRESS"
+        color="blue"
       >
         Create Address
       </m-button>
@@ -135,6 +137,7 @@
         [saving]="inProgress"
         (onAction)="downloadPrivateKey()"
         i18n="@@WALLET_V2_SETTINGS_TOKENS__DOWNLOAD_PRIVATE_KEY"
+        color="blue"
       >
         Download Private Key
       </m-button>
@@ -220,6 +223,7 @@
             [saving]="inProgress"
             (onAction)="provideAddress()"
             i18n="@@SETTINGS_TOKENS__UPDATE_ONCHAIN_ADDRESS"
+            color="blue"
           >
             Update on-chain address
           </m-button>
