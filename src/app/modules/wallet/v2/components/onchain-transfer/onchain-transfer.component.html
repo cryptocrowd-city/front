@@ -86,6 +86,7 @@
     [disabled]="!isFormValid() || loading"
     [saving]="transferring"
     (onAction)="submitError ? load() : onSubmit()"
+    color="blue"
   >
     {{ submitError ? 'Reset' : 'Transfer' }}
   </m-button>
