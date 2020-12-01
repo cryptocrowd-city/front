@@ -2,7 +2,10 @@
 
 :host {
   .m-composerToolbar__action--post {
-    font-size: 15px;
+    margin-top: -4px;
+    .m-button__text--unsaved > * {
+      font-size: 15px !important;
+    }
   }
 
   span.m-animation__shimmer--text,
