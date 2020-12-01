@@ -349,7 +349,10 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     switch (this.entity.content_type) {
       case 'image':
         this.entityWidth = this.entity.custom_data[0].width;
-        this.entityHeight = this.entity.custom_data[0].height;
+        this.entityHeight =
+          this.entity.custom_data[0].height !== '0'
+            ? this.entity.custom_data[0].height
+            : ACTIVITY_MODAL_MIN_STAGE_HEIGHT;
         break;
       case 'blog':
         this.entityWidth = window.innerWidth * 0.4;

@@ -20,6 +20,10 @@
         (mouseenter)="onMouseEnterStage()"
         (mouseleave)="onMouseLeaveStage()"
         (touchend)="showOverlaysOnTablet()"
+        [ngClass]="{
+          'm-activityModal__stageWrapper--status':
+            entity.activity_type === 'status'
+        }"
       >
         <!-- LOADING PANEL -->
         <div

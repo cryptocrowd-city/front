@@ -89,6 +89,9 @@ export class ActivityContentComponent
   @ViewChild('mediaEl', { read: ElementRef })
   mediaEl: ElementRef;
 
+  @ViewChild('imageEl', { read: ElementRef })
+  imageEl: ElementRef;
+
   @ViewChild('messageEl', { read: ElementRef })
   messageEl: ElementRef;
 
@@ -103,6 +106,7 @@ export class ActivityContentComponent
   remindWidth: number;
   remindHeight: number;
   videoHeight: string;
+  imageHeight: string;
 
   paywallUnlocked: boolean = false;
   canonicalUrl: string;
@@ -141,9 +145,11 @@ export class ActivityContentComponent
     this.entitySubscription = this.service.entity$.subscribe(
       (entity: ActivityEntity) => {
         this.entity = entity;
+
         this.calculateFixedContentHeight();
         setTimeout(() => {
           this.calculateVideoHeight();
+          this.calculateImageHeight();
         });
         this.isPaywalledStatusPost =
           this.showPaywallBadge && entity.content_type === 'status';
@@ -201,6 +207,7 @@ export class ActivityContentComponent
       .then(() => {
         this.calculateRemindHeight();
         this.calculateVideoHeight();
+        this.calculateImageHeight();
       });
   }
 
@@ -286,30 +293,6 @@ export class ActivityContentComponent
     }
 
     return ''; // TODO: placeholder
-  }
-
-  get imageHeight(): string {
-    if (this.service.displayOptions.fixedHeight) return null;
-    if (this.entity.custom_type !== 'batch') return null;
-    const originalHeight = parseInt(this.entity.custom_data[0].height || 0);
-    const originalWidth = parseInt(this.entity.custom_data[0].width || 0);
-
-    if (!originalHeight || !originalWidth) {
-      if (this.isModal) {
-        return `${ACTIVITY_MODAL_MIN_STAGE_HEIGHT}px`;
-      } else {
-        return null;
-      }
-    }
-
-    if (this.isModal && originalHeight) {
-      return `${originalHeight}px`;
-    }
-
-    const ratio = originalHeight / originalWidth;
-
-    const height = this.el.nativeElement.clientWidth * ratio;
-    return `${height}px`;
   }
 
   get imageGuid(): string {
@@ -408,6 +391,52 @@ export class ActivityContentComponent
     }
     const height = this.mediaEl.nativeElement.clientWidth / aspectRatio;
     this.videoHeight = `${height}px`;
+
+    this.detectChanges();
+  }
+
+  /**
+   * Calculates the image height
+   */
+  calculateImageHeight(): void {
+    if (!this.imageEl) {
+      return;
+    }
+    if (
+      this.service.displayOptions.fixedHeight ||
+      this.entity.custom_type !== 'batch'
+    ) {
+      this.imageHeight = null;
+    }
+
+    if (
+      this.entity.custom_data &&
+      this.entity.custom_data[0] &&
+      this.entity.custom_data[0].height &&
+      this.entity.custom_data[0].height !== '0'
+    ) {
+      const originalHeight = parseInt(this.entity.custom_data[0].height || 0);
+      const originalWidth = parseInt(this.entity.custom_data[0].width || 0);
+
+      if (this.isModal) {
+        this.imageHeight =
+          originalHeight > 0
+            ? `${originalHeight}px`
+            : `${ACTIVITY_MODAL_MIN_STAGE_HEIGHT}px`;
+      } else {
+        const ratio = originalHeight / originalWidth;
+
+        const height = this.el.nativeElement.clientWidth * ratio;
+        this.imageHeight = `${height}px`;
+      }
+    } else {
+      // No custom dimensions data
+      if (this.isModal) {
+        this.imageHeight = `${ACTIVITY_MODAL_MIN_STAGE_HEIGHT}px`;
+      } else {
+        this.imageHeight = null;
+      }
+    }
 
     this.detectChanges();
   }
