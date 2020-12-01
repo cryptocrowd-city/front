@@ -16,7 +16,7 @@ m-settings--two-factor {
     outline: 0;
 
     @include m-theme {
-      background-color: themed($m-btn--primary);
+      background-color: themed($m-link);
       color: themed($m-white-always);
     }
   }
@@ -30,14 +30,13 @@ m-settings--two-factor {
 
 .m-twoFactor__confirm {
   @include m-theme {
-    background-color: themed($m-btn--primary) !important;
+    background-color: themed($m-link) !important;
     color: themed($m-white-always) !important;
   }
 }
 
 .m-twoFactor__retry {
   @include m-theme {
-    // background-color: themed($m-btn--primary);
     color: themed($m-textColor--primary);
   }
 }

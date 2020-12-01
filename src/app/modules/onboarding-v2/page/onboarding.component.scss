@@ -259,7 +259,9 @@ m-onboarding {
 
                 &.m-groupsJoin__subscribed {
                   & > i {
-                    color: #5dbac0;
+                    @include m-theme() {
+                      color: themed($m-link);
+                    }
                   }
                 }
               }
@@ -524,7 +526,7 @@ m-onboarding {
           flex-shrink: 2;
 
           @include m-theme() {
-            color: themed($m-aqua);
+            color: themed($m-link);
           }
 
           &.disabled {
