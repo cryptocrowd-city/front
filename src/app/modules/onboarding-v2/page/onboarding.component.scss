@@ -23,7 +23,7 @@ m-onboarding {
   }
 
   @include m-theme() {
-    background-color: themed($m-bgcolor--primary);
+    background-color: themed($m-bgColor--primary);
   }
 
   &.m-onboarding__iosFallback {

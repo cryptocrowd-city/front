@@ -4,27 +4,26 @@
   [type]="type"
   [disabled]="disabled"
   [ngClass]="{
-    saving: saving,
-    grey: color === 'grey',
-    blue: color === 'blue',
-    red: color === 'red',
-    xsmall: size === 'xsmall',
-    small: size === 'small',
-    medium: size === 'medium',
-    large: size === 'large',
-    overlay: overlay,
-    disabled: disabled,
-    noBorder: noBorder,
-    iconOnly: iconOnly,
-    dropdown: !!dropdown
+    'm-button--saving': saving,
+    'm-button--grey': color === 'grey',
+    'm-button--blue': color === 'blue',
+    'm-button--red': color === 'red',
+    'm-button--xsmall': size === 'xsmall',
+    'm-button--small': size === 'small',
+    'm-button--medium': size === 'medium',
+    'm-button--large': size === 'large',
+    'm-button--overlay': overlay,
+    'm-button--noBorder': noBorder,
+    'm-button--iconOnly': iconOnly,
+    'm-button--dropdown': !!dropdown
   }"
 >
-  <div *ngIf="!saving" class="m-button__status--unsaved" #buttonTextContainer>
+  <div *ngIf="!saving" class="m-button__text--unsaved" #buttonTextContainer>
     <ng-content></ng-content>
   </div>
   <div
     *ngIf="saving"
-    class="m-button__status--saving"
+    class="m-button__text--saving"
     [style.width]="buttonTextWidth + 'px'"
   >
     <span></span>
