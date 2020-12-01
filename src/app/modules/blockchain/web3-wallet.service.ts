@@ -1,7 +1,6 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Web3Provider, ExternalProvider } from '@ethersproject/providers';
 import { BigNumber, BigNumberish, Contract, utils, Wallet } from 'ethers';
-import * as BN from 'bn.js';
 import { Web3ModalService } from '@mindsorg/web3modal-angular';
 import { LocalWalletService } from './local-wallet.service';
 import asyncSleep from '../../helpers/async-sleep';
@@ -224,9 +223,8 @@ export class Web3WalletService {
     return BigNumber.from(weiAmount).toHexString();
   }
 
-  fromWei(amount: BN, unit?: BigNumberish) {
-    const etherAmount = utils.formatUnits(amount.toString(), unit).toString();
-    return BigNumber.from(etherAmount).toHexString();
+  fromWei(amount: BigNumber, unit?: BigNumberish) {
+    return utils.formatUnits(amount.toString(), unit).toString();
   }
 
   encodeParams(types: (string | utils.ParamType)[], values: any[]) {
