@@ -4,7 +4,7 @@
       <span class="m-buyTokensBodyPaymentMethod__text">Payment Method</span>
     </div>
     <div class="m-buyTokensBody__buttons">
-      <div
+      <button
         class="m-buyTokensButtons__button"
         [ngClass]="{
           'm-buyTokensBody__button--selected': paymentMethod === 'card'
@@ -12,8 +12,8 @@
         (click)="choosePaymentMethod('card')"
       >
         Card
-      </div>
-      <div
+      </button>
+      <button
         class="m-buyTokensButtons__button"
         [ngClass]="{
           'm-buyTokensBody__button--selected': paymentMethod === 'bank'
@@ -21,8 +21,8 @@
         (click)="choosePaymentMethod('bank')"
       >
         Bank
-      </div>
-      <div
+      </button>
+      <button
         class="m-buyTokensButtons__button"
         [ngClass]="{
           'm-buyTokensBody__button--selected': paymentMethod === 'crypto'
@@ -30,14 +30,14 @@
         (click)="choosePaymentMethod('crypto')"
       >
         Crypto
-      </div>
+      </button>
     </div>
-    <div class="m-buyTokensBody__estimate">
+    <span class="m-buyTokensBody__estimate">
       Delivery estimate:
       <span class="m-buyTokensBody__estimate--primary">
         1-2 {{ paymentMethod === 'bank' ? 'days' : 'mins' }}
       </span>
-    </div>
+    </span>
     <div class="m-buyTokensBody__termsCheck">
       <input id="terms-check" type="checkbox" [(ngModel)]="terms" />
       <label
@@ -65,14 +65,13 @@
       <a class="m-buyTokensFooter__learnMoreText" href="/tokens">
         Learn more about tokens
       </a>
-      <button
-        class="m-btn m-btn--action m-buyTokensFooter__btn"
+      <m-shadowboxSubmitButton
         [disabled]="!canContinue()"
         (click)="openPaymentModal()"
         i18n="@@M__PURCHASE_BUTTON"
       >
         Continue
-      </button>
+      </m-shadowboxSubmitButton>
     </div>
   </div>
 </m-concertColors__modal>

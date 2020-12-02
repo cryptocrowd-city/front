@@ -20,12 +20,10 @@ export class EarnModalComponent {
   }
 
   constructor(
-    private composer: ComposerService,
     private uniswapModalService: UniswapModalService,
     private web3walletService: Web3WalletService,
     private composerModal: ModalService,
-    private injector: Injector,
-    private buyTokensModalService: BuyTokensModalService
+    private injector: Injector
   ) {}
 
   async openAddLiquidity() {
@@ -41,14 +39,4 @@ export class EarnModalComponent {
       .present()
       .toPromise();
   }
-
-  redirectDevelop() {
-    window.location.replace('https://gitlab.com/minds');
-  }
-
-  async openReferModal() {
-    this.onDismissIntent();
-    await this.buyTokensModalService.open();
-  }
-
 }

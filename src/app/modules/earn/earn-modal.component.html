@@ -8,14 +8,17 @@
           and the equivalent amount of ETH on Uniswap.
         </p>
       </div>
-      <div class="m-earnModal__block">
+      <a
+        class="m-earnModal__block m-earnModal__block--anchor"
+        routerLink="wallet/canary/tokens/overview"
+      >
         <span class="m-earnModalBlock__title">Transfer</span>
         <p class="m-earnModalBlock__text">
           Receive a miltiplier on your daily token rewards by holding your MINDS
           on-chain. The multiplier increases over time and as your balance
           grows.
         </p>
-      </div>
+      </a>
       <div class="m-earnModal__block" (click)="openCompose()">
         <span class="m-earnModalBlock__title">Create</span>
         <p class="m-earnModalBlock__text">
@@ -31,20 +34,26 @@
           on which channels will grow and gain trust.
         </p>
       </div>
-      <div class="m-earnModal__block" (click)="redirectDevelop()">
+      <a
+        class="m-earnModal__block m-earnModal__block--anchor"
+        href="https://gitlab.com/minds"
+      >
         <span class="m-earnModalBlock__title">Develop</span>
         <p class="m-earnModalBlock__text">
           Submit succesful merge requests or create Gitlab issues that result in
           a succesful merge request.
         </p>
-      </div>
-      <div class="m-earnModal__block" (click)="openReferModal()">
+      </a>
+      <a
+        class="m-earnModal__block m-earnModal__block--anchor"
+        routerLink="settings/other/referrals"
+      >
         <span class="m-earnModalBlock__title">Refer</span>
         <p class="m-earnModalBlock__text">
           Get your contacts to sign up for Minds through your referral link or
           any of your content.
         </p>
-      </div>
+      </a>
     </div>
   </div>
 </m-concertColors__modal>
