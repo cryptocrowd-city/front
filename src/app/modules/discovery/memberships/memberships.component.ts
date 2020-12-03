@@ -54,7 +54,10 @@ export class DiscoveryMembershipsFeedComponent implements OnInit {
    */
   private async load(refresh: boolean = false): Promise<boolean> {
     try {
-      this.discoveryFeed.load();
+      this.discoveryFeed
+        .setFilter('latest')
+        .setType('all')
+        .load();
       return true;
     } catch (e) {
       return false;
