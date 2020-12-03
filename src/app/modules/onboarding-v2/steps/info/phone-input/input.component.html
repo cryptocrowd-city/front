@@ -36,7 +36,7 @@
         size="xsmall"
         class="m-onboardingInput__saveButton"
         style="height: 38px !important;"
-        [disabled]="disabled || !number || number.length < 13"
+        [disabled]="verifyDisabled"
         (onAction)="savePhoneNumber()"
         *ngIf="!inProgress"
         i18n="@@ONBOARDING_PHONE__VERIFY"
@@ -81,26 +81,30 @@
         i18n-placeholder="@@ONBOARDING_PHONE__EXAMPLE_INPUT_CODE"
       />
 
-      <button
-        class="m-onboardingInput__smallButton"
+      <m-button
+        size="xsmall"
+        color="blue"
+        iconOnly="true"
         [disabled]="resendButtonDisabled"
-        (click)="reSendCode()"
+        (onAction)="reSendCode()"
         *ngIf="!inProgress"
         title="Re-send verification code"
         i18n-title="@@ONBOARDING_PHONE__RESEND_VERIFICATION_CODE"
       >
         <i class="material-icons">refresh</i>
-      </button>
+      </m-button>
 
-      <button
-        class="m-onboardingInput__smallButton"
-        (click)="reset()"
+      <m-button
+        size="xsmall"
+        color="blue"
+        iconOnly="true"
+        (onAction)="reset()"
         *ngIf="!inProgress"
         title="Go back"
         i18n-title="@@ONBOARDING_PHONE__GO_BACK"
       >
         <i class="material-icons">keyboard_backspace</i>
-      </button>
+      </m-button>
 
       <div
         class="m-onboarding__error"

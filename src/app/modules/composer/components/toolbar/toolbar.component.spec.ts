@@ -161,13 +161,4 @@ describe('Composer Toolbar', () => {
     expect(popupServiceMock.create).toHaveBeenCalledWith(ScheduleComponent);
     expect(popupServiceMock.present).toHaveBeenCalled();
   });
-
-  it('should emit on post', () => {
-    spyOn(comp.onPostEmitter, 'emit');
-    fixture.detectChanges();
-
-    const action: ButtonComponentAction = { type: 'mock' };
-    comp.onPost(action);
-    expect(comp.onPostEmitter.emit).toHaveBeenCalledWith(action);
-  });
 });
