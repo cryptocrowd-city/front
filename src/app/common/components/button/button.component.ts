@@ -32,6 +32,7 @@ export class ButtonComponent implements AfterViewInit {
   @Input() iconOnly: boolean = false;
   @Input() color: 'blue' | 'grey' | 'red' = 'grey';
   @Input() size: 'xsmall' | 'small' | 'medium' | 'large' = 'medium';
+  @Input() pulsating: boolean = false;
 
   /**
    * Handles width for buttons that are not visible onInit

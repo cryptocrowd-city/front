@@ -33,7 +33,7 @@
 
       <m-button
         color="blue"
-        size="small"
+        size="xsmall"
         class="m-onboardingInput__saveButton"
         style="height: 38px !important;"
         [disabled]="disabled || !number || number.length < 13"
@@ -82,7 +82,7 @@
       />
 
       <button
-        class="mf-button mf-button--alt m-onboardingInput__smallButton"
+        class="m-onboardingInput__smallButton"
         [disabled]="resendButtonDisabled"
         (click)="reSendCode()"
         *ngIf="!inProgress"
@@ -93,7 +93,7 @@
       </button>
 
       <button
-        class="mf-button mf-button--alt m-onboardingInput__smallButton"
+        class="m-onboardingInput__smallButton"
         (click)="reset()"
         *ngIf="!inProgress"
         title="Go back"

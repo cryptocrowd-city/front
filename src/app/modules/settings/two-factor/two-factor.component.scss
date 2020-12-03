@@ -27,16 +27,3 @@ m-settings--two-factor {
   width: unset;
   max-width: 100%;
 }
-
-.m-twoFactor__confirm {
-  @include m-theme {
-    background-color: themed($m-link) !important;
-    color: themed($m-white-always) !important;
-  }
-}
-
-.m-twoFactor__retry {
-  @include m-theme {
-    color: themed($m-textColor--primary);
-  }
-}

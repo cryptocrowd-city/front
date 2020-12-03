@@ -87,16 +87,16 @@
                 *ngIf="(!group['is:creator'] || (session.isAdmin()) && !group['is:invited'])"
               >
               </minds-groups-join-button>
-              <button
-                class="m-btn m-btn--slim m-btn--with-icon"
-                [class.m-pulsating--small]="group.hasGathering$ | async"
+              <m-button
                 style="margin-left: 8;"
-                (click)="videochat.activate(group)"
+                (onAction)="videochat.activate(group)"
                 *ngIf="!group.videoChatDisabled && group['is:member']"
+                size="small"
+                [pulsating]="group.hasGathering$ | async"
               >
-                <span class="m-gatheringIcon">Gathering</span>
                 <i class="material-icons">video_call</i>
-              </button>
+                <span class="m-gatheringIcon">Gathering</span>
+              </m-button>
             </div>
           </div>
 

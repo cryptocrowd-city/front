@@ -494,25 +494,10 @@ m-onboarding {
             }
           }
 
-          // ojm need to handle this one
           .m-onboardingInput__saveButton {
-            height: 36px !important;
-            // font-size: 16px !important;
-            // padding: 4px 20px;
             margin-left: 8px;
-            // cursor: pointer;
             width: auto !important;
             flex-shrink: 2;
-
-            // @include m-theme() {
-            //   color: themed($m-aqua);
-            // }
-
-            // &.disabled {
-            //   cursor: not-allowed;
-            //   @include m-theme() {
-            //     color: themed($m-grey-100);
-            //   }
           }
         }
 
@@ -575,7 +560,7 @@ m-onboarding {
       margin-bottom: 30px;
 
       & > *:not(:first-child) {
-        margin-left: 30px;
+        margin-left: 15px;
       }
 
       a {
@@ -583,23 +568,4 @@ m-onboarding {
       }
     }
   }
-
-  // ojm remove
-  // .mf-button--hollow {
-  //   border-color: #e7e7e7 !important;
-  //   color: #9b9b9b !important;
-  //   font-size: 16px !important;
-  //   line-height: 21px !important;
-  //   font-weight: 300 !important;
-  //   height: 56px !important;
-  // }
-
-  // .mf-button--alt {
-  //   background-color: #5dbac0 !important;
-  //   border-color: #5dbac0 !important;
-  //   color: white !important;
-  //   font-size: 20px !important;
-  //   line-height: 26px !important;
-  //   height: 56px !important;
-  // }
 }

@@ -77,15 +77,14 @@
       <div class="m-reportCreator__submit">
         <div class="m-layout__spacer"></div>
 
-        <button
-          type="button"
-          class="m-reportCreator__button m-reportCreator__button--submit m-btn m-btn--slim m-btn--action"
+        <m-button
           [disabled]="!canSubmit() || inProgress || success"
-          (click)="submit()"
+          (onAction)="submit()"
           i18n="@@REPORT__CREATOR__SUBMIT_ACTION"
+          color="blue"
         >
-          SUBMIT
-        </button>
+          Submit
+        </m-button>
 
         <div
           *ngIf="inProgress"
@@ -109,16 +108,14 @@
     <section class="m-report-creator--section m-report-creator--section--last">
       <div class="m-reportCreator__submit">
         <div class="m-layout__spacer"></div>
-
-        <button
-          type="button"
-          class="m-reportCreator__button m-reportCreator__button--next m-btn m-btn--slim m-btn--action"
+        <m-button
           [disabled]="!canSubmit() || inProgress || success"
-          (click)="next = true"
+          (onAction)="next = true"
           i18n="@@REPORT__CREATOR__NEXT_ACTION"
+          color="blue"
         >
-          NEXT
-        </button>
+          Next
+        </m-button>
       </div>
     </section>
   </div>
@@ -142,11 +139,8 @@
     class="m-report-creator--close"
     *ngIf="success || (next && subject.value === 10)"
   >
-    <button
-      class="m-reportCreator__button m-reportCreator__button--close m-btn m-btn--slim m-btn--action"
-      (click)="close()"
-    >
-      <ng-container i18n="@@M__ACTION__CLOSE__CAPS">CLOSE</ng-container>
-    </button>
+    <m-button (onAction)="close()">
+      <ng-container i18n="@@M__ACTION__CLOSE__CAPS">Close</ng-container>
+    </m-button>
   </div>
 </div>

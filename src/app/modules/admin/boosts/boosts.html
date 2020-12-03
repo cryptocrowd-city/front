@@ -78,7 +78,7 @@
       ></minds-card-user>
       <m-activity
         [entity]="boost.entity"
-        *ngIf="boost.entity.type == 'activity' 
+        *ngIf="boost.entity.type == 'activity'
           || boost.entity.subtype === 'blog'
           || boost.entity.subtype == 'image'
           || boost.entity.subtype == 'video'
@@ -168,36 +168,25 @@
         class="mdl-card__supporting-text action-buttons"
         *ngIf="boost.state == 'created'"
       >
-        <button
-          class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--accept-button m-admin-button--green"
-          (click)="accept(boost, false)"
-        >
+        <m-button (onAction)="accept(boost, false)" color="blue" size="xsmall">
           Accept
-        </button>
-        <button
-          class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--open-button m-admin-button--green-dark"
-          (click)="accept(boost, true)"
-        >
+        </m-button>
+        <m-button (onAction)="accept(boost, true)" size="xsmall">
           Open
-        </button>
-        <button
-          class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--e-tag-button-accept m-admin-button--green-dark"
-          (click)="accept(boost, true, { mature: 1 })"
-        >
+        </m-button>
+        <m-button (onAction)="accept(boost, true, { mature: 1 })" size="xsmall">
           Open (E-tag)
-        </button>
-        <button
-          class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--reject-button m-admin-button--red"
-          (click)="openReasonsModal(boost)"
+        </m-button>
+        <m-button
+          (onAction)="openReasonsModal(boost)"
+          color="red"
+          size="xsmall"
         >
           Reject
-        </button>
-        <button
-          class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--e-tag-button m-admin-button--red"
-          (click)="eTag(boost)"
-        >
+        </m-button>
+        <m-button (click)="eTag(boost)" color="red" size="xsmall">
           E-tag
-        </button>
+        </m-button>
       </div>
     </div>
   </div>

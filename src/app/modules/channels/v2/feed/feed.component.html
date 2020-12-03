@@ -159,18 +159,13 @@
         >
       </ng-container>
 
-      <!-- OJM am I supposed to do this one? It's so new -->
-      <button
-        class="m-channelFeed__firstPostButton"
+      <m-button
         i18n="@@M__CHANNEL_FEED__CREATE_YOUR_FIRST_POST"
-        (click)="onFirstPostButtonClick()"
-        [ngClass]="{
-          'm-channelFeed__firstPostButton--dark': isDarkTheme$ | async,
-          'm-channelFeed__firstPostButton--light': !(isDarkTheme$ | async)
-        }"
+        (onAction)="onFirstPostButtonClick()"
+        color="blue"
       >
         Create your first post
-      </button>
+      </m-button>
     </div>
   </div>
 

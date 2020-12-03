@@ -99,11 +99,13 @@
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
-      <m-button color="blue" class="m-upgradesUpgradeOptionsPlan__action"
+      <m-button
+        color="blue"
+        class="m-upgradesUpgradeOptionsPlan__action"
+        *ngIf="!session.getLoggedInUser()?.plus"
         ><a
           routerLink="/plus"
           [queryParams]="intervalCurrencyQueryParams"
-          *ngIf="!session.getLoggedInUser()?.plus"
           data-cy="m-upgradeOptions__upgrade-to-plus-button"
           i18n="@@COMMON__UPGRADE_TO_PLUS"
         >
@@ -195,11 +197,14 @@
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
       <ng-container *mIfFeature="'purchase-pro'; else comingSoon">
-        <m-button color="blue" class="m-upgradesUpgradeOptionsPlan__action">
+        <m-button
+          color="blue"
+          class="m-upgradesUpgradeOptionsPlan__action"
+          *ngIf="!session.getLoggedInUser()?.pro"
+        >
           <a
             routerLink="/pro"
             [queryParams]="intervalCurrencyQueryParams"
-            *ngIf="!session.getLoggedInUser()?.pro"
             data-cy="m-upgradeOptions__upgrade-to-pro-button"
             i18n="@@COMMON__UPGRADE_TO_PRO"
           >
