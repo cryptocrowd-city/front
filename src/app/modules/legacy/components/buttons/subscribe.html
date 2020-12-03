@@ -3,7 +3,7 @@
     *ngIf="!_user.subscribed"
     (onAction)="subscribe($event)"
     iconOnly="true"
-    size="small"
+    size="xsmall"
   >
     <i class="material-icons">
       add
@@ -13,7 +13,7 @@
     (onAction)="unSubscribe($event)"
     *ngIf="_user.subscribed"
     iconOnly="true"
-    size="small"
+    size="xsmall"
   >
     <i class="material-icons">
       check
@@ -25,7 +25,7 @@
   <m-button
     *ngIf="!_user.subscribed"
     (onAction)="subscribe($event)"
-    size="small"
+    size="xsmall"
   >
     <i class="material-icons">person_add</i>
     <span>
@@ -35,7 +35,7 @@
   <m-button
     *ngIf="_user.subscribed"
     (onAction)="unSubscribe($event)"
-    size="small"
+    size="xsmall"
   >
     <i class="material-icons">close</i>
     <span>

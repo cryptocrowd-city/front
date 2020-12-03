@@ -30,7 +30,7 @@
       align-self: stretch;
     }
     button {
-      width: 195px; //ojm
+      width: 195px;
 
       @media screen and (max-width: $max-mobile) {
         width: 100%;
@@ -208,9 +208,6 @@
 
       button {
         align-self: flex-end;
-        @include m-theme() {
-          background-color: themed($m-aqua);
-        }
       }
     }
 

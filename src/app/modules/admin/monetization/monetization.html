@@ -30,7 +30,7 @@
 
       <m-activity
         [entity]="entity"
-        *ngIf="entity.type == 'activity' 
+        *ngIf="entity.type == 'activity'
           || entity.subtype === 'blog'
           || entity.subtype == 'image'
           || entity.subtype == 'video'
@@ -39,12 +39,9 @@
       ></m-activity>
 
       <div class="mdl-card__supporting-text m-action-buttons">
-        <button
-          class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--red"
-          (click)="deMonetize(entity, i)"
-        >
+        <m-button color="red" (onAction)="deMonetize(entity, i)">
           De-Monetize
-        </button>
+        </m-button>
       </div>
     </div>
   </div>

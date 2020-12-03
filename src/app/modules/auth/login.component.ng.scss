@@ -137,27 +137,15 @@
             }
           }
 
-          button.mf-button {
-            width: 132px; //ojm test?
+          button {
+            width: 132px;
           }
         }
       }
 
-      //ojm maybe remove
       ::ng-deep m-button {
-        // min-width: 0 !important;
         button {
-          width: 132px; //ojm test?
-          // border-radius: 2px;
-          // > div {
-          //   font-size: 18px;
-          //   @include m-theme() {
-          //     color: themed($m-white) !important;
-          //   }
-          //   @media screen and (max-width: $max-mobile) {
-          //     font-size: 15px;
-          //   }
-          // }
+          width: 132px;
         }
       }
     }
@@ -185,9 +173,6 @@
 
       button {
         align-self: flex-end;
-        @include m-theme() {
-          background-color: themed($m-aqua);
-        }
       }
     }
   }
