@@ -65,11 +65,11 @@ describe('Composer Toolbar', () => {
           selector: 'm-icon',
           inputs: ['from', 'iconId', 'sizeFactor'],
         }),
-        MockComponent({
-          selector: 'm-button',
-          inputs: ['disabled', 'dropdown', 'dropdownAnchorPosition'],
-          outputs: ['onAction'],
-        }),
+        // MockComponent({ //ojm
+        //   selector: 'm-button',
+        //   inputs: ['disabled', 'dropdown', 'dropdownAnchorPosition'],
+        //   outputs: ['onAction'],
+        // }),
       ],
       providers: [
         {
