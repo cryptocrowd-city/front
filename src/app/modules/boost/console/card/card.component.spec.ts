@@ -12,6 +12,7 @@ import { boostServiceMock } from '../../../../mocks/modules/boost/boost.service.
 import { BoostService } from '../../boost.service';
 import { TokenPipe } from '../../../../common/pipes/token.pipe';
 import { MockComponent } from '../../../../utils/mock';
+import { ButtonComponent } from '../../../../common/components/button/button.component';
 
 describe('BoostConsoleCard', () => {
   let comp: BoostConsoleCard;
@@ -27,6 +28,7 @@ describe('BoostConsoleCard', () => {
         }),
         TokenPipe,
         BoostConsoleCard,
+        ButtonComponent,
       ],
       imports: [
         RouterTestingModule,
@@ -145,7 +147,7 @@ describe('BoostConsoleCard', () => {
     expect(buttons).not.toBeNull();
 
     const revoke = fixture.debugElement.query(
-      By.css('.m-boostCardManagerButton--revoke')
+      By.css('.m-boostCardManagerButton--revoke button')
     );
     expect(revoke).not.toBeNull();
     expect(revoke.nativeElement.textContent).toContain('Revoke');
@@ -153,7 +155,7 @@ describe('BoostConsoleCard', () => {
     expect(boostServiceMock.revoke).toHaveBeenCalled();
 
     const reject = fixture.debugElement.query(
-      By.css('.m-boostCardManagerButton--reject')
+      By.css('.m-boostCardManagerButton--reject button')
     );
     expect(reject).not.toBeNull();
     expect(reject.nativeElement.textContent).toContain('Reject');
@@ -165,7 +167,7 @@ describe('BoostConsoleCard', () => {
     });
 
     const accept = fixture.debugElement.query(
-      By.css('.m-boostCardManagerButton--accept')
+      By.css('.m-boostCardManagerButton--accept button')
     );
     expect(accept).not.toBeNull();
     expect(accept.nativeElement.textContent).toContain('Accept');

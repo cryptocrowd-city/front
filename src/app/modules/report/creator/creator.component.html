@@ -110,6 +110,7 @@
       <div class="m-reportCreator__submit m-reportCreator__submit--next">
         <div class="m-layout__spacer"></div>
         <m-button
+          class="m-reportCreator__button--next"
           [disabled]="!canSubmit() || inProgress || success"
           (onAction)="next = true"
           i18n="@@REPORT__CREATOR__NEXT_ACTION"
@@ -140,7 +141,7 @@
     class="m-report-creator--close"
     *ngIf="success || (next && subject.value === 10)"
   >
-    <m-button (onAction)="close()">
+    <m-button (onAction)="close()" class="m-reportCreator__button--close">
       <ng-container i18n="@@M__ACTION__CLOSE__CAPS">Close</ng-container>
     </m-button>
   </div>
