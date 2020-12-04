@@ -40,12 +40,12 @@
       </div>
 
       <div class="m-application-cta" *ngIf="reviewing !== i">
-        <m-button color="blue" (onACtion)="review(i)" [saving]="inProgress">
+        <m-button color="blue" (onAction)="review(i)" [saving]="inProgress">
           Review
         </m-button>
       </div>
       <div class="m-application-cta" *ngIf="reviewing === i">
-        <m-button color="blue" (onACtion)="accept(i)" [saving]="inProgress">
+        <m-button color="blue" (onAction)="accept(i)" [saving]="inProgress">
           Accept
         </m-button>
 

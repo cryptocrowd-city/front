@@ -17,6 +17,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { loginReferrerServiceMock } from '../../mocks/services/login-referrer-service-mock.spec';
 import { MockService } from '../../utils/mock';
+import { ButtonComponent } from '../../common/components/button/button.component';
 
 describe('GroupsJoinButton', () => {
   let fixture: ComponentFixture<GroupsJoinButton>;
@@ -60,7 +61,11 @@ describe('GroupsJoinButton', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SignupOnActionModalMock, GroupsJoinButton],
+      declarations: [
+        SignupOnActionModalMock,
+        GroupsJoinButton,
+        ButtonComponent,
+      ],
       imports: [RouterTestingModule],
       providers: [
         { provide: Session, useValue: sessionMock },
