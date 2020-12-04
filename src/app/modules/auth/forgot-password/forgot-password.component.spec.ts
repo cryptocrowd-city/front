@@ -44,13 +44,13 @@ describe('ForgotPasswordComponent', () => {
 
   function getContinueButton(): DebugElement {
     return fixture.debugElement.query(
-      By.css('.m-forgot-password--step-1 button')
+      By.css('.m-forgot-password--step-1 m-button')
     );
   }
 
   function getResetButton(): DebugElement {
     return fixture.debugElement.query(
-      By.css('.m-forgot-password--step-3 button')
+      By.css('.m-forgot-password--step-3 m-button')
     );
   }
 

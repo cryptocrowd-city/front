@@ -168,6 +168,7 @@
     <div class="m-login__spacer" *ngIf="showBigButton"></div>
 
     <m-button
+      class="m-login__button--login"
       color="blue"
       (onAction)="login()"
       [saving]="inProgress"
@@ -177,6 +178,7 @@
       <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
     </m-button>
     <m-button
+      class="m-login__button--login"
       *ngIf="showBigButton"
       type="button"
       [saving]="inProgress"

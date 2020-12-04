@@ -377,7 +377,7 @@ describe('BoostCreatorComponent', () => {
   function getNextButton(): DebugElement {
     return fixture.debugElement.query(
       By.css(
-        '.m-boost--creator-section-submit .m-boost--creator--submit button.m-boost--creator-button'
+        '.m-boost--creator-section-submit .m-boost--creator--submit m-button.m-boost--creator-button-next'
       )
     );
   }

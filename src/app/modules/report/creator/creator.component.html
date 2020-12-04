@@ -78,6 +78,7 @@
         <div class="m-layout__spacer"></div>
 
         <m-button
+          class="m-reportCreator__button--submit"
           [disabled]="!canSubmit() || inProgress || success"
           (onAction)="submit()"
           i18n="@@REPORT__CREATOR__SUBMIT_ACTION"
@@ -106,7 +107,7 @@
   <!-- SHOW FOR MORE OR COPYRIGHT -->
   <div *ngIf="!success && !next && subject.hasMore">
     <section class="m-report-creator--section m-report-creator--section--last">
-      <div class="m-reportCreator__submit">
+      <div class="m-reportCreator__submit m-reportCreator__submit--next">
         <div class="m-layout__spacer"></div>
         <m-button
           [disabled]="!canSubmit() || inProgress || success"

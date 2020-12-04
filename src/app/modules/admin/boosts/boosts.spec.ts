@@ -325,6 +325,7 @@ describe('AdminBoosts', () => {
     spyOn(comp, 'accept').and.stub();
 
     button.nativeElement.click();
+    tick();
     fixture.detectChanges();
 
     expect(comp.accept).toHaveBeenCalled();
