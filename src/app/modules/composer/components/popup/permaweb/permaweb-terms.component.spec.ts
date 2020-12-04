@@ -22,14 +22,7 @@ describe('Permaweb Terms Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        PermawebTermsComponent,
-        ButtonComponent,
-        // MockComponent({ //ojm
-        //   selector: 'm-button',
-        //   outputs: ['onAction'],
-        // }),
-      ],
+      declarations: [PermawebTermsComponent, ButtonComponent],
       providers: [
         {
           provide: ComposerService,
