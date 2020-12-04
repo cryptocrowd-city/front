@@ -105,7 +105,7 @@ describe('ReportCreatorComponent', () => {
 
   xit('should have a disabled send button and get the guid from the object', () => {
     const button = fixture.debugElement.query(
-      By.css('.m-reportCreator__button--submit')
+      By.css('.m-reportCreator__submit m-button')
     );
     expect(button.properties.disabled).toBe(true);
   });
@@ -126,7 +126,7 @@ describe('ReportCreatorComponent', () => {
     item.nativeElement.click();
     fixture.detectChanges();
     const button = fixture.debugElement.query(
-      By.css('.m-reportCreator__button--submit')
+      By.css('.m-reportCreator__submit m-button')
     );
     expect(comp.subject.value).toEqual(4);
     expect(button.properties.disabled).toBe(false);
@@ -137,7 +137,7 @@ describe('ReportCreatorComponent', () => {
     item.nativeElement.click();
     fixture.detectChanges();
     const next = fixture.debugElement.query(
-      By.css('.m-reportCreator__button--next')
+      By.css('.m-reportCreator__submit--next m-button button')
     );
     expect(next).not.toBeNull();
     next.nativeElement.click();
@@ -149,7 +149,7 @@ describe('ReportCreatorComponent', () => {
     fixture.detectChanges();
 
     const button = fixture.debugElement.query(
-      By.css('.m-reportCreator__button--submit')
+      By.css('.m-reportCreator__submit m-button button')
     );
     expect(button.properties.disabled).toBe(false);
   });

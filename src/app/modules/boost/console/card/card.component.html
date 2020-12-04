@@ -107,6 +107,7 @@
     class="m-boost-card--manager-item m-boost-card--manager-item--buttons"
   >
     <m-button
+      class="m-boostCardManagerButton--revoke"
       *ngIf="canRevoke()"
       color="red"
       (onAction)="revoke()"
@@ -116,6 +117,7 @@
     </m-button>
 
     <m-button
+      class="m-boostCardManagerButton--reject"
       *ngIf="canReject()"
       color="red"
       (onAction)="reject()"
@@ -125,6 +127,7 @@
     </m-button>
 
     <m-button
+      class="m-boostCardManagerButton--accept"
       *ngIf="canAccept()"
       color="blue"
       (onAction)="accept()"

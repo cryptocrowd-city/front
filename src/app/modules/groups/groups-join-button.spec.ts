@@ -39,19 +39,21 @@ describe('GroupsJoinButton', () => {
   }
 
   function getJoinButtons(): DebugElement[] {
-    return fixture.debugElement.queryAll(By.css('.m-btn--join-group'));
+    return fixture.debugElement.queryAll(By.css('.m-groupsJoinButton__join'));
   }
 
   function getAcceptAndDeclineButtons(): DebugElement[] {
-    return fixture.debugElement.queryAll(By.css('span > .m-btn'));
+    return fixture.debugElement.queryAll(
+      By.css('.m-groupsJoinButton__verdict')
+    );
   }
 
   function getLeaveButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-btn.subscribed'));
+    return fixture.debugElement.query(By.css('.m-groupsJoinButton__leave'));
   }
 
   function getCancelRequestButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-btn.awaiting'));
+    return fixture.debugElement.query(By.css('.m-groupsJoinButton__cancel'));
   }
 
   /** /Helpers */

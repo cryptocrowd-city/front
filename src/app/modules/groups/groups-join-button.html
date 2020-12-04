@@ -23,6 +23,7 @@
 
 <ng-template #normalView>
   <m-button
+    class="m-groupsJoinButton__join"
     *ngIf="
           !group['is:banned'] &&
           !group['is:awaiting'] &&
@@ -37,10 +38,16 @@
     <ng-container>Join</ng-container>
   </m-button>
   <ng-container *ngIf="group['is:invited'] &amp;&amp; !group['is:member']">
-    <m-button (onAction)="accept()" i18n="@@M__ACTION__ACCEPT" size="small">
+    <m-button
+      class="m-groupsJoinButton__verdict"
+      (onAction)="accept()"
+      i18n="@@M__ACTION__ACCEPT"
+      size="small"
+    >
       Accept
     </m-button>
     <m-button
+      class="m-groupsJoinButton__verdict"
       (onAction)="decline()"
       i18n="@@GROUPS__JOIN_BUTTON__DECLINE_ACTION"
       size="small"
@@ -49,6 +56,7 @@
     </m-button>
   </ng-container>
   <m-button
+    class="m-groupsJoinButton__leave"
     *ngIf="group['is:member']"
     (onAction)="leave()"
     i18n="@@GROUPS__JOIN_BUTTON__LEAVE_ACTION"
@@ -57,6 +65,7 @@
     Leave
   </m-button>
   <m-button
+    class="m-groupsJoinButton__cancel"
     *ngIf="group['is:awaiting']"
     (onAction)="cancelRequest()"
     i18n="@@GROUPS__JOIN_BUTTON__CANCEL_REQ_ACTION"

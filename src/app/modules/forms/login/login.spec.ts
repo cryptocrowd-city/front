@@ -76,7 +76,7 @@ describe('LoginForm', () => {
   }
 
   function getTwoFactorLoginButton() {
-    return fixture.debugElement.query(By.css('.m-login__2fa > button'));
+    return fixture.debugElement.query(By.css('.m-login__2fa > m-button'));
   }
 
   beforeEach(async(() => {
@@ -105,7 +105,7 @@ describe('LoginForm', () => {
     loginForm = fixture.debugElement.query(By.css('form.m-login-box'));
     username = fixture.debugElement.query(By.css('#username'));
     password = fixture.debugElement.query(By.css('#password'));
-    loginButton = fixture.debugElement.query(By.css('.m-btn--login'));
+    loginButton = fixture.debugElement.query(By.css('.m-login__button--login'));
     errorMessage = fixture.debugElement.query(By.css('.m-error-box'));
 
     session = comp.session;

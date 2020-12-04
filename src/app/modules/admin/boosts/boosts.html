@@ -168,10 +168,19 @@
         class="mdl-card__supporting-text action-buttons"
         *ngIf="boost.state == 'created'"
       >
-        <m-button (onAction)="accept(boost, false)" color="blue" size="xsmall">
+        <m-button
+          (onAction)="accept(boost, false)"
+          color="blue"
+          size="xsmall"
+          class="m-admin-boosts--accept-button"
+        >
           Accept
         </m-button>
-        <m-button (onAction)="accept(boost, true)" size="xsmall">
+        <m-button
+          (onAction)="accept(boost, true)"
+          size="xsmall"
+          class="m-admin-boosts--open-button"
+        >
           Open
         </m-button>
         <m-button (onAction)="accept(boost, true, { mature: 1 })" size="xsmall">
@@ -181,10 +190,16 @@
           (onAction)="openReasonsModal(boost)"
           color="red"
           size="xsmall"
+          class="m-admin-boosts--reject-button"
         >
           Reject
         </m-button>
-        <m-button (click)="eTag(boost)" color="red" size="xsmall">
+        <m-button
+          (click)="eTag(boost)"
+          class="m-admin-boosts--e-tag-button"
+          color="red"
+          size="xsmall"
+        >
           E-tag
         </m-button>
       </div>

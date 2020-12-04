@@ -85,7 +85,7 @@ describe('RejectionReasonModalComponent', () => {
     comp.noButton = 'No';
 
     confirmButton = fixture.debugElement.query(
-      By.css('.m-modal-confirm-buttons > button:first-child')
+      By.css('.m-modal-confirm-buttons > m-button:first-child')
     );
 
     fixture.detectChanges();

@@ -145,7 +145,7 @@ describe('BoostConsoleCard', () => {
     expect(buttons).not.toBeNull();
 
     const revoke = fixture.debugElement.query(
-      By.css('.m-boost-card--manager-item--buttons button:nth-child(1)')
+      By.css('.m-boostCardManagerButton--revoke')
     );
     expect(revoke).not.toBeNull();
     expect(revoke.nativeElement.textContent).toContain('Revoke');
@@ -153,7 +153,7 @@ describe('BoostConsoleCard', () => {
     expect(boostServiceMock.revoke).toHaveBeenCalled();
 
     const reject = fixture.debugElement.query(
-      By.css('.m-boost-card--manager-item--buttons button:nth-child(2)')
+      By.css('.m-boostCardManagerButton--reject')
     );
     expect(reject).not.toBeNull();
     expect(reject.nativeElement.textContent).toContain('Reject');
@@ -165,7 +165,7 @@ describe('BoostConsoleCard', () => {
     });
 
     const accept = fixture.debugElement.query(
-      By.css('.m-boost-card--manager-item--buttons button:nth-child(3)')
+      By.css('.m-boostCardManagerButton--accept')
     );
     expect(accept).not.toBeNull();
     expect(accept.nativeElement.textContent).toContain('Accept');
