@@ -8,11 +8,14 @@
 export default function getActivityContentType(
   entity: any,
   isolateBlogs: boolean = false
-): 'image' | 'video' | 'rich-embed' | 'status' | 'remind' | 'blog' {
+): 'image' | 'video' | 'rich-embed' | 'status' | 'remind' | 'quote' | 'blog' {
   const e = entity;
 
-  if (e.remind_object) {
+  if (e.subtype && e.subtype === 'remind') {
     return 'remind';
+  }
+  if (e.remind_object) {
+    return 'quote';
   }
   if (e.custom_type && e.custom_type === 'video') {
     return 'video';
