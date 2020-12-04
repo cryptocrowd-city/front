@@ -25,10 +25,10 @@ describe('Permaweb Terms Component', () => {
       declarations: [
         PermawebTermsComponent,
         ButtonComponent,
-        MockComponent({
-          selector: 'm-button',
-          outputs: ['onAction'],
-        }),
+        // MockComponent({ //ojm
+        //   selector: 'm-button',
+        //   outputs: ['onAction'],
+        // }),
       ],
       providers: [
         {
