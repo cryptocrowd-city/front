@@ -333,7 +333,7 @@
   >
     <div class="m-boost--creator--submit">
       <m-button
-        class="m-boost--creator-button-back"
+        class="m-boost--creator-button--back"
         (onAction)="back()"
         i18n="verb|@@M__ACTION__BOOST_BACK"
         *ngIf="boost.currency === 'usd' || boost.currency === 'creditcard'"
@@ -342,6 +342,7 @@
       </m-button>
 
       <m-button
+        class="m-boost--creator-button--submit m-boost--creator-button--boost"
         [disabled]="!canSubmit() || success || criticalError"
         [saving]="inProgress"
         (onAction)="submit()"
