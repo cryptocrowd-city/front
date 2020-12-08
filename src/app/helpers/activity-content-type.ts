@@ -4,17 +4,20 @@
  * When isolateBlogs is false, it will return
  * 'rich-embed' for both minds blogs and
  * external links.
+ *
+ * When collapseReminds is true, it returns the content type of the reminded post
  */
 export default function getActivityContentType(
   entity: any,
-  isolateBlogs: boolean = false
+  isolateBlogs: boolean = false,
+  collapseReminds: boolean = false
 ): 'image' | 'video' | 'rich-embed' | 'status' | 'remind' | 'quote' | 'blog' {
   const e = entity;
 
-  if (e.subtype && e.subtype === 'remind') {
+  if (e.subtype && e.subtype === 'remind' && !collapseReminds) {
     return 'remind';
   }
-  if (e.remind_object) {
+  if (!e.subtype && e.remind_object) {
     return 'quote';
   }
   if (e.custom_type && e.custom_type === 'video') {

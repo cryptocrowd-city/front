@@ -30,7 +30,7 @@
       [class.m-activityContent__message--short]="shortStatus"
       [class.m-activityContent__message--minimalMode]="minimalMode"
       [maxHeightAllowed]="maxMessageHeight"
-      *ngIf="message"
+      *ngIf="message.length >= 1"
       (click)="onMessageClick($event)"
     >
       <div class="m-activityContent__messageWrapper">
@@ -182,13 +182,14 @@
     not have permission to view it.</span
   >
 </div>
+
 <ng-container *ngIf="!hideMedia">
   <div
+    *ngIf="service.isRemind$ | async"
     class="m-activityContent__remind"
     [class.m-activityContent__remind--hasMessage]="!!message"
     [class.m-activityContent__remind--minimalMode]="minimalMode"
     #remindContainerEl
-    *ngIf="service.isRemind$ | async"
   >
     <m-activity__remind
       [parentService]="service"
@@ -199,6 +200,12 @@
     >
     </m-activity__remind>
   </div>
+</ng-container>
+<!-- ----------------------------------- -->
+<!--QUOTE MESSAGE -->
+<!-- ----------------------------------- -->
+<ng-container *ngIf="!hideText && isQuote && isModal">
+  <ng-container *ngTemplateOutlet="messageTemplate"></ng-container>
 </ng-container>
 <!-- ----------------------------------- -->
 <!-- TEMPLATE: TRANSLATION -->

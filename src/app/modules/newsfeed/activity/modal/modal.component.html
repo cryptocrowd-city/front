@@ -22,7 +22,7 @@
         (touchend)="showOverlaysOnTablet()"
         [ngClass]="{
           'm-activityModal__stageWrapper--status':
-            entity.activity_type === 'status'
+            entity.content_type === 'status'
         }"
       >
         <!-- LOADING PANEL -->
@@ -45,24 +45,26 @@
             [style.height]="mediaWrapperHeight"
             [ngClass]="{
               'm-activityModal__mediaWrapper--image':
-                entity.activity_type === 'image',
+                entity.content_type === 'image',
               'm-activityModal__mediaWrapper--status':
-                entity.activity_type === 'status',
+                entity.content_type === 'status',
               'm-activityModal__mediaWrapper--statusShort': shortStatus,
               'm-activityModal__mediaWrapper--statusLong':
-                entity.activity_type === 'status' && !shortStatus,
+                entity.content_type === 'status' && !shortStatus,
               'm-activityModal__mediaWrapper--video':
-                entity.activity_type === 'video',
+                entity.content_type === 'video',
               'm-activityModal__mediaWrapper--richEmbed':
-                entity.activity_type === 'rich-embed',
-              isBlog: entity.content_type === 'blog'
+                entity.content_type === 'rich-embed',
+              isBlog: entity.content_type === 'blog',
+              'm-activityModal__mediaWrapper--quote': isQuote
             }"
           >
             <m-activity__content
-              *ngIf="activityService.shouldShowContent$ | async"
+              *ngIf="!isQuote && (activityService.shouldShowContent$ | async)"
               [hideText]="
-                entity.activity_type !== 'status' &&
-                entity.activity_type !== 'rich-embed'
+                entity.content_type !== 'status' &&
+                entity.activity_type !== 'rich-embed' &&
+                entity.content_type !== 'rich-embed'
               "
               [showPaywall]="activityService.shouldShowPaywall$ | async"
               [showPaywallBadge]="
@@ -71,6 +73,10 @@
               [@slowFade]="(this.service.loading$ | async) ? 'out' : 'in'"
               [ngClass]="{ missingDimensions: mediaHeight === 0 }"
             ></m-activity__content>
+            <m-activity__modalQuote
+              *ngIf="isQuote && entity"
+              [entity]="entity.remind_object"
+            ></m-activity__modalQuote>
           </div>
           <m-activity__nsfwConsent
             *ngIf="activityService.shouldShowNsfwConsent$ | async"

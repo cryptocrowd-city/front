@@ -1,0 +1,28 @@
+@import 'defaults.scss';
+@import '../../activity.component.scss';
+
+:host {
+  text-align: left;
+  display: block;
+
+  a {
+    text-decoration: none;
+    cursor: pointer;
+  }
+  ::ng-deep {
+    m-activity {
+      margin-top: 20px;
+      line-height: normal;
+      height: calc(100% - 40px) !important;
+    }
+    m-activity__ownerBlock {
+      text-align: left;
+      ::ng-deep .m-activityOwnerBlock__right {
+        display: none !important;
+      }
+    }
+    m-activity__toolbar {
+      display: none;
+    }
+  }
+}

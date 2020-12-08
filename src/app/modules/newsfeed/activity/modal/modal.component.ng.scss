@@ -69,6 +69,13 @@ $modal-padding: 20px;
     overflow: hidden;
   }
 
+  .m-activityModal__mediaWrapper--quote {
+    overflow-y: scroll;
+    overflow-y: overlay;
+
+    @extend %disable-scrollbars;
+  }
+
   .m-activityModal__mediaWrapper--status {
     &.m-activityModal__mediaWrapper--statusLong {
       overflow-y: scroll;
@@ -153,36 +160,36 @@ $modal-padding: 20px;
       }
     }
 
-    &.isBlog {
-      ::ng-deep {
-        m-activity__content {
-          .meta {
-            padding: $modal-padding $modal-padding * 3;
+    // &.isBlog {
+    //   ::ng-deep {
+    //     m-activity__content {
+    //       .meta {
+    //         padding: $modal-padding $modal-padding * 3;
 
-            @include m-theme() {
-              background-color: themed($m-bgColor--primary);
-            }
-            .m-rich-embed--title {
-              font-size: 24px;
-              font-weight: 800;
-              margin-bottom: 15px;
-            }
-            .m-blurb {
-              display: block;
-              font-size: 17px;
-              line-height: 20px;
-              margin-bottom: 0;
-              @include m-theme() {
-                color: themed($m-textColor--secondary);
-              }
-            }
-            .m-url {
-              display: none;
-            }
-          }
-        }
-      }
-    }
+    //         @include m-theme() {
+    //           background-color: themed($m-bgColor--primary);
+    //         }
+    //         .m-rich-embed--title {
+    //           font-size: 24px;
+    //           font-weight: 800;
+    //           margin-bottom: 15px;
+    //         }
+    //         .m-blurb {
+    //           display: block;
+    //           font-size: 17px;
+    //           line-height: 20px;
+    //           margin-bottom: 0;
+    //           @include m-theme() {
+    //             color: themed($m-textColor--secondary);
+    //           }
+    //         }
+    //         .m-url {
+    //           display: none;
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
   }
 
   // NOTE: modal blog view not implemented
@@ -249,7 +256,7 @@ $modal-padding: 20px;
     height: auto;
     position: relative;
 
-    &:not(.m-activityModal__mediaWrapper--statusLong) {
+    &:not(.m-activityModal__mediaWrapper--statusLong):not(.m-activityModal__mediaWrapper--quote) {
       ::ng-deep m-activity__content {
         position: absolute;
         top: 50%;
@@ -577,7 +584,8 @@ $modal-padding: 20px;
     m-activity__content {
       overflow: hidden;
 
-      .m-rich-embed-has-thumbnail {
+      .m-rich-embed-has-thumbnail,
+      .m-rich-embed-src {
         text-align: left;
       }
       m-paywallBadge {

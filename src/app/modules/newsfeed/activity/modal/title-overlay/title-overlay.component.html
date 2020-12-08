@@ -9,7 +9,9 @@
 >
   <div
     class="m-activityModal__overlayTitleWrapper"
-    *ngIf="entity.activity_type !== 'rich-embed'"
+    *ngIf="
+      entity.activity_type !== 'rich-embed' && entity.activity_type !== 'quote'
+    "
   >
     <!-- TITLE -->
     <!-- <span

@@ -279,7 +279,7 @@ export class ActivityService {
     if (entity.type !== 'activity') entity = this.patchForeignEntity(entity);
 
     if (!entity.content_type) {
-      entity.content_type = getActivityContentType(entity, true);
+      entity.content_type = getActivityContentType(entity, true, true);
     }
     if (!entity.activity_type) {
       entity.activity_type = getActivityContentType(entity);

@@ -241,6 +241,10 @@ export class ActivityContentComponent
     return !!this.entity.perma_url && !this.isVideo && !this.isImage;
   }
 
+  get isQuote(): boolean {
+    return this.entity.content_type && this.entity.content_type === 'quote';
+  }
+
   get isBlog(): boolean {
     return this.entity.content_type === 'blog';
   }

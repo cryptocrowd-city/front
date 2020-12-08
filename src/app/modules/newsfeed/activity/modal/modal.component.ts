@@ -131,10 +131,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
 
     this.entitySubscription = this.activityService.entity$.subscribe(
       (entity: ActivityEntity) => {
-        /**
-         * Modal doesn't handle reminds
-         */
-
         if (!entity) {
           return;
         }
@@ -353,6 +349,10 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
           this.entity.custom_data[0].height !== '0'
             ? this.entity.custom_data[0].height
             : ACTIVITY_MODAL_MIN_STAGE_HEIGHT;
+        break;
+      case 'quote':
+        this.entityWidth = 500;
+        this.entityHeight = 600;
         break;
       case 'blog':
         this.entityWidth = window.innerWidth * 0.4;
@@ -578,7 +578,8 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   get showContentMessageOnRight(): boolean {
     return (
       (this.entity.content_type === 'image' ||
-        this.entity.content_type === 'video') &&
+        this.entity.content_type === 'video' ||
+        this.entity.content_type === 'quote') &&
       (this.entity.title || this.entity.message)
     );
   }
@@ -594,7 +595,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
 
   get mediaWrapperWidth(): string {
     if (
-      this.entity.activity_type === status ||
+      this.entity.content_type === status ||
       !this.mediaWidth ||
       this.mediaWidth <= 0
     ) {
@@ -605,16 +606,23 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   }
 
   get mediaWrapperHeight(): string {
-    if (this.entity.activity_type === 'status') {
+    if (this.entity.content_type === 'status') {
       return '100%';
     }
 
-    if (this.entity.activity_type === 'rich-embed') {
+    if (
+      this.entity.activity_type === 'rich-embed' &&
+      this.entity.content_type === 'rich-embed'
+    ) {
       return `${this.stageHeight}px`;
     }
 
     return this.mediaHeight === 0
       ? ACTIVITY_MODAL_MIN_STAGE_HEIGHT + 'px'
       : this.mediaHeight + 'px';
+  }
+
+  get isQuote(): boolean {
+    return this.entity.activity_type === 'quote';
   }
 }
