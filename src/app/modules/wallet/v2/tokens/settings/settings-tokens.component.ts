@@ -27,6 +27,8 @@ import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
 import { getBrowser } from '../../../../../utils/browser';
 import { WalletV2Service, Wallet } from '../../wallet-v2.service';
 import { Subscription } from 'rxjs';
+import { ethers } from 'ethers';
+import { FormToastService } from '../../../../../common/services/form-toast.service';
 
 enum Views {
   CreateAddress = 1,
@@ -50,10 +52,11 @@ export class WalletSettingsTokensComponent
   display: Views;
   generatedAccount: any;
   providedAddress: string = '';
-  hasExternal: boolean = false;
+  hasExternal: boolean = true;
   currentAddress: string = '';
   downloadingMetamask: boolean = false;
   form;
+  isVerified: boolean;
 
   readonly cdnAssetsUrl: string;
 
@@ -73,7 +76,8 @@ export class WalletSettingsTokensComponent
     protected walletService: WalletV2Service,
     configs: ConfigsService,
     protected el: ElementRef,
-    @Inject(PLATFORM_ID) protected platformId: Object
+    @Inject(PLATFORM_ID) protected platformId: Object,
+    protected toasterService: FormToastService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -109,12 +113,14 @@ export class WalletSettingsTokensComponent
     // Check if already has an address
     this.currentAddress = this.walletService.wallet.receiver.address;
 
+    this.isVerified = await this.walletService.isVerified();
+    console.log(this.isVerified);
+
     if (this.currentAddress) {
       this.display = Views.CurrentAddress;
       this.detectChanges();
     }
 
-    this.hasExternal = !(await this.web3Wallet.isLocal());
     this.detectChanges();
   }
 
@@ -242,46 +248,15 @@ export class WalletSettingsTokensComponent
     this.linkingMetamask = true;
     this.inProgress = true;
     this.detectChanges();
-
-    await this.web3Wallet.ready();
-    this.detectExternal();
-
-    // keep checking for metamask if it's not detected right away
-    if (isPlatformBrowser(this.platformId)) {
-      this._externalTimer = setInterval(() => {
-        if (!(this.cd as ViewRef).destroyed) {
-          this.detectExternal();
-        }
-      }, 1000);
-    }
-    this.detectChanges();
+    await this.detectExternal();
   }
 
   async detectExternal() {
     this.error = '';
-    const address: string =
-      (await this.web3Wallet.getCurrentWallet(true)) || '';
+    let address: string;
 
-    if (this.providedAddress !== address) {
-      this.providedAddress = address;
-      this.currentAddress = address;
-      this.detectChanges();
-    }
-    // stop checking for metamask and set address
-    if (isPlatformBrowser(this.platformId)) {
-      if (address) {
-        clearInterval(this._externalTimer);
-        this.provideMetamaskAddress(address);
-        this.detectChanges();
-      }
-    }
-  }
-
-  async provideMetamaskAddress(address) {
-    this.error = '';
     try {
-      this.inProgress = true;
-      this.detectChanges();
+      address = (await this.web3Wallet.getCurrentWallet(true)) || '';
 
       await this.blockchain.setWallet({ address: address });
 
@@ -290,10 +265,16 @@ export class WalletSettingsTokensComponent
       this.walletService.onOnchainAddressChange();
     } catch (e) {
       this.error = e.message;
-      console.error(e);
     } finally {
       this.inProgress = false;
       this.linkingMetamask = false;
+
+      this.detectChanges();
+    }
+
+    if (this.providedAddress !== address) {
+      this.providedAddress = address;
+      this.currentAddress = address;
       this.detectChanges();
     }
   }
@@ -307,6 +288,68 @@ export class WalletSettingsTokensComponent
     this.linkingMetamask = false;
 
     this.display = this.Views.CurrentAddress;
+    this.detectChanges();
+  }
+
+  changeProvider() {
+    this.display = null;
+    this.web3Wallet.resetProvider();
+  }
+
+  async validate(): Promise<void> {
+    this.isVerified = undefined;
+
+    await this.web3Wallet.getCurrentWallet(true);
+    const msg = JSON.stringify({
+      user_guid: this.session.getLoggedInUser().guid,
+      unix_ts: Date.now() / 1000,
+    });
+    const signature = await this.web3Wallet.getSigner().signMessage(msg);
+
+    try {
+      const response = await (<any>this.client.post(
+        'api/v3/blockchain/unique-onchain/validate',
+        {
+          signature,
+          payload: msg,
+          address: this.currentAddress,
+        }
+      ));
+
+      if (response.status === 'success') {
+        this.isVerified = true;
+        this.toasterService.success('Your address is now verified');
+      }
+    } catch (err) {
+      this.isVerified = false;
+      this.toasterService.error(err.message);
+    }
+
+    this.detectChanges();
+  }
+
+  async unValidate(): Promise<void> {
+    this.isVerified = undefined;
+
+    try {
+      const response = await (<any>this.client.delete(
+        'api/v3/blockchain/unique-onchain/validate',
+        {
+          address: this.currentAddress,
+        }
+      ));
+
+      if (response.status === 'success') {
+        this.isVerified = false;
+        this.toasterService.success(
+          'Your address verification has been removed'
+        );
+      }
+    } catch (err) {
+      this.isVerified = true;
+      this.toasterService.error(err.message);
+    }
+
     this.detectChanges();
   }
 
