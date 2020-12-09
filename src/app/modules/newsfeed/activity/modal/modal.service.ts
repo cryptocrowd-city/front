@@ -70,7 +70,6 @@ export class ActivityModalService {
 
   // Set entity on load or page
   setEntity(entity: any): void {
-    console.log(this.entity);
     this.entity = entity;
 
     this.activityService.setEntity(entity);
