@@ -117,7 +117,8 @@ $modal-padding: 20px;
     }
   }
 
-  .m-activityModal__mediaWrapper--richEmbed {
+  .m-activityModal__mediaWrapper--richEmbed,
+  .isBlog {
     width: 100%;
     overflow-y: scroll;
     overflow-y: overlay;
