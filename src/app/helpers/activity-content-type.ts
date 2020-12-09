@@ -14,10 +14,15 @@ export default function getActivityContentType(
 ): 'image' | 'video' | 'rich-embed' | 'status' | 'remind' | 'quote' | 'blog' {
   const e = entity;
 
-  if (e.subtype && e.subtype === 'remind' && !collapseReminds) {
+  if (
+    e.subtype &&
+    e.subtype === 'remind' &&
+    !collapseReminds &&
+    !e.remind_object
+  ) {
     return 'remind';
   }
-  if (!e.subtype && e.remind_object) {
+  if (e.remind_object) {
     return 'quote';
   }
   if (e.custom_type && e.custom_type === 'video') {
