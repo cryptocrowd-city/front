@@ -65,13 +65,13 @@
       <a class="m-buyTokensFooter__learnMoreText" href="/tokens">
         Learn more about tokens
       </a>
-      <m-shadowboxSubmitButton
+      <m-button
         [disabled]="!canContinue()"
-        (click)="openPaymentModal()"
+        (onAction)="openPaymentModal()"
         i18n="@@M__PURCHASE_BUTTON"
       >
         Continue
-      </m-shadowboxSubmitButton>
+      </m-button>
     </div>
   </div>
 </m-concertColors__modal>

@@ -52,7 +52,7 @@ export interface Wallet {
 
 @Injectable()
 export class WalletV2Service {
-  readonly basePath: string = '/wallet/canary';
+  readonly basePath: string = '/wallet';
 
   totalTokens = 0;
   stripeDetails: StripeDetails;
@@ -460,5 +460,12 @@ export class WalletV2Service {
     }
 
     return splitBalance;
+  }
+
+  async isVerified(): Promise<boolean> {
+    const response = await (<any>(
+      this.client.get('api/v3/blockchain/unique-onchain')
+    ));
+    return response.unique;
   }
 }
