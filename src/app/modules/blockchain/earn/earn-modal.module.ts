@@ -6,8 +6,8 @@ import {
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { EarnModalComponent } from './earn-modal.component';
-import { CommonModule } from '../../common/common.module';
-import { ModalsModule } from '../modals/modals.module';
+import { CommonModule } from '../../../common/common.module';
+import { ModalsModule } from '../../modals/modals.module';
 import { RouterModule } from '@angular/router';
 
 @NgModule({

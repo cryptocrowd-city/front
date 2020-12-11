@@ -16,5 +16,10 @@
 }
 
 .m-modalV2__inner {
-  max-width: unset !important;
+  max-width: calc(100% - 80px);
+  margin: 20px auto;
+
+  @media screen and (max-width: $max-mobile) {
+    max-width: calc(100% - 20px);
+  }
 }

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, Injector } from '@angular/core';
-import { BuyTokensModalService } from '../blockchain/token-purchase/v2/buy-tokens-modal.service';
-import { UniswapModalService } from '../blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
-import { Web3WalletService } from '../blockchain/web3-wallet.service';
-import { ModalService } from '../composer/components/modal/modal.service';
-import { ComposerService } from '../composer/services/composer.service';
+import { BuyTokensModalService } from '../token-purchase/v2/buy-tokens-modal.service';
+import { UniswapModalService } from '../token-purchase/v2/uniswap/uniswap-modal.service';
+import { Web3WalletService } from '../web3-wallet.service';
+import { ModalService } from '../../composer/components/modal/modal.service';
+import { ComposerService } from '../../composer/services/composer.service';
 
 @Component({
   selector: 'm-earn__modal',

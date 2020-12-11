@@ -9,7 +9,7 @@ import { LocalWalletService } from '../modules/blockchain/local-wallet.service';
 import { TransactionOverlayService } from '../modules/blockchain/transaction-overlay/transaction-overlay.service';
 import { Web3WalletService } from '../modules/blockchain/web3-wallet.service';
 import { UniswapModalService } from '../modules/blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
-import { EarnModalService } from '../modules/earn/earn-modal.service';
+import { EarnModalService } from '../modules/blockchain/earn/earn-modal.service';
 
 @NgModule({
   imports: [Web3ModalModule],

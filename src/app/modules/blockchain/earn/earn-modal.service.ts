@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import {
   StackableModalEvent,
   StackableModalService,
-} from '../../services/ux/stackable-modal.service';
+} from '../../../services/ux/stackable-modal.service';
 import { EarnModalComponent } from './earn-modal.component';
 
 @Injectable()
