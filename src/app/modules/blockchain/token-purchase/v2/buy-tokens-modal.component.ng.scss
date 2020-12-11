@@ -1,9 +1,10 @@
 @import 'defaults.scss';
 
 :host {
-  .m-buyTokens__body {
-    overflow: auto !important;
-    padding-top: 0px !important;
+  display: contents;
+
+  ::ng-deep .m-modalV2__inner {
+    max-width: 500px !important;
   }
 
   .m-buyTokensHeader__title {
@@ -16,22 +17,28 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 35px;
+    margin-top: 40px;
   }
 
   .m-buyTokensBody__termsCheck {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
+    margin-top: 20px;
+    * {
+      vertical-align: middle;
+    }
     & > input {
       margin-left: 0;
       margin-right: 10px;
     }
+    a {
+      font-weight: inherit;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
   }
 
   .m-buyTokensBody__paymentMethod {
-    margin: 26px 0 15px 0;
+    margin-bottom: 20px;
   }
 
   .m-buyTokensBodyPaymentMethod__text {
@@ -55,7 +62,7 @@
   }
 
   .m-buyTokensBody__estimate--primary {
-    margin: 25px 0;
+    margin: 20px 0;
 
     @include m-theme() {
       color: themed($m-textColor--primary);
@@ -73,6 +80,12 @@
 
   .m-buyTokensFooter__learnMoreText {
     font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
 
     @include m-theme() {
       color: themed($m-textColor--secondary);
@@ -121,9 +134,23 @@
     font-size: 15px;
     margin-top: 20px;
     display: block;
+    border-radius: 5px;
+    padding: 10px;
 
     @include m-theme() {
-      color: themed($m-textColor--primary);
+      color: themed($m-textColor--secondary);
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    i {
+      font-size: 20px;
+      line-height: 20px;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+
+    span {
+      vertical-align: middle;
     }
   }
 }

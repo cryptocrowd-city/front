@@ -33,8 +33,10 @@ export class TransakService {
     private web3WalletService: Web3WalletService,
     private configService: ConfigsService
   ) {
-    this.apiKey = this.configService.get('blockchain').api_keys?.transak;
-    this.environment = this.configService.get('blockchain').transak_environment;
+    this.apiKey = this.configService.get('blockchain').transak?.api_key;
+    this.environment = this.configService.get(
+      'blockchain'
+    ).transak?.environment;
   }
 
   async open(): Promise<TransakResponse> {

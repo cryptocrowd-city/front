@@ -1,5 +1,9 @@
 @import 'defaults.scss';
 
+:host {
+  display: contents;
+}
+
 .m-concertColors__header {
   padding: 0 40px;
   height: 150px;

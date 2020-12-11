@@ -13,7 +13,7 @@ type PaymentMethod = 'card' | 'bank' | 'crypto' | '';
 })
 export class BuyTokensModalComponent {
   terms: boolean = false;
-  paymentMethod: PaymentMethod = '';
+  paymentMethod: PaymentMethod = 'card';
 
   constructor(
     private transakService: TransakService,
