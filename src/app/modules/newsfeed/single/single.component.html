@@ -56,11 +56,21 @@
       </div>
     </div>
 
-    <div class="m-newsfeedSingle__sidebar" jm m-pageLayout__pane="right">
+    <div
+      class="m-newsfeedSingle__sidebar m-discovery__sidebar"
+      m-pageLayout__pane="right"
+    >
       <div class="m-pageLayoutPane__inner">
         <div class="m-pageLayoutPane__sticky" m-stickySidebar>
-          <!-- <m-suggestions__sidebar type="user"></m-suggestions__sidebar> -->
-          <m-discovery__sidebarTags></m-discovery__sidebarTags>
+          <!-- - MORE POSTS FROM OWNER --------------------- -->
+          <m-newsfeed__activitySuggestions
+            [baseEntity]="activity"
+          ></m-newsfeed__activitySuggestions>
+          <!-- - RELATED TAGS --------------------------- -->
+          <m-discovery__sidebarTags
+            context="activity"
+            [entityGuid]="activity.guid"
+          ></m-discovery__sidebarTags>
         </div>
       </div>
     </div>

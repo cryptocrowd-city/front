@@ -59,7 +59,7 @@ export class DiscoveryTagsService {
   ) {}
 
   // TODOPLUS add optional 'plus' bool input
-  async loadTags(refresh = false) {
+  async loadTags(refresh = false, entityGuid = null) {
     this.inProgress$.next(true);
 
     if (isPlatformServer(this.platformId)) return;
@@ -69,8 +69,18 @@ export class DiscoveryTagsService {
       this.trending$.next(null);
       this.remove$.next([]);
     }
+
+    let endpoint = 'api/v3/discovery/tags';
+
+    if (entityGuid) {
+      endpoint = endpoint + `?entity_guid=${entityGuid}`;
+    }
+
     try {
-      const response: any = await this.client.get('api/v3/discovery/tags');
+      const response: any = await this.client.get(endpoint);
+
+      console.log('ojm loadTags response', response);
+
       this.tags$.next(response.tags);
       this.trending$.next(response.trending);
       this.foryou$.next(

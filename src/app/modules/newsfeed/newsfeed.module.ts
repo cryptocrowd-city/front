@@ -38,6 +38,7 @@ import { ComposerModule } from '../composer/composer.module';
 import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
 import { LanguageModule } from '../language/language.module';
 import { LiquiditySpotModule } from '../boost/liquidity-spot/liquidity-spot.module';
+import { NewsfeedActivitySuggestionsComponent } from './suggestions/suggestions.component';
 
 const routes: Routes = [
   {
@@ -110,6 +111,7 @@ const routes: Routes = [
     NewsfeedEntityComponent,
     NewsfeedTilesComponent,
     FeedGridComponent,
+    NewsfeedActivitySuggestionsComponent,
   ],
   providers: [NewsfeedService, NewsfeedHashtagSelectorService],
   exports: [

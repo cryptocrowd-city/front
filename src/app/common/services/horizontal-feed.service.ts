@@ -3,6 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 import { Client } from '../../services/api/client';
 import { EntitiesService } from './entities.service';
 
+// ojm rename all of this
+
 /**
  * Specifies how to interpret base entity and which correlation to use
  *
@@ -26,7 +28,7 @@ export type HorizontalFeedResponse = HorizontalFeedObject | null;
 /**
  * Stores per-side pools and its attributes for the base entity
  */
-interface HorizontalFeedPool {
+export interface HorizontalFeedPool {
   entities: any[];
   moreData: boolean;
   offset?: any;
@@ -35,7 +37,7 @@ interface HorizontalFeedPool {
 /**
  * Horizontal feed pools
  */
-interface HorizontalFeedPools {
+export interface HorizontalFeedPools {
   prev: HorizontalFeedPool;
   next: HorizontalFeedPool;
 }
@@ -65,7 +67,7 @@ export class HorizontalFeedService {
 
   protected cursor: number = 0;
 
-  protected pools: HorizontalFeedPools = {
+  public pools: HorizontalFeedPools = {
     next: {
       entities: [],
       moreData: true,
