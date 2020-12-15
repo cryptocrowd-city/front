@@ -12,6 +12,7 @@ export class DiscoveryTagsService {
   tags$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
   trending$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
   foryou$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
+  activityRelated$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
   other$: Observable<DiscoveryTag[]> = combineLatest(
     this.tags$,
     this.trending$
@@ -70,16 +71,11 @@ export class DiscoveryTagsService {
       this.remove$.next([]);
     }
 
-    let endpoint = 'api/v3/discovery/tags';
-
-    if (entityGuid) {
-      endpoint = endpoint + `?entity_guid=${entityGuid}`;
-    }
+    let endpoint = 'api/v3/discovery/tags',
+      params = { entity_guid: entityGuid };
 
     try {
-      const response: any = await this.client.get(endpoint);
-
-      console.log('ojm loadTags response', response);
+      const response: any = await this.client.get(endpoint, params);
 
       this.tags$.next(response.tags);
       this.trending$.next(response.trending);
@@ -93,6 +89,17 @@ export class DiscoveryTagsService {
               };
             })
           : response.default
+      );
+      this.activityRelated$.next(
+        response.activity_related
+          ? response.activity_related.map(tag => {
+              return {
+                value: tag.hashtag,
+                posts_count: tag.volume,
+                selected: tag.selected,
+              };
+            })
+          : null
       );
     } catch (err) {
     } finally {

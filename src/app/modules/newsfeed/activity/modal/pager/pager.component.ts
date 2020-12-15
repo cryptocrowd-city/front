@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { ActivityModalService } from '../modal.service';
 import { ActivityService } from '../../activity.service';
-import { HorizontalFeedService } from '../../../../../common/services/horizontal-feed.service';
+import { RelatedContentService } from '../../../../../common/services/related-content.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { MediumFadeAnimation } from '../../../../../animations';
 
@@ -23,7 +23,7 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
   constructor(
     public service: ActivityModalService,
     public activityService: ActivityService,
-    private horizontalFeed: HorizontalFeedService
+    private RelatedContent: RelatedContentService
   ) {}
 
   ngOnInit(): void {
@@ -31,16 +31,16 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
      * Whenever user clicks a pager button,
      * recalculate whether or not to display pager buttons
      */
-    this.modalPagerSubscription = this.horizontalFeed
-      .onChange()
-      .subscribe(async change => {
+    this.modalPagerSubscription = this.RelatedContent.onChange().subscribe(
+      async change => {
         this.modalPager = {
-          hasNext: await this.horizontalFeed.hasNext(),
-          hasPrev: await this.horizontalFeed.hasPrev(),
+          hasNext: await this.RelatedContent.hasNext(),
+          hasPrev: await this.RelatedContent.hasPrev(),
         };
-      });
+      }
+    );
 
-    this.horizontalFeed.setContext('container');
+    this.RelatedContent.setContext('container');
   }
 
   ngOnDestroy(): void {
@@ -82,7 +82,7 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
 
     this.service.loading$.next(true);
 
-    const response = await this.horizontalFeed.next();
+    const response = await this.RelatedContent.next();
 
     if (response && response.entity) {
       this.setAsyncEntity(response.entity);
@@ -102,7 +102,7 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
 
     this.service.loading$.next(true);
 
-    const response = await this.horizontalFeed.prev();
+    const response = await this.RelatedContent.prev();
 
     if (response && response.entity) {
       this.setAsyncEntity(response.entity);

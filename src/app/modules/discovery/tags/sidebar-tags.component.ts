@@ -26,6 +26,7 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
   limit = 5;
   trending$: Observable<any> = this.service.trending$;
   foryou$: Observable<any> = this.service.foryou$;
+  activityRelated$: Observable<any> = this.service.activityRelated$;
   inProgress$: Observable<boolean> = this.service.inProgress$;
 
   parentPathSubscription: Subscription;
@@ -45,9 +46,7 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
 
     if (this.entityGuid) {
       this.service.loadTags(false, this.entityGuid);
-    }
-
-    if (!this.service.trending$.value.length) {
+    } else if (!this.service.trending$.value.length) {
       this.service.loadTags();
     }
 

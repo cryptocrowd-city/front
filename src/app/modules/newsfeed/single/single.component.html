@@ -37,11 +37,7 @@
         </ng-container>
       </div>
 
-      <div
-        class="minds-list"
-        style="padding: 20px 40px;"
-        *ngIf="activity && !error"
-      >
+      <div class="minds-list" *ngIf="activity && !error">
         <m-activity
           [entity]="activity"
           [displayOptions]="{
@@ -54,6 +50,9 @@
           (deleted)="delete($event)"
         ></m-activity>
       </div>
+      <div class="m-newsfeedSingle__mobileSuggestions">
+        <ng-container *ngTemplateOutlet="suggestions"></ng-container>
+      </div>
     </div>
 
     <div
@@ -62,15 +61,7 @@
     >
       <div class="m-pageLayoutPane__inner">
         <div class="m-pageLayoutPane__sticky" m-stickySidebar>
-          <!-- - MORE POSTS FROM OWNER --------------------- -->
-          <m-newsfeed__activitySuggestions
-            [baseEntity]="activity"
-          ></m-newsfeed__activitySuggestions>
-          <!-- - RELATED TAGS --------------------------- -->
-          <m-discovery__sidebarTags
-            context="activity"
-            [entityGuid]="activity.guid"
-          ></m-discovery__sidebarTags>
+          <ng-container *ngTemplateOutlet="suggestions"></ng-container>
         </div>
       </div>
     </div>
@@ -84,3 +75,16 @@
   >
   </m-social-icons>
 </ng-container>
+
+<ng-template #suggestions>
+  <!-- - MORE POSTS FROM OWNER --------------------- -->
+  <m-newsfeed__activitySuggestions
+    [baseEntity]="activity"
+  ></m-newsfeed__activitySuggestions>
+  <!-- - RELATED TAGS --------------------------- -->
+  <m-discovery__sidebarTags
+    *ngIf="activity"
+    context="activity"
+    [entityGuid]="activity.guid"
+  ></m-discovery__sidebarTags>
+</ng-template>

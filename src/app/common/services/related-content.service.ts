@@ -10,12 +10,12 @@ import { EntitiesService } from './entities.service';
  *
  * Container can be a user or group
  */
-export type HorizontalFeedContext = 'container';
+export type RelatedContentContext = 'container';
 
 /**
  * Specifies the object returned to consumers
  */
-export interface HorizontalFeedObject {
+export interface RelatedContentObject {
   index: number;
   entity: BehaviorSubject<any>;
 }
@@ -23,12 +23,12 @@ export interface HorizontalFeedObject {
 /**
  * Response from navigational methods
  */
-export type HorizontalFeedResponse = HorizontalFeedObject | null;
+export type RelatedContentResponse = RelatedContentObject | null;
 
 /**
  * Stores per-side pools and its attributes for the base entity
  */
-export interface HorizontalFeedPool {
+export interface RelatedContentPool {
   entities: any[];
   moreData: boolean;
   offset?: any;
@@ -37,16 +37,16 @@ export interface HorizontalFeedPool {
 /**
  * Horizontal feed pools
  */
-export interface HorizontalFeedPools {
-  prev: HorizontalFeedPool;
-  next: HorizontalFeedPool;
+export interface RelatedContentPools {
+  prev: RelatedContentPool;
+  next: RelatedContentPool;
 }
 
 /**
  * Change event payload
  */
-interface HorizontalFeedChange {
-  context: HorizontalFeedContext;
+interface RelatedContentChange {
+  context: RelatedContentContext;
   cursor: number;
   lastUpdate: number;
 }
@@ -58,8 +58,8 @@ interface HorizontalFeedChange {
  * @todo: Support other kind of contexts
  */
 @Injectable()
-export class HorizontalFeedService {
-  protected context: HorizontalFeedContext;
+export class RelatedContentService {
+  protected context: RelatedContentContext;
 
   protected baseEntity: any;
 
@@ -67,7 +67,7 @@ export class HorizontalFeedService {
 
   protected cursor: number = 0;
 
-  public pools: HorizontalFeedPools = {
+  public pools: RelatedContentPools = {
     next: {
       entities: [],
       moreData: true,
@@ -79,8 +79,8 @@ export class HorizontalFeedService {
   };
 
   protected onChangeEmitter: EventEmitter<
-    HorizontalFeedChange
-  > = new EventEmitter<HorizontalFeedChange>();
+    RelatedContentChange
+  > = new EventEmitter<RelatedContentChange>();
 
   constructor(protected client: Client, protected entities: EntitiesService) {}
 
@@ -88,7 +88,7 @@ export class HorizontalFeedService {
    * Sets the current context and resets
    * @param context
    */
-  setContext(context: HorizontalFeedContext): HorizontalFeedService {
+  setContext(context: RelatedContentContext): RelatedContentService {
     this.context = context;
     this.reset();
     return this;
@@ -98,7 +98,7 @@ export class HorizontalFeedService {
    * Sets the base entity and resets
    * @param entity
    */
-  setBaseEntity(entity: any): HorizontalFeedService {
+  setBaseEntity(entity: any): RelatedContentService {
     this.baseEntity = entity;
     this.reset();
     return this;
@@ -108,7 +108,7 @@ export class HorizontalFeedService {
    * Sets the total limit of entities per-side
    * @param limit
    */
-  setLimit(limit: number): HorizontalFeedService {
+  setLimit(limit: number): RelatedContentService {
     this.limit = limit;
     return this;
   }
@@ -116,7 +116,7 @@ export class HorizontalFeedService {
   /**
    * Reset the cursor and caches
    */
-  reset(): HorizontalFeedService {
+  reset(): RelatedContentService {
     this.cursor = 0;
 
     this.pools = {
@@ -141,7 +141,7 @@ export class HorizontalFeedService {
    * Moves the cursor to a certain point and retrieves the entity, if exists
    * @param index
    */
-  async go(index: number): Promise<HorizontalFeedResponse> {
+  async go(index: number): Promise<RelatedContentResponse> {
     await this.fetch();
 
     if (!(await this.has(index))) {
@@ -208,7 +208,7 @@ export class HorizontalFeedService {
   /**
    * Shortcut for go(index - 1)
    */
-  prev(): Promise<HorizontalFeedResponse> {
+  prev(): Promise<RelatedContentResponse> {
     return this.go(this.cursor - 1);
   }
 
@@ -223,7 +223,7 @@ export class HorizontalFeedService {
   /**
    * Shortcut for go(index + 1)
    */
-  next(): Promise<HorizontalFeedResponse> {
+  next(): Promise<RelatedContentResponse> {
     return this.go(this.cursor + 1);
   }
 
@@ -238,7 +238,7 @@ export class HorizontalFeedService {
   /**
    * Returns an event emitter that will fire an event when something (cursor, pools) change
    */
-  onChange(): EventEmitter<HorizontalFeedChange> {
+  onChange(): EventEmitter<RelatedContentChange> {
     return this.onChangeEmitter;
   }
 

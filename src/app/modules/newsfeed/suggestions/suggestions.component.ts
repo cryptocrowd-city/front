@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {
-  HorizontalFeedPool,
-  HorizontalFeedPools,
-  HorizontalFeedService,
-} from '../../../common/services/horizontal-feed.service';
+  RelatedContentPool,
+  RelatedContentPools,
+  RelatedContentService,
+} from '../../../common/services/related-content.service';
 import getActivityContentType from '../../../helpers/activity-content-type';
 import { Session } from '../../../services/session';
 import { ActivityEntity } from '../activity/activity.service';
@@ -12,7 +12,7 @@ import { ActivityEntity } from '../activity/activity.service';
   selector: 'm-newsfeed__activitySuggestions',
   templateUrl: './suggestions.component.html',
   styleUrls: ['./suggestions.component.ng.scss'],
-  providers: [HorizontalFeedService],
+  providers: [RelatedContentService],
 })
 export class NewsfeedActivitySuggestionsComponent {
   protected _baseEntity: ActivityEntity;
@@ -35,18 +35,18 @@ export class NewsfeedActivitySuggestionsComponent {
 
   constructor(
     public session: Session,
-    protected horizontalFeed: HorizontalFeedService
+    protected RelatedContent: RelatedContentService
   ) {}
 
   async onBaseEntityChange(e: ActivityEntity): Promise<void> {
     this.inProgress = true;
     this.entities = [];
-    this.horizontalFeed.setContext('container');
-    this.horizontalFeed.setBaseEntity(e);
+    this.RelatedContent.setContext('container');
+    this.RelatedContent.setBaseEntity(e);
 
-    await this.horizontalFeed.fetch();
+    await this.RelatedContent.fetch();
 
-    const pools = this.horizontalFeed.pools;
+    const pools = this.RelatedContent.pools;
 
     if (pools) {
       this.collatePools(pools);
@@ -55,7 +55,7 @@ export class NewsfeedActivitySuggestionsComponent {
     this.inProgress = false;
   }
 
-  collatePools(pools: HorizontalFeedPools): void {
+  collatePools(pools: RelatedContentPools): void {
     this.filterPoolByType(pools.next);
 
     // if there aren't enough viable posts in the 'next' pool
@@ -67,7 +67,7 @@ export class NewsfeedActivitySuggestionsComponent {
     this.entities.length = Math.min(this.entities.length, 3);
   }
 
-  filterPoolByType(pool: HorizontalFeedPool): void {
+  filterPoolByType(pool: RelatedContentPool): void {
     if (!pool.entities.length) {
       return;
     }
