@@ -3,8 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 import { Client } from '../../services/api/client';
 import { EntitiesService } from './entities.service';
 
-// ojm rename all of this
-
 /**
  * Specifies how to interpret base entity and which correlation to use
  *

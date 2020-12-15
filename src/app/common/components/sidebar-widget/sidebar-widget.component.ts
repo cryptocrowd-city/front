@@ -8,7 +8,6 @@ import { Client } from '../../api/client.service';
 })
 export class SidebarWidgetComponent {
   @Input() title: string;
-  @Input() i18nTitle: string;
   @Input() dismissibleId: string;
   @HostBinding('hidden') hidden: boolean = false;
 
