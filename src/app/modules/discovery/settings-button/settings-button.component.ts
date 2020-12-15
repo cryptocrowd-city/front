@@ -4,6 +4,7 @@ import { DiscoveryFeedsSettingsComponent } from '../feeds/settings.component';
 import { DiscoveryTagSettingsComponent } from '../tags/settings.component';
 import { DiscoveryTagsService } from '../tags/tags.service';
 import { DiscoveryFeedsService } from '../feeds/feeds.service';
+import { DiscoveryTrendsService } from '../trends/trends.service';
 
 @Component({
   selector: 'm-discovery__settingsButton',
@@ -16,7 +17,8 @@ export class DiscoverySettingsButtonComponent {
     private service: DiscoveryTagsService,
     private overlayModal: OverlayModalService,
     private injector: Injector,
-    @Optional() @SkipSelf() private feeds: DiscoveryFeedsService
+    @Optional() @SkipSelf() private feeds: DiscoveryFeedsService,
+    @Optional() @SkipSelf() private trends: DiscoveryTrendsService
   ) {}
 
   openSettingsModal(e: MouseEvent): void {
@@ -46,6 +48,9 @@ export class DiscoverySettingsButtonComponent {
 
               if (this.feeds !== null) {
                 this.feeds.load();
+              }
+              if (this.trends !== null) {
+                this.trends.loadTrends();
               }
             }
             this.overlayModal.dismiss();
