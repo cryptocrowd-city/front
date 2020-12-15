@@ -19,6 +19,7 @@ import { Client } from '../../../../../../services/api';
 })
 export class WalletCashOnboardingComponent implements OnInit {
   @Input() allowedCountries: string[];
+  @Input() embedded = false;
   @Output() submitted: EventEmitter<any> = new EventEmitter();
   form;
   user;
@@ -105,10 +106,28 @@ export class WalletCashOnboardingComponent implements OnInit {
     });
   }
 
-  countryChange($event) {
+  /**
+   * Fired on country dropdown change
+   * @returns { void }
+   */
+  public countryChange($event): void {
+    this.resetRemovableFields();
     this.country.setValue($event);
     this.revalidateForm();
   }
+
+  /**
+   * Resets removable fields - used so that when country changes,
+   * if the user has filled out certain fields in error,
+   * Stripe do not reject the request because of the unexpected parameter.
+   * @returns { void }
+   */
+  private resetRemovableFields(): void {
+    this.ssn.setValue('');
+    this.personalIdNumber.setValue('');
+    this.state.setValue('');
+  }
+
   detectChanges(): void {
     if ((this.cd as ViewRef).destroyed) {
       return;
