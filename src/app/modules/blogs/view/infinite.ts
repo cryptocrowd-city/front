@@ -147,8 +147,8 @@ export class BlogViewInfinite {
     const description = blog.custom_meta['description']
       ? blog.custom_meta['description']
       : blog.description.length > 140
-      ? blog.description.substr(0, 140) + '...'
-      : blog.description;
+      ? blog.excerpt.substr(0, 140) + '...'
+      : blog.excerpt;
 
     const author = blog.custom_meta['author'] || `@${blog.ownerObj.username}`;
 
