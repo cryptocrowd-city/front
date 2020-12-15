@@ -32,11 +32,17 @@
             class="m-v3Topbar__logo--bulb"
           />
           <img
-            [src]="cdnAssetsUrl + 'assets/logos/logo.svg'"
+            *ngIf="!isDarkTheme$ | async"
+            [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
+            class="m-v3Topbar__logo--full"
+          />
+          <img
+            *ngIf="isDarkTheme$ | async"
+            [src]="cdnAssetsUrl + 'assets/logos/logo-dark-mode.svg'"
             class="m-v3Topbar__logo--full"
           />
         </a>
-
+        <m-canaryFlag></m-canaryFlag>
         <div
           class="m-v3TopbarNav__item m-v3TopbarNav__item--hamburger"
           (click)="toggleSidebarNav()"
@@ -70,7 +76,7 @@
 
             <a
               class="m-v3TopbarLoginWrapper__joinMindsNow"
-              routerLink="/register"
+              (click)="onJoinNowClick()"
               title="Join Minds Now"
               i18n-title="@@COMMON__JOIN_MINDS_NOW"
             >

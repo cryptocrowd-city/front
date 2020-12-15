@@ -61,11 +61,11 @@ m-walletDashboard {
     min-height: 150px;
   }
 
-  m-shadowboxSubmitButton {
+  m-button {
     box-sizing: border-box;
     display: inline-block;
 
-    .m-shadowboxSubmitButton {
+    .m-button {
       box-sizing: border-box;
       max-height: none;
       min-height: 42px;
@@ -313,10 +313,10 @@ m-walletDashboard {
     justify-content: flex-end;
     align-items: center;
 
-    m-shadowboxSubmitButton {
+    m-button {
       margin-top: 8px;
       margin: 8px 0 0 18px;
-      .m-shadowboxSubmitButton {
+      .m-button {
         min-height: 42px;
         width: 100%;
       }
@@ -411,7 +411,7 @@ m-walletDashboard {
     .m-walletForm__row--input {
       input {
         @include m-theme() {
-          background-color: themed($m-bgColor--secondary);
+          background-color: themed($m-bgColor--primary);
           color: themed($m-textColor--primary);
         }
       }
@@ -440,13 +440,13 @@ m-walletDashboard {
     @media screen and (max-width: $max-mobile) {
       width: 100%;
     }
-    m-shadowboxSubmitButton {
+    m-button {
       margin: 8px 0 0 18px;
 
       @media screen and (max-width: $max-mobile) {
         width: 100%;
         margin: 8px 0 0 0;
-        .m-shadowboxSubmitButton {
+        .m-button {
           width: 100%;
         }
       }
@@ -548,7 +548,6 @@ m-walletDashboard {
   minds-country-input select {
     border-radius: 2px;
     @include m-theme() {
-      box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
       border: 1px solid themed($m-borderColor--primary);
     }
     &:focus {
@@ -600,7 +599,7 @@ m-walletDashboard {
       line-height: 20px;
       font-weight: 300;
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
         color: themed($m-textColor--primary);
       }
     }
@@ -648,7 +647,6 @@ m-walletDashboard {
       @include m-theme() {
         color: themed($m-textColor--primary);
         border: 1px solid themed($m-borderColor--primary);
-        box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
       }
       &:focus {
         @include m-theme() {

@@ -26,13 +26,13 @@
     padding: 0;
     list-style: none;
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primary);
     }
   }
 
   .m-suggestionsSidebarList__item {
     // @include m-theme() {
-    //   border-bottom: 1px solid themed($m-grey-50);
+    //   border-bottom: 1px solid themed($m-borderColor--primary);
     // }
 
     &:last-of-type {
@@ -57,6 +57,12 @@
         border: 1px solid themed($m-borderColor--primary);
       }
     }
+    .m-suggestionsSidebarListItem__passBtn {
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+    }
+
     .m-suggestionsSidebarListItem__body {
       display: inline-flex;
       vertical-align: middle;
@@ -98,23 +104,19 @@
         font-size: 13px;
         margin-right: 8px;
       }
-      ::ng-deep .m-btn {
-        height: 30px;
-        width: 30px;
-        padding: 0;
-        font-size: 10px;
-        letter-spacing: 1px;
-        -webkit-font-smoothing: antialiased;
-        text-rendering: optimizeLegibility;
-
-        i {
-          display: block;
-          font-size: 16px;
-          padding: 0;
-          margin: 0;
-        }
-        span {
-          display: none;
+      ::ng-deep m-button {
+        margin-right: 0;
+        .m-button {
+          padding: 7px 7px;
+          i {
+            display: block;
+            font-size: 16px !important;
+            padding: 0;
+            margin: 0;
+          }
+          span {
+            display: none;
+          }
         }
       }
     }

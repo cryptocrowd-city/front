@@ -93,7 +93,7 @@ $min-tablet-pro: 900px;
 
     .m-proChannel__loginRow,
     .m-proChannel__topbar {
-      @include z-index(topbar);
+      @include z-index(body);
       width: 100%;
       box-sizing: border-box;
 
@@ -300,7 +300,7 @@ $min-tablet-pro: 900px;
 
   ::ng-deep {
     m-pro__joinButton {
-      m-shadowboxSubmitButton {
+      m-button {
         display: inline-block;
       }
     }

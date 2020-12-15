@@ -30,6 +30,8 @@ import { ActivityModalTitleOverlayComponent } from './modal/title-overlay/title-
 import { ActivityModalPagerComponent } from './modal/pager/pager.component';
 import { ActivityModalCreatorService } from './modal/modal-creator.service';
 import { ActivityMinimalMetricsComponent } from './minimal-metrics/minimal-metrics.component';
+import { ActivityRemindButtonComponent } from './remind-button/remind-button.component';
+import { ActivityModalQuoteComponent } from './modal/quote/quote.component';
 
 @NgModule({
   imports: [
@@ -62,8 +64,10 @@ import { ActivityMinimalMetricsComponent } from './minimal-metrics/minimal-metri
     ActivityModalTitleOverlayComponent,
     ActivityModalPagerComponent,
     ActivityMinimalMetricsComponent,
+    ActivityRemindButtonComponent,
+    ActivityModalQuoteComponent,
   ],
   providers: [ActivityModalCreatorService],
-  exports: [ActivityComponent],
+  exports: [ActivityComponent, ActivityRemindButtonComponent],
 })
 export class ActivityModule {}

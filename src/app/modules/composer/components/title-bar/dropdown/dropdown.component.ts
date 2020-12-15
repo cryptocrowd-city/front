@@ -24,6 +24,7 @@ import { PopupService } from '../../popup/popup.service';
 })
 export class ComposerTitleBarDropdownComponent implements OnDestroy {
   @Input() anchorPosition = { top: '0', left: '0' };
+  @Input() displayAsButton: boolean = false;
 
   /**
    * Visibility items list
@@ -180,6 +181,7 @@ export class ComposerTitleBarDropdownComponent implements OnDestroy {
     return (
       this.features.has('permaweb') &&
       !this.service.isEditing$.getValue() &&
+      !this.service.remind$.getValue() &&
       this.canChangeVisibility // true is there is a container_guid
     );
   }
