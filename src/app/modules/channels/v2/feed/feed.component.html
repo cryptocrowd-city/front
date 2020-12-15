@@ -120,7 +120,7 @@
       *ngIf="
         !(feed.service.inProgress | async) &&
         (feed.service.feed | async) &&
-        (feed.service.feed | async).length < 1 &&
+        (feed.service.feed | async)?.length < 1 &&
         isOwnedChannel
       "
       class="m-channelFeed__emptyFeedContainer m-channelFeed__emptyFeedContainer--bordered"

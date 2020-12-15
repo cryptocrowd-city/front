@@ -14,7 +14,7 @@ $padding: $activity-padding-lr--minimalMode;
     padding: 20px 40px;
   }
 
-  @media screen and (min-width: $max-mobile) {
+  @media screen and (max-width: $max-mobile) {
     .minds-list {
       padding: 0 !important;
     }

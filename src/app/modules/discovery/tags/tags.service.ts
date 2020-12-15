@@ -72,10 +72,12 @@ export class DiscoveryTagsService {
     }
 
     let endpoint = 'api/v3/discovery/tags',
-      params = { entity_guid: entityGuid };
+      params = entityGuid ? { entity_guid: entityGuid } : {};
 
     try {
       const response: any = await this.client.get(endpoint, params);
+
+      console.log('ojm response', response, response.for_you);
 
       this.tags$.next(response.tags);
       this.trending$.next(response.trending);
