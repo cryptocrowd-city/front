@@ -15,7 +15,7 @@ context('Token Page', () => {
   it('should have the ability to trigger Buy Tokens modal', () => {
     const tokensInput = 'm-blockchain--purchase input[name=amount]';
     const buyTokensButton =
-      'm-blockchain--purchase .m-blockchainTokenPurchase__action .mf-button';
+      'm-blockchain--purchase .m-blockchainTokenPurchase__action m-button';
     const anyBuyTokensModal =
       'm-blockchain--purchase m-modal .m-modal-container';
 
@@ -33,9 +33,7 @@ context('Token Page', () => {
       .should('not.be.disabled')
       .click();
 
-    cy.get('.m-get-metamask--cancel-btn.m-btn').click();
-
-    cy.get(anyBuyTokensModal).should('be.visible');
+    cy.contains('Please verify your phone number');
   });
 
   it('should have the ability to trigger Buy Eth modal', () => {
