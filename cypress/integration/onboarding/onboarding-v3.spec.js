@@ -5,7 +5,6 @@ context('Onboarding V3', () => {
   const username = generateRandomId();
   const password = `${generateRandomId()}0oA!`;
   const email = 'test@minds.com';
-
   const displayNameText = generateRandomId();
   const bioText = generateRandomId();
 
