@@ -1,4 +1,4 @@
-<m-loadingSpinner [inProgress]="entities.length <= 0"></m-loadingSpinner>
+<m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
 <m-sidebarWidget *ngIf="entities.length" [title]="'More from ' + headerName">
   <div class="m-sidebarWidget__body">
     <div

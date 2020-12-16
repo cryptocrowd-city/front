@@ -42,7 +42,6 @@
     display: none;
   }
 
-  //  .m-activityContent__mediaRichEmbed
   ::ng-deep m-activity__content {
     ::ng-deep minds-rich-embed {
       .meta {
@@ -55,6 +54,12 @@
       .m-url {
         display: none;
       }
+    }
+  }
+
+  ::ng-deep m-loadingSpinner {
+    @media screen and (max-width: $max-mobile) {
+      display: none;
     }
   }
 }
