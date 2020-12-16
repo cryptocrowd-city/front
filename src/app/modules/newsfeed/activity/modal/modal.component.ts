@@ -72,7 +72,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     });
 
     // Prepare pager
-    this.RelatedContent.setBaseEntity(params.entity);
+    this.relatedContent.setBaseEntity(params.entity);
   }
 
   entity: any;
@@ -118,7 +118,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     protected clientMetaService: ClientMetaService,
     public attachment: AttachmentService,
     public service: ActivityModalService,
-    private RelatedContent: RelatedContentService,
+    private relatedContent: RelatedContentService,
     private features: FeaturesService
   ) {}
 

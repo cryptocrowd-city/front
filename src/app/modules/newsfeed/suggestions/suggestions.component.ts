@@ -35,18 +35,18 @@ export class NewsfeedActivitySuggestionsComponent {
 
   constructor(
     public session: Session,
-    protected RelatedContent: RelatedContentService
+    protected relatedContent: RelatedContentService
   ) {}
 
   async onBaseEntityChange(e: ActivityEntity): Promise<void> {
     this.inProgress = true;
     this.entities = [];
-    this.RelatedContent.setContext('container');
-    this.RelatedContent.setBaseEntity(e);
+    this.relatedContent.setContext('container');
+    this.relatedContent.setBaseEntity(e);
 
-    await this.RelatedContent.fetch();
+    await this.relatedContent.fetch();
 
-    const pools = this.RelatedContent.pools;
+    const pools = this.relatedContent.pools;
 
     if (pools) {
       this.collatePools(pools);

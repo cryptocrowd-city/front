@@ -23,7 +23,7 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
   constructor(
     public service: ActivityModalService,
     public activityService: ActivityService,
-    private RelatedContent: RelatedContentService
+    private relatedContent: RelatedContentService
   ) {}
 
   ngOnInit(): void {
@@ -31,16 +31,16 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
      * Whenever user clicks a pager button,
      * recalculate whether or not to display pager buttons
      */
-    this.modalPagerSubscription = this.RelatedContent.onChange().subscribe(
-      async change => {
+    this.modalPagerSubscription = this.relatedContent
+      .onChange()
+      .subscribe(async change => {
         this.modalPager = {
-          hasNext: await this.RelatedContent.hasNext(),
-          hasPrev: await this.RelatedContent.hasPrev(),
+          hasNext: await this.relatedContent.hasNext(),
+          hasPrev: await this.relatedContent.hasPrev(),
         };
-      }
-    );
+      });
 
-    this.RelatedContent.setContext('container');
+    this.relatedContent.setContext('container');
   }
 
   ngOnDestroy(): void {
@@ -82,7 +82,7 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
 
     this.service.loading$.next(true);
 
-    const response = await this.RelatedContent.next();
+    const response = await this.relatedContent.next();
 
     if (response && response.entity) {
       this.setAsyncEntity(response.entity);
@@ -102,7 +102,7 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
 
     this.service.loading$.next(true);
 
-    const response = await this.RelatedContent.prev();
+    const response = await this.relatedContent.prev();
 
     if (response && response.entity) {
       this.setAsyncEntity(response.entity);

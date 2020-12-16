@@ -77,10 +77,9 @@ export class DiscoveryTagsService {
     try {
       const response: any = await this.client.get(endpoint, params);
 
-      console.log('ojm response', response, response.for_you);
-
       this.tags$.next(response.tags);
       this.trending$.next(response.trending);
+
       this.foryou$.next(
         response.for_you
           ? response.for_you.map(tag => {
@@ -92,6 +91,7 @@ export class DiscoveryTagsService {
             })
           : response.default
       );
+
       this.activityRelated$.next(
         response.activity_related
           ? response.activity_related.map(tag => {

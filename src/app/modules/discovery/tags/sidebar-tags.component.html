@@ -1,11 +1,14 @@
-<ng-container *ngIf="!(entityGuid && !(activityRelated$ | async))">
+<ng-container *ngIf="visible">
   <m-sidebarWidget [title]="title">
     <div class="m-sidebarWidget__body">
-      <m-loadingSpinner [inProgress]="inProgress$ | async"></m-loadingSpinner>
+      <m-loadingSpinner
+        *ngIf="!entityGuid"
+        [inProgress]="inProgress$ | async"
+      ></m-loadingSpinner>
       <ul>
         <ng-container *ngIf="entityGuid; else forYou">
           <li
-            *ngFor="let tag of activityRelated$ | async | slice: 0:limit"
+            *ngFor="let tag of activityRelatedTags | slice: 0:3"
             class="m-discoveryTrends__trend"
           >
             <ng-container
@@ -36,23 +39,25 @@
     >
   </m-sidebarWidget>
 
-  <ng-template #tagTemplate>
-    <a
-      [routerLink]="parentPath + '/search'"
-      [queryParams]="{ q: '#' + tag.value, f: 'top' }"
-    >
-      <div>
-        <h4>#{{ tag.value }}</h4>
-        <div
-          class="m-discoveryTrendListItem__supportingText--below"
-          *ngIf="tag.posts_count"
-        >
-          <span i18n="@@DISCOVERY_SIDEBAR_TAGS__X_POSTS"
-            >{{ tag.posts_count }} posts</span
+  <ng-template #tagTemplate let-tag="tag">
+    <ng-container>
+      <a
+        [routerLink]="parentPath + '/search'"
+        [queryParams]="{ q: '#' + tag.value, f: 'top' }"
+      >
+        <div>
+          <h4>#{{ tag.value }}</h4>
+          <div
+            class="m-discoveryTrendListItem__supportingText--below"
+            *ngIf="tag.posts_count"
           >
+            <span i18n="@@DISCOVERY_SIDEBAR_TAGS__X_POSTS"
+              >{{ tag.posts_count }} posts</span
+            >
+          </div>
         </div>
-      </div>
-    </a>
-    <m-discovery__tagButton [tag]="tag"></m-discovery__tagButton>
+      </a>
+      <m-discovery__tagButton [tag]="tag"></m-discovery__tagButton>
+    </ng-container>
   </ng-template>
 </ng-container>

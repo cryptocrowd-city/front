@@ -17,9 +17,8 @@
 
     .m-newsfeedActivitySuggestion__item {
       margin-top: 20px;
-      position: relative;
       & > a {
-        position: absolute;
+        display: block;
         &,
         * {
           text-decoration: none;

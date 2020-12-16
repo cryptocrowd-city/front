@@ -1,8 +1,5 @@
 <m-loadingSpinner [inProgress]="entities.length <= 0"></m-loadingSpinner>
-<m-sidebarWidget
-  *ngIf="entities.length"
-  [title]="'More posts from ' + headerName"
->
+<m-sidebarWidget *ngIf="entities.length" [title]="'More from ' + headerName">
   <div class="m-sidebarWidget__body">
     <div
       class="m-newsfeedActivitySuggestion__item"

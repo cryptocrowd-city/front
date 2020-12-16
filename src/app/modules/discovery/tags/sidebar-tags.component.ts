@@ -23,6 +23,7 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
 
   public _context: DiscoverySidebarTagsContext;
 
+  visible = true;
   limit = 5;
   trending$: Observable<any> = this.service.trending$;
   foryou$: Observable<any> = this.service.foryou$;
@@ -32,11 +33,15 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
   parentPathSubscription: Subscription;
   parentPath: string = '/discovery';
 
+  activityRelatedTagsSubscription: Subscription;
+  activityRelatedTags: any;
+
   isPlusPage: boolean = false;
 
   constructor(
     private service: DiscoveryTagsService,
-    private discoveryService: DiscoveryService
+    private discoveryService: DiscoveryService,
+    public tagsService: DiscoveryTagsService
   ) {}
 
   ngOnInit() {
@@ -49,6 +54,13 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
     } else if (!this.service.trending$.value.length) {
       this.service.loadTags();
     }
+
+    this.activityRelatedTagsSubscription = this.tagsService.activityRelated$.subscribe(
+      tags => {
+        this.visible = this.entityGuid && tags.length < 1 ? false : true;
+        this.activityRelatedTags = tags;
+      }
+    );
 
     this.parentPathSubscription = this.discoveryService.parentPath$.subscribe(
       parentPath => {

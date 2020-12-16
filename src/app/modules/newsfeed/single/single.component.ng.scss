@@ -14,9 +14,13 @@ $padding: $activity-padding-lr--minimalMode;
     padding: 20px 40px;
   }
 
+  .m-newsfeedSingle__mobileSuggestions {
+    display: none;
+  }
+
   @media screen and (max-width: $max-mobile) {
     .minds-list {
-      padding: 0 !important;
+      padding: 0;
     }
 
     ::ng-deep m-activity {
@@ -24,10 +28,17 @@ $padding: $activity-padding-lr--minimalMode;
     }
 
     .m-newsfeedSingle__mobileSuggestions {
-      display: none;
+      display: block;
 
       ::ng-deep {
+        .m-sidebarWidget {
+          @include m-theme() {
+            border: none;
+          }
+        }
         > * {
+          display: block;
+
           margin-top: $padding;
           padding-top: $padding;
           padding-bottom: $padding;
@@ -39,8 +50,7 @@ $padding: $activity-padding-lr--minimalMode;
 
         .m-sidebarWidget__title {
           @media screen and (max-width: $max-mobile) {
-            padding-left: $padding;
-            padding-right: $padding;
+            padding: $padding;
           }
         }
       }
