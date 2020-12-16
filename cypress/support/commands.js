@@ -60,7 +60,7 @@ const defaults = {
 const loginForm = {
   password: '[data-cy=data-minds-login-password-input]',
   username: '[data-cy=data-minds-login-username-input]',
-  submit: '[data-cy=data-minds-login-button]',
+  submit: '[data-cy=data-minds-login-button] button',
 };
 
 const poster = {
