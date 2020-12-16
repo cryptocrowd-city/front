@@ -5,8 +5,8 @@ context('Blogs', () => {
   const closeButton = '[data-cy=data-minds-conversation-close]';
   const postText = generateRandomId();
   const titleText = generateRandomId();
-  const saveDraftButton = '[data-cy=data-minds-blog-editor-save-draft]';
-  const publishButton = '[data-cy=data-minds-blog-editor-publish]';
+  const saveDraftButton = '[data-cy=data-minds-blog-editor-save-draft] button';
+  const publishButton = '[data-cy=data-minds-blog-editor-publish] button';
   const toastWrapper = '[data-cy=data-minds-form-toast-wrapper]';
   const titleInput = '[data-cy=data-minds-blog-title-input]';
   const bannerInput = '[data-cy=data-minds-blog-banner-upload]';
