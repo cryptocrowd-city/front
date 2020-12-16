@@ -2,7 +2,13 @@
 
 :host {
   .m-tabs__container {
-    overflow: auto;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     .m-tabs__tab a {
       white-space: nowrap;
