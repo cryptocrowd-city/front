@@ -1,0 +1,21 @@
+@import 'defaults.scss';
+
+:host {
+  .m-tabs__container {
+    overflow: auto;
+
+    .m-tabs__tab a {
+      white-space: nowrap;
+    }
+
+    m-discovery__settingsButton {
+      ::ng-deep {
+        i {
+          @media screen and (max-width: $max-mobile) {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+}
