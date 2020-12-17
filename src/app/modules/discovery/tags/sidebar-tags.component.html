@@ -8,7 +8,7 @@
       <ul>
         <ng-container *ngIf="entityGuid; else forYou">
           <li
-            *ngFor="let tag of activityRelatedTags | slice: 0:3"
+            *ngFor="let tag of activityRelated$ | async | slice: 0:limit"
             class="m-discoveryTrends__trend"
           >
             <ng-container
@@ -19,7 +19,7 @@
         </ng-container>
         <ng-template #forYou>
           <li
-            *ngFor="let tag of forYou$ | async | slice: 0:limit"
+            *ngFor="let tag of foryou$ | async | slice: 0:limit"
             class="m-discoveryTrends__trend"
           >
             <ng-container

@@ -76,9 +76,9 @@ export class NewsfeedActivitySuggestionsComponent {
       let entity = e.entity;
       const type = getActivityContentType(entity, true, false);
 
-      if (type === 'image' || type === 'video' || type === 'blog') {
-        this.entities.push(entity);
-      }
+      // if (type === 'image' || type === 'video' || type === 'blog') {
+      this.entities.push(entity);
+      // }
     });
   }
 

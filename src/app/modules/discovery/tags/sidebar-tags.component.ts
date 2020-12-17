@@ -34,7 +34,6 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
   parentPath: string = '/discovery';
 
   activityRelatedTagsSubscription: Subscription;
-  activityRelatedTags: any;
 
   isPlusPage: boolean = false;
 
@@ -50,15 +49,15 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
     }
 
     if (this.entityGuid) {
-      this.service.loadTags(false, this.entityGuid);
+      this.service.loadTags(true, this.entityGuid);
     } else if (!this.service.trending$.value.length) {
       this.service.loadTags();
     }
 
     this.activityRelatedTagsSubscription = this.tagsService.activityRelated$.subscribe(
       tags => {
-        this.visible = this.entityGuid && tags.length < 1 ? false : true;
-        this.activityRelatedTags = tags;
+        this.visible =
+          this.entityGuid && tags && tags.length > 0 ? true : false;
       }
     );
 

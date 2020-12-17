@@ -69,6 +69,7 @@ export class DiscoveryTagsService {
       this.tags$.next([]);
       this.trending$.next(null);
       this.remove$.next([]);
+      this.activityRelated$.next(null);
     }
 
     let endpoint = 'api/v3/discovery/tags',
