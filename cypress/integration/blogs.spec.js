@@ -204,9 +204,9 @@ context('Blogs', () => {
   });
 
   const navigateToNewBlog = () => {
-    cy.visit('/blog/v2/edit/new')
+    cy.visit('/blog/edit/new')
         .location('pathname')
-        .should('eq', '/blog/v2/edit/new');
+        .should('eq', '/blog/edit/new');
   }
 
   const saveBlog = (draft = false) => { 

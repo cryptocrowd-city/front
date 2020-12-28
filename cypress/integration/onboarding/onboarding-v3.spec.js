@@ -8,7 +8,7 @@ context('Onboarding V3', () => {
   const displayNameText = generateRandomId();
   const bioText = generateRandomId();
 
-  const submitButton = 'm-onboardingModal__nextButton';
+  const submitButton = '.m-onboardingModal__nextButton button';
   const joinButton = '[data-cy=data-minds-homepage-join-button-main]';
 
   const toastMessage = '[data-cy=data-minds-form-toast-wrapper]';
@@ -19,7 +19,7 @@ context('Onboarding V3', () => {
     password1Input: '[data-cy=data-minds-register-password-input-1]',
     password2Input: '[data-cy=data-minds-register-password-input-2]',
     tosCheckbox:  '[data-cy=minds-accept-tos-input] [type=checkbox]',
-    submitButton: '.m-register__actions m-button', // 2020-12-03 - not adding data attribute yet as this is mid revamp.
+    submitButton: '.m-register__actions m-button button', // 2020-12-03 - not adding data attribute yet as this is mid revamp.
   };
 
   const fixtures = {
@@ -224,7 +224,8 @@ context('Onboarding V3', () => {
     assertTaskIsCompleted(cy.get(widget.tasks.setupChannel).parent())
   });
 
-  it('should open composer modal for a new post and complete when posted', () => {
+  // TODO: unskip when we can post from unverified accounts on all non-prod envs
+  it.skip('should open composer modal for a new post and complete when posted', () => {
     cy.get(widget.tasks.createPost).click();
     cy.get(composer.messageTextArea)
       .clear()

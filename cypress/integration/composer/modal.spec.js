@@ -82,7 +82,14 @@ context('Composer Modal', () => {
   });
 
   it('should open a composer modal popup in own channel', () => {
-    cy.visit(`/${Cypress.env().username}`);
+    cy.intercept('GET', '**/api/v1/channel/**').as('GETChannel');
+
+    cy.get('.m-sidebarNavigation__list')
+      .contains(`${Cypress.env().username}`)
+      .click()
+      .wait('@GETChannel')
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.get(composerTrigger)
       .should('be.visible')
