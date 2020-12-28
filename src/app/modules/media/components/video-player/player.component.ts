@@ -30,8 +30,7 @@ import { take } from 'rxjs/operators';
   animations: PLAYER_ANIMATIONS,
   providers: [VideoPlayerService, Session],
 })
-export class MindsVideoPlayerComponent
-  implements OnChanges, OnDestroy, OnChanges {
+export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   /**
    * MH: dislike having to emit an event to open modal, but this is
    * the quickest work around for now
@@ -49,6 +48,12 @@ export class MindsVideoPlayerComponent
   @Output() dimensions: EventEmitter<any> = new EventEmitter<any>();
 
   /**
+   * Controls events
+   */
+  @Output() onControlsShown: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onControlsHidden: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
    * Autoplay (if set to false, then placeholder will be displayed)
    * calling .play() will override this
    */
@@ -57,6 +62,8 @@ export class MindsVideoPlayerComponent
       this.service.playable = true;
     }
   }
+
+  @Input() embedded?: boolean = false;
 
   /**
    * This is the video player component
@@ -113,7 +120,6 @@ export class MindsVideoPlayerComponent
   constructor(
     public elementRef: ElementRef,
     private service: VideoPlayerService,
-    private session: Session,
     private cd: ChangeDetectorRef,
     public autoProgress: AutoProgressVideoService,
     @Inject(PLATFORM_ID) private platformId: Object

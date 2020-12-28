@@ -10,8 +10,10 @@ import {
   Input,
 } from '@angular/core';
 import { UniqueId } from '../../../../helpers/unique-id.helper';
-import { ButtonComponentAction } from '../../../../common/components/button-v2/button.component';
-import { ComposerService } from '../../services/composer.service';
+import {
+  ComposerService,
+  RemindSubjectValue,
+} from '../../services/composer.service';
 import { PopupService } from '../popup/popup.service';
 import { PopupComponent } from '../popup/popup.component';
 import { TextAreaComponent } from '../text-area/text-area.component';
@@ -21,6 +23,7 @@ import { FormToastService } from '../../../../common/services/form-toast.service
 import { FeaturesService } from '../../../../services/features.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { first } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -67,6 +70,11 @@ export class BaseComponent implements AfterViewInit {
    * The urn of the Minds+ support tier
    */
   private readonly plusTierUrn: string;
+
+  /**
+   * Remind subject
+   */
+  remind$: Observable<RemindSubjectValue> = this.service.remind$;
 
   /**
    * Constructor
@@ -214,7 +222,7 @@ export class BaseComponent implements AfterViewInit {
    * Post intent
    * @param event
    */
-  async onPost(event: ButtonComponentAction) {
+  async onPost(event) {
     if (!(await this.meetsPlusPostRequirements())) {
       return;
     }

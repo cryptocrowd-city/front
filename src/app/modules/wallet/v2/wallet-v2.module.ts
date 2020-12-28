@@ -39,10 +39,12 @@ import { WalletProEarningsCashComponent } from './cash/pro-earnings/pro-earnings
 import { WalletTabHistoryService } from './tab-history.service';
 import { DefaultRedirectGuard } from './guards/default-redirect-guard.component';
 import { TabStorageGuard } from './guards/tab-storage-guard.component';
+import { SharedModule } from 'angular-plotly.js/src/app/shared/shared.module';
 
 export const WALLET_V2_ROUTES: Routes = [
+  { path: 'canary', redirectTo: '..', pathMatch: 'full' },
   {
-    path: 'canary',
+    path: '',
     component: WalletDashboardComponent,
     data: {
       title: 'Wallet',
@@ -173,16 +175,6 @@ export const WALLET_V2_ROUTES: Routes = [
   ],
   exports: [WalletDashboardComponent, WalletPhoneVerificationComponent],
   providers: [
-    {
-      provide: Web3WalletService,
-      useFactory: Web3WalletService._,
-      deps: [
-        LocalWalletService,
-        TransactionOverlayService,
-        PLATFORM_ID,
-        ConfigsService,
-      ],
-    },
     TokenContractService,
     WithdrawContractService,
     WalletTabHistoryService,

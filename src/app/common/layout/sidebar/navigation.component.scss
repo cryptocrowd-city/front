@@ -76,9 +76,13 @@ m-sidebar--navigation {
         border-bottom: 1px solid themed($m-borderColor--primary);
       }
 
-      a > img {
-        height: 36px;
-        cursor: pointer;
+      a {
+        text-decoration: none;
+
+        & > img {
+          height: 36px;
+          cursor: pointer;
+        }
       }
 
       i.material-icons {
@@ -150,6 +154,7 @@ m-sidebar--navigation {
 
   &.m-sidebarNavigation__item--active > a,
   &:hover > a {
+    cursor: pointer;
     @include m-theme() {
       color: themed($m-textColor--primary);
       svg {
@@ -223,7 +228,7 @@ m-sidebar--navigation {
   // margin: 4px 20px;
   // padding: 20px;
   @include m-theme() {
-    background: themed($m-bgColor--secondary);
+    background: themed($m-bgColor--primary);
     border: 1px solid themed($m-borderColor--primary);
     border-right: 0;
   }
@@ -239,7 +244,7 @@ m-sidebar--navigation {
     left: 48px;
     transform: rotate(45deg);
     @include m-theme() {
-      background: themed($m-bgColor--secondary);
+      background: themed($m-bgColor--primary);
       border-top: 1px solid themed($m-borderColor--primary);
       border-left: 1px solid themed($m-borderColor--primary);
     }

@@ -14,20 +14,20 @@ import {
   ViewChild,
   Input,
 } from '@angular/core';
-import { Subject, Subscription, BehaviorSubject } from 'rxjs';
+import { Subject, Subscription, BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import {
   AttachmentSubjectValue,
   ComposerService,
   MonetizationSubjectValue,
   NsfwSubjectValue,
+  RemindSubjectValue,
   TagsSubjectValue,
 } from '../../services/composer.service';
 import {
   FileUploadComponent,
   FileUploadSelectEvent,
 } from '../../../../common/components/file-upload/file-upload.component';
-import { ButtonComponentAction } from '../../../../common/components/button-v2/button.component';
 import { PopupService } from '../popup/popup.service';
 import { NsfwComponent } from '../popup/nsfw/nsfw.component';
 import { MonetizeComponent } from '../popup/monetize/monetize.component';
@@ -50,9 +50,9 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   /**
    * On Post event emitter
    */
-  @Output('onPost') onPostEmitter: EventEmitter<
-    ButtonComponentAction
-  > = new EventEmitter<ButtonComponentAction>();
+  @Output('onPost') onPostEmitter: EventEmitter<MouseEvent> = new EventEmitter<
+    MouseEvent
+  >();
 
   /**
    * Is the composer in a modal?
@@ -93,6 +93,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   protected attachmentSubscription: Subscription;
 
   public legacyPaywallEnabled: boolean = false;
+
+  remind$: Observable<RemindSubjectValue> = this.service.remind$;
 
   /**
    * Constructor
@@ -328,10 +330,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /**
    * Emits post event
-   * @param buttonComponentAction
+   * @param $event
    */
-  onPost(buttonComponentAction: ButtonComponentAction): void {
-    this.onPostEmitter.emit(buttonComponentAction);
+  onPost($event: MouseEvent): void {
+    this.onPostEmitter.emit($event);
   }
 
   /**

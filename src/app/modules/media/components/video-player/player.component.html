@@ -20,6 +20,8 @@
       [plyrOptions]="options"
       (plyrEnded)="onEnded($event)"
       (plyrPlay)="onPlayed($event)"
+      (plyrControlsShown)="onControlsShown.next($event)"
+      (plyrControlsHidden)="onControlsHidden.next($event)"
       (plyrEnterFullScreen)="fullScreenChange.next($event)"
       (plyrExitFullScreen)="fullScreenChange.next($event)"
       (plyrLoadedMetadata)="emitDimensions($event)"
@@ -35,6 +37,7 @@
 <ng-template #placeholder>
   <div
     class="m-videoPlayer__placeholder"
+    [class.m-videoPlayer__placeholder--embedded]="embedded"
     [style.background-image]="'url(' + (service.poster$ | async) + ')'"
   >
     <i

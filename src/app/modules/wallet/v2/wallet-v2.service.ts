@@ -52,7 +52,7 @@ export interface Wallet {
 
 @Injectable()
 export class WalletV2Service {
-  readonly basePath: string = '/wallet/canary';
+  readonly basePath: string = '/wallet';
 
   totalTokens = 0;
   stripeDetails: StripeDetails;
@@ -207,7 +207,7 @@ export class WalletV2Service {
       const address = await this.web3Wallet.getCurrentWallet();
       if (address) {
         this.wallet.eth.address = address;
-        const ethBalance = await this.web3Wallet.getBalance(address);
+        const ethBalance = await this.web3Wallet.getBalance();
         if (ethBalance) {
           this.wallet.eth.balance = toFriendlyCryptoVal(ethBalance);
         }
@@ -400,11 +400,6 @@ export class WalletV2Service {
     }
   }
 
-  async hasMetamask(): Promise<boolean> {
-    const isLocal: any = await this.web3Wallet.isLocal();
-    return Boolean(isLocal);
-  }
-
   async canTransfer() {
     try {
       const response: any = await this.client.post(
@@ -421,7 +416,6 @@ export class WalletV2Service {
   }
 
   async web3WalletUnlocked() {
-    await this.web3Wallet.ready();
     if (await this.web3Wallet.unlock()) {
       return true;
     } else {
@@ -466,5 +460,12 @@ export class WalletV2Service {
     }
 
     return splitBalance;
+  }
+
+  async isVerified(): Promise<boolean> {
+    const response = await (<any>(
+      this.client.get('api/v3/blockchain/unique-onchain')
+    ));
+    return response.unique;
   }
 }
