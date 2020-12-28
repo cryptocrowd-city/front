@@ -31,8 +31,7 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
   constructor(
     public service: ActivityModalService,
     public activityService: ActivityService,
-    private horizontalFeed: HorizontalFeedService,
-    @Optional() private autoProgress: AutoProgressVideoService
+    @Optional() private autoProgress: AutoProgressVideoService,
     private relatedContent: RelatedContentService
   ) {}
 
@@ -58,12 +57,12 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
         }
       );
 
-      if (this.horizontalFeed.getBaseEntity().custom_type === 'video') {
-        this.horizontalFeed.setFilter('videos');
+      if (this.relatedContent.getBaseEntity().custom_type === 'video') {
+        this.relatedContent.setFilter('videos');
       }
     }
 
-    this.horizontalFeed.setContext('container');
+    this.relatedContent.setContext('container');
   }
 
   ngOnDestroy(): void {

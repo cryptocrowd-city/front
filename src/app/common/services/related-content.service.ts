@@ -139,7 +139,7 @@ export class RelatedContentService {
    * Sets filter to set class to request specific content types.
    * @param { FilterType } filter - entity type to be returned by fetch.
    */
-  setFilter(filter: FilterType): HorizontalFeedService {
+  setFilter(filter: FilterType): RelatedContentService {
     this.filter = filter;
     return this;
   }
@@ -443,7 +443,12 @@ export class RelatedContentService {
       cache: true,
     })) as any;
 
-    // don't return reminds or non-activities
+    // if video only feed, return
+    if (this.filter === 'videos') {
+      return response.entities.length ? response.entities : [];
+    }
+
+    // else, don't return reminds or non-activities
     if (response && response.entities && response.entities.length) {
       const responseEntities = response.entities.filter(
         e =>
@@ -452,8 +457,8 @@ export class RelatedContentService {
           (e.entity.entity_guid || e.entity.message)
       );
 
-      if (responseEntities.length) {
-        return responseEntities;
+      if (response.entities.length) {
+        return response.entities;
       }
     }
 

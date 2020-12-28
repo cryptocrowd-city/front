@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, timer, Observable, Subscription, of } from 'rxjs';
-import { tap, takeWhile, scan, take, map, switchMap } from 'rxjs/operators';
-import { HorizontalFeedService } from '../../../../../common/services/horizontal-feed.service';
+import { BehaviorSubject, timer, Observable, of } from 'rxjs';
+import { tap, takeWhile, scan, map } from 'rxjs/operators';
+import { RelatedContentService } from '../../../../../common/services/related-content.service';
 import { ActivityEntity } from '../../../../newsfeed/activity/activity.service';
 
 /**
@@ -34,7 +34,7 @@ export class AutoProgressVideoService {
    * @returns { void }
    */
   public updateNextEntity(): void {
-    this.nextEntity$.next(this.horizontalFeed.getNextEntity());
+    this.nextEntity$.next(this.relatedContent.getNextEntity());
   }
 
   /**
@@ -81,14 +81,14 @@ export class AutoProgressVideoService {
     );
   }
 
-  constructor(private horizontalFeed: HorizontalFeedService) {}
+  constructor(private relatedContent: RelatedContentService) {}
 
   /**
    * If a next video exists, trigger it to play next.
    * @returns { AutoProgressVideoService } - chainable.
    */
   public next(): AutoProgressVideoService {
-    if (this.horizontalFeed && this.horizontalFeed.hasNext) {
+    if (this.relatedContent && this.relatedContent.hasNext) {
       const entity = this.updateNextEntity();
 
       this.delayed(6);

@@ -1,7 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { HorizontalFeedService } from '../../../../../common/services/horizontal-feed.service';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { MediumFadeAnimation } from '../../../../../animations';
+import { Component } from '@angular/core';
 import { AutoProgressVideoService } from './auto-progress-video.service';
 
 @Component({
