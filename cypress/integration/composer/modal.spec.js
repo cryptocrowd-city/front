@@ -86,7 +86,7 @@ context('Composer Modal', () => {
 
     cy.get('.m-sidebarNavigation__list')
       .contains(`${Cypress.env().username}`)
-      .click()
+      .click({force: true})
       .wait('@GETChannel')
       .its('response.statusCode')
       .should('eq', 200);
