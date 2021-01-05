@@ -112,7 +112,7 @@ export class SettingsV2ProFooterComponent implements OnInit, OnDestroy {
     } catch (e) {
       this.formSubmitted.emit({
         formSubmitted: false,
-        error: e.messages || 'An unknown error has occurred',
+        error: e.message || 'An unknown error has occurred',
       });
     } finally {
       this.inProgress = false;
