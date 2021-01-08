@@ -67,10 +67,11 @@ export class ChannelShopMembershipsEditService {
     this.name$,
     this.usd$,
     this.canReceiveUsd$,
+    this.hasTokens$,
   ]).pipe(
-    map(([name, usd, canReceiveUsd]): boolean =>
-      Boolean(name && usd && usd > 0 && canReceiveUsd)
-    )
+    map(([name, usd, canReceiveUsd, hasTokens]): boolean => {
+      return Boolean(name && usd && usd > 0 && (canReceiveUsd || hasTokens));
+    })
   );
 
   /**
