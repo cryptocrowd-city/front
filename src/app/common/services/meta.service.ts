@@ -193,6 +193,28 @@ export class MetaService {
     return this;
   }
 
+  /**
+   * Sets OEmbed URL for relevant content.
+   * @param { entityGuid } - The GUID of the entity to be linked.
+   * @returns { MetaService } - Chainable.
+   */
+  public setOEmbed(entityGuid: string): MetaService {
+    const existingLink = this.dom.head.querySelector('#oEmbed');
+
+    if (existingLink) {
+      existingLink.setAttribute('href', this.getOEmbedUrl(entityGuid));
+    } else {
+      let link: HTMLLinkElement;
+      link = this.dom.createElement('link');
+      link.setAttribute('rel', 'alternative');
+      link.setAttribute('href', this.getOEmbedUrl(entityGuid));
+      link.setAttribute('type', 'application/json+oembed');
+      link.setAttribute('id', '#oEmbed');
+      this.dom.head.appendChild(link);
+    }
+    return this;
+  }
+
   reset(
     data: {
       title?: string;
@@ -211,7 +233,8 @@ export class MetaService {
       .setCanonicalUrl(data.canonicalUrl || '') // Only use canonical when required
       .setRobots(data.robots || 'all')
       .setNsfw(false)
-      .resetDynamicFavicon();
+      .resetDynamicFavicon()
+      .resetOEmbed();
   }
 
   private applyTitle(): void {
@@ -236,5 +259,31 @@ export class MetaService {
     const fakeEl = this.dom.createElement('span');
     fakeEl.innerHTML = this.domSanitizer.sanitize(SecurityContext.HTML, value);
     return fakeEl.textContent || fakeEl.innerText;
+  }
+
+  /**
+   * Gets oEmbed URL for a given entity guid.
+   * @param { entityGuid } - entityGuid
+   * @returns { string } - full oEmbed url with encoded 'url' query parameter.
+   */
+  private getOEmbedUrl(entityGuid: string): string {
+    const baseUrl = this.configs.get('cdn_assets_url');
+    const encodedOEmbedUrl = encodeURIComponent(
+      `${baseUrl}newsfeed/${entityGuid}`
+    );
+    return `${baseUrl}api/v2/oembed\?url=${encodedOEmbedUrl}`;
+  }
+
+  /**
+   * Resets oEmbed link node.
+   * @param { MetaService } - Chainable.
+   */
+  private resetOEmbed(): MetaService {
+    const link = this.dom.head.querySelector('#oEmbed');
+
+    if (link) {
+      this.dom.head.removeChild(link);
+    }
+    return this;
   }
 }
