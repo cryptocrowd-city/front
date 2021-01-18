@@ -105,7 +105,8 @@
                 [readonly]="service.inProgress$ | async"
                 [disabled]="
                   (service.isEditing$ | async) ||
-                  !(service.canReceiveTokens$ | async)
+                  !(service.canReceiveTokens$ | async) ||
+                  !(service.canReceiveUsd$ | async)
                 "
               />
               <span class="m-form__customInput__checkbox"></span>

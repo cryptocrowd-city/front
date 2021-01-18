@@ -66,11 +66,9 @@ export class ChannelShopMembershipsEditService {
   readonly canSave$: Observable<boolean> = combineLatest([
     this.name$,
     this.usd$,
-    this.canReceiveUsd$,
-    this.hasTokens$,
   ]).pipe(
-    map(([name, usd, canReceiveUsd, hasTokens]): boolean => {
-      return Boolean(name && usd && usd > 0 && (canReceiveUsd || hasTokens));
+    map(([name, usd]): boolean => {
+      return Boolean(name && usd && usd > 0);
     })
   );
 
@@ -104,9 +102,12 @@ export class ChannelShopMembershipsEditService {
   reset(): void {
     this.name$.next('');
     this.usd$.next(0);
-    this.hasTokens$.next(false);
     this.description$.next('');
     this.original$.next(null);
+
+    // force true if cannot receive - template disables user change.
+    this.hasTokens$.next(this.canReceiveUsd$.getValue() ? false : true);
+
     this.inProgress$.next(false);
   }
 
