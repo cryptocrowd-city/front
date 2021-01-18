@@ -3,7 +3,10 @@ import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 import { MindsUser } from '../../../interfaces/entities';
 import { ApiService } from '../../../common/api/api.service';
-import { Wallet, WalletV2Service } from '../../wallet/v2/wallet-v2.service';
+import {
+  Wallet,
+  WalletV2Service,
+} from '../../wallet/components/wallet-v2.service';
 import { WireService as WireV1Service, WireStruc } from '../wire.service';
 import { UpgradeOptionInterval } from '../../upgrades/upgrade-options.component';
 import { ConfigsService } from '../../../common/services/configs.service';
@@ -653,17 +656,17 @@ export class WireV2Service implements OnDestroy {
         yearly: this.upgrades[upgradeType]['yearly'][type],
       };
       this.upgradePricingOptions$.next(upgradePricingOptions);
-    }
 
-    // Update the amount when anything changes
-    let upgradePrice = this.upgrades[this.upgradeType$.value][
-      this.upgradeInterval$.value
-    ][this.type$.value];
-    if (this.upgradeInterval$.value === 'yearly') {
-      upgradePrice = upgradePrice;
-    }
+      // Update the amount when anything changes
+      let upgradePrice = this.upgrades[this.upgradeType$.value][
+        this.upgradeInterval$.value
+      ][this.type$.value];
+      if (this.upgradeInterval$.value === 'yearly') {
+        upgradePrice = upgradePrice;
+      }
 
-    this.setAmount(upgradePrice);
+      this.setAmount(upgradePrice);
+    }
 
     return this;
   }

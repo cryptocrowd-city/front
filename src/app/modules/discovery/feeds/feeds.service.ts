@@ -50,10 +50,11 @@ export class DiscoveryFeedsService {
   async load(): Promise<void> {
     if (isPlatformServer(this.platformId)) return;
     const isPlusPage: boolean = this.discoveryService.isPlusPage$.value;
+    const wireSupportTiersOnly: boolean = this.discoveryService.isWireSupportPage$.getValue();
     let algorithm = this.filter$.value === 'preferred' ? 'topV2' : 'top';
 
     if (isPlusPage) {
-      algorithm = 'plusFeed'; // Temporary, need to make backend sorting algo for plus
+      algorithm = this.filter$.value === 'latest' ? 'latest' : 'plusFeed';
     }
 
     const type = this.type$.value;
@@ -66,6 +67,7 @@ export class DiscoveryFeedsService {
         nsfw: this.getNsfwString(),
         period_fallback: 0,
         plus: isPlusPage,
+        wire_support_tier_only: wireSupportTiersOnly,
       })
       .fetch();
   }
