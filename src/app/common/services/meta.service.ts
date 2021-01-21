@@ -267,7 +267,7 @@ export class MetaService {
    * @returns { string } - full oEmbed url with encoded 'url' query parameter.
    */
   private getOEmbedUrl(entityGuid: string): string {
-    const baseUrl = this.configs.get('cdn_assets_url');
+    const baseUrl = this.site.baseUrl;
     const encodedOEmbedUrl = encodeURIComponent(
       `${baseUrl}newsfeed/${entityGuid}`
     );
