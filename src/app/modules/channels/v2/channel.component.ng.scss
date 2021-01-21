@@ -19,6 +19,27 @@
       border-color: themed($m-borderColor--primary);
     }
 
+    .m-channel__proHeader {
+      width: 100%;
+      min-width: 100%;
+      display: flex;
+      padding: 15px 0;
+      justify-content: center;
+      text-decoration: unset;
+      font-size: 18px;
+      line-height: 24px;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+
+      @include m-theme() {
+        background-color: themed($m-blue);
+        color: themed($m-white-always);
+
+        &:hover {
+          background-color: themed($m-blue-dark);
+        }
+      }
+    }
     .m-channel__narrowBrief {
       display: none;
       padding: 20px 20px 0;
