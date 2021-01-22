@@ -84,6 +84,7 @@ export class AttachmentService {
 
                   case UploadEventType.Success:
                   case UploadEventType.Fail:
+                    throw new Error(uploadEvent.payload.response);
                   default:
                     progressFn(false, 0);
                     break;
