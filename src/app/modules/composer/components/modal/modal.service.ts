@@ -66,8 +66,8 @@ export class ModalService {
           )
           .onDidDismiss(() => {
             modalOpen = false;
-            // ojm remove intent from url queryParam here?
-            // Remove query params
+
+            // Remove intentUrl query params
             this.router.navigate([], {
               queryParams: {
                 intentUrl: null,
