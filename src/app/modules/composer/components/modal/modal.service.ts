@@ -1,5 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { ModalComponent } from './modal.component';
@@ -21,7 +21,8 @@ export class ModalService {
 
   constructor(
     protected overlayModal: OverlayModalService,
-    protected router: Router
+    protected router: Router,
+    protected route: ActivatedRoute
   ) {}
 
   /**
@@ -67,14 +68,8 @@ export class ModalService {
           .onDidDismiss(() => {
             modalOpen = false;
 
-            // Remove intentUrl query params
-            this.router.navigate([], {
-              queryParams: {
-                intentUrl: null,
-              },
-              queryParamsHandling: 'merge',
-            });
             subscriber.complete();
+            this.removeIntentUrlParam();
           })
           .present();
       } catch (e) {
@@ -89,6 +84,15 @@ export class ModalService {
         }
       };
     });
+  }
+
+  removeIntentUrlParam() {
+    if (this.route.snapshot.queryParamMap.get('intentUrl')) {
+      this.router.navigate(['.'], {
+        queryParams: {},
+        relativeTo: this.route,
+      });
+    }
   }
 
   /**

@@ -6,6 +6,8 @@ import { ModalService } from './components/modal/modal.service';
 import { By } from '@angular/platform-browser';
 import { FormToastService } from '../../common/services/form-toast.service';
 import { composerMockService } from '../../mocks/modules/composer/services/composer.service.mock';
+import { Session } from '../../services/session';
+import { sessionMock } from '../../../tests/session-mock.spec';
 
 describe('Composer', () => {
   let comp: ComposerComponent;
@@ -27,6 +29,7 @@ describe('Composer', () => {
       providers: [
         { provide: ModalService, useValue: MockService(ModalService) },
         { provide: FormToastService, useValue: MockService(FormToastService) },
+        { provide: Session, useValue: sessionMock },
       ],
     }).compileComponents();
   }));
