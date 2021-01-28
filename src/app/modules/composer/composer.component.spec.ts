@@ -8,6 +8,8 @@ import { FormToastService } from '../../common/services/form-toast.service';
 import { composerMockService } from '../../mocks/modules/composer/services/composer.service.mock';
 import { Session } from '../../services/session';
 import { sessionMock } from '../../../tests/session-mock.spec';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Storage } from '../../services/storage';
 
 describe('Composer', () => {
   let comp: ComposerComponent;
@@ -30,6 +32,9 @@ describe('Composer', () => {
         { provide: ModalService, useValue: MockService(ModalService) },
         { provide: FormToastService, useValue: MockService(FormToastService) },
         { provide: Session, useValue: sessionMock },
+        { provide: ActivatedRoute, useValue: MockService(ActivatedRoute) },
+        { provide: Router, useValue: MockService(Router) },
+        { provide: Storage, useValue: MockService(Storage) },
       ],
     }).compileComponents();
   }));
