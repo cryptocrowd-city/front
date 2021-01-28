@@ -292,7 +292,7 @@ export class MetaService {
     const encodedOEmbedUrl = encodeURIComponent(
       `${baseUrl}newsfeed/${entityGuid}`
     );
-    return `${baseUrl}api/v2/oembed\?url=${encodedOEmbedUrl}`;
+    return `${baseUrl}api/oembed\?url=${encodedOEmbedUrl}`;
   }
 
   /**
