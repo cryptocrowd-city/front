@@ -10,6 +10,7 @@ import { Session } from '../../services/session';
 import { sessionMock } from '../../../tests/session-mock.spec';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '../../services/storage';
+import { ConfigsService } from '../../common/services/configs.service';
 
 describe('Composer', () => {
   let comp: ComposerComponent;
@@ -35,6 +36,7 @@ describe('Composer', () => {
         { provide: ActivatedRoute, useValue: MockService(ActivatedRoute) },
         { provide: Router, useValue: MockService(Router) },
         { provide: Storage, useValue: MockService(Storage) },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents();
   }));
