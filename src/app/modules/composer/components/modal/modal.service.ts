@@ -69,7 +69,6 @@ export class ModalService {
             modalOpen = false;
 
             subscriber.complete();
-            this.removeIntentUrlParam();
           })
           .present();
       } catch (e) {
@@ -84,15 +83,6 @@ export class ModalService {
         }
       };
     });
-  }
-
-  removeIntentUrlParam() {
-    if (this.route.snapshot.queryParamMap.get('intentUrl')) {
-      this.router.navigate(['.'], {
-        queryParams: {},
-        relativeTo: this.route,
-      });
-    }
   }
 
   /**

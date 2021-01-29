@@ -173,6 +173,8 @@ export class ComposerComponent implements OnInit, OnDestroy {
     this.modalOpen = true;
     this.detectChanges();
 
+    //
+
     try {
       const $event = await this.modalService
         .setInjector(this.injector)
@@ -193,6 +195,14 @@ export class ComposerComponent implements OnInit, OnDestroy {
     }
 
     this.modalOpen = false;
+
+    // Cleanup intentUrl param
+    if (this.route.snapshot.queryParamMap.get('intentUrl')) {
+      this.router.navigate(['.'], {
+        queryParams: {},
+        relativeTo: this.route,
+      });
+    }
     this.detectChanges();
   }
 
