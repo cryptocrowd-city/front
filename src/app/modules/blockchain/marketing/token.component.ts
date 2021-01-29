@@ -11,10 +11,12 @@ import { ConfigsService } from '../../../common/services/configs.service';
 @Component({
   selector: 'm-blockchainMarketing__token',
   templateUrl: 'token.component.html',
+  styleUrls: ['./token.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlockchainMarketingTokenComponent {
-  readonly cdnAssetsUrl: string;
+  public readonly cdnAssetsUrl: string;
+  public readonly siteUrl: string;
 
   @ViewChild('topAnchor')
   readonly topAnchor: ElementRef;
@@ -22,9 +24,10 @@ export class BlockchainMarketingTokenComponent {
   constructor(
     protected router: Router,
     protected cd: ChangeDetectorRef,
-    private configs: ConfigsService
+    configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    this.siteUrl = configs.get('site_url');
   }
 
   scrollToTop() {

@@ -158,6 +158,32 @@
       }
     }
 
+    ol {
+      padding: 0;
+      margin: 10px 0 30px 0px;
+
+      // strip list style away
+      list-style: none;
+      counter-reset: item;
+
+      li {
+        // replace list style with incrementing counter
+        counter-increment: item;
+        font-size: 17px;
+        font-weight: 400;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+
+        // theme counter
+        &:before {
+          margin-right: 10px;
+          content: counter(item) '.';
+        }
+      }
+    }
+
     ul {
       margin: 13px 0 0 0;
       padding: 0;

@@ -178,6 +178,7 @@ import { MarkedDirective } from './directives/marked.directive';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { ConfirmV2Component } from '../modules/modals/confirm-v2/confirm';
 import { CanaryFlagComponent } from '../common/components/canary-flag/canary-flag.component';
+import { LaunchButtonComponent } from './components/launch-button/launch-button.component';
 
 const routes: Routes = [
   {
@@ -331,6 +332,7 @@ const routes: Routes = [
     DragAndDropDirective,
     ConfirmV2Component,
     CanaryFlagComponent,
+    LaunchButtonComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -461,6 +463,7 @@ const routes: Routes = [
     MarkedDirective,
     DragAndDropDirective,
     ConfirmV2Component,
+    LaunchButtonComponent,
   ],
   providers: [
     SiteService,

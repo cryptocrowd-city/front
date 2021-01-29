@@ -26,6 +26,7 @@ import { Web3ModalService } from '@mindsorg/web3modal-angular';
   selector: 'm-blockchain--purchase',
   templateUrl: 'purchase.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./purchase.component.ng.scss'],
 })
 export class BlockchainPurchaseComponent implements OnInit {
   stats: { amount; count; requested; issued } = {
@@ -231,6 +232,13 @@ export class BlockchainPurchaseComponent implements OnInit {
     setTimeout(() => {
       input.focus();
     }, 100);
+  }
+
+  /**
+   * Called on "Token Analytics" click. Navigates to analytics.
+   */
+  public tokenAnalyticsClick(): void {
+    this.router.navigate(['/analytics']);
   }
 
   detectChanges() {
