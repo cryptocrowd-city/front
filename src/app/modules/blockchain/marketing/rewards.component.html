@@ -34,32 +34,31 @@
           channels or boost your content for more reach.
         </p>
 
-        <div class="">
-          <m-button
-            color="blue"
-            (onAction)="action(); $event.preventDefault()"
-            i18n="@@COMMON__JOIN_REWARDS"
-          >
-            Join Rewards
-          </m-button>
-        </div>
+        <m-blockchain--purchase
+          [hasTitle]="true"
+          (onComplete)="onPurchaseComplete($event)"
+          [launchButtons]="['analytics', 'earn']"
+        ></m-blockchain--purchase>
       </div>
 
       <div
         class="m-grid__column-5 m-grid__column-12--mobile m-marketing__image"
       >
         <span>
-          <img [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-2.jpg'" />
+          <img
+            [src]="
+              cdnAssetsUrl + 'assets/product-pages/token/v2/mobile-tokens.png'
+            "
+          />
         </span>
       </div>
     </div>
   </div>
 
   <ng-container slot="2">
-    <m-marketing__asFeaturedIn></m-marketing__asFeaturedIn>
+    <m-marketing__asFeaturedInBlockchain></m-marketing__asFeaturedInBlockchain>
 
-    <!-- Section 2 -->
-
+    <!-- Engagement Section -->
     <div class="m-marketing__section m-marketing__section--style-3">
       <div class="m-grid m-marketing__wrapper">
         <div
@@ -69,11 +68,13 @@
 
           <p
             class="m-marketing__description"
-            i18n="@@COMMON__REWARD_FOR_UNIQUE_ENGAGEMENT"
+            i18n="
+               @@BLOCKCHAIN__MARKETING__EARN_DAILY_TOKENS_FOR_POPULAR_CONTENT
+            "
           >
-            We reward you for the amount of unique engagement received on your
-            content. In order to prevent fraud, you can only receive credit once
-            per engagement type per day from verified channels.
+            Earn daily tokens for creating popular content or referring your
+            friends. Your rewards get multiplied the more active you are on the
+            app.
           </p>
 
           <ul class="m-marketing__points">
@@ -83,6 +84,15 @@
                 >{contributionValues.votes, plural, =1
                 {{{contributionValues.votes}} point} other
                 {{{contributionValues.votes}} points}}</em
+              >
+            </li>
+
+            <li i18n="@@BLOCKCHAIN__MARKETING__VOTES__HOURLY_CHECK_IN">
+              Hourly check-in =
+              <em
+                >{contributionValues.checkin, plural, =1
+                {{{contributionValues.checkin}} point} other
+                {{{contributionValues.checkin}} points}}</em
               >
             </li>
 
@@ -105,14 +115,50 @@
             </li>
 
             <li i18n="@@BLOCKCHAIN__MARKETING__REMINDS__EQUALS">
-              Reminds =
+              Reminds or Quotes =
               <em
                 >{contributionValues.reminds, plural, =1
                 {{{contributionValues.reminds}} point} other
                 {{{contributionValues.reminds}} points}}</em
               >
             </li>
+
+            <li i18n="refer a friend|@@BLOCKCHAIN__MARKETING__REFERRAL">
+              Referral =
+              <em
+                >{contributionValues.referrals, plural, =1
+                {{{contributionValues.referrals}} point} other
+                {{{contributionValues.referrals}} points}}</em
+              >
+            </li>
+
+            <li i18n="@@BLOCKCHAIN__MARKETING__JURY_DUTY">
+              Jury duty =
+              <em
+                >{contributionValues.jury_duty, plural, =1
+                {{{contributionValues.jury_duty}} point} other
+                {{{contributionValues.jury_duty}} points}}</em
+              >
+            </li>
           </ul>
+          <em
+            class="m-marketing__emphasisSubtext"
+            i18n="@@BLOCKCHAIN__MARKETING__TOKEN_LIMITATIONS"
+            >You may only receive credit once per engagement type per day from
+            validated channels</em
+          >
+          <div class="m-marketing__engagementButtons">
+            <m-button [color]="'primary'" (onAction)="openComposerModal()"
+              ><ng-container i18n="@@BLOCKCHAIN__MARKETING__CREATE_A_POST"
+                >Create a post</ng-container
+              ></m-button
+            >
+            <m-button [color]="'primary'" (onAction)="navigateToReferrals()"
+              ><ng-container i18n="@@BLOCKCHAIN__MARKETING__REFER_A_FRIEND"
+                >Refer a friend</ng-container
+              ></m-button
+            >
+          </div>
         </div>
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
@@ -121,7 +167,8 @@
             <img
               class="m-marketing__image--1"
               [src]="
-                cdnAssetsUrl + 'assets/product-pages/rewards/rewards-2.jpg'
+                cdnAssetsUrl +
+                'assets/product-pages/rewards/engagements-rewards.png'
               "
             />
 
@@ -136,34 +183,30 @@
       </div>
     </div>
 
-    <!-- Section 3 -->
-
+    <!-- Liquidity Rewards -->
     <div class="m-marketing__section m-marketing__section--style-4">
       <div class="m-grid m-marketing__wrapper">
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2 i18n="@@COMMON__REFERRALS">Referrals</h2>
+          <h2 i18n="@@BLOCKCHAIN__MARKETING__LIQUIDITY_REWARDS">
+            Liquidity Rewards
+          </h2>
 
           <p
             class="m-marketing__description"
-            i18n="@@COMMON__YOU_DESERVE_CREDIT"
+            i18n="@@BLOCKCHAIN__MARKETING__EARN_DAILY_REWARDS_FOR_SHARE"
           >
-            You deserve credit for the people you bring to the Minds network. We
-            reward you with 50 points for every new user that signs up through
-            your referral code and joins our Rewards program.
+            Earn daily tokens for your percent share of the total MINDS/ETH
+            liquidity pair on Uniswap. Your rewards get multiplied the longer
+            you hold your liquidity position for.
           </p>
 
-          <ul class="m-marketing__points">
-            <li i18n="@@COMMON__REFERRALS">
-              Referrals =
-              <em
-                >{contributionValues.referrals, plural, =1
-                {{{contributionValues.referrals}} point} other
-                {{{contributionValues.referrals}} points}}</em
-              >
-            </li>
-          </ul>
+          <m-button [color]="'primary'" (onAction)="provideLiquidityClick()"
+            ><ng-container i18n="@@BLOCKCHAIN__MARKETING__ADD_LIQUIDITY"
+              >Add liquidity</ng-container
+            ></m-button
+          >
         </div>
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
@@ -172,14 +215,16 @@
             <img
               class="m-marketing__image--1"
               [src]="
-                cdnAssetsUrl + 'assets/product-pages/rewards/rewards-3.jpg'
+                cdnAssetsUrl +
+                'assets/product-pages/rewards/liquidity-rewards.png'
               "
             />
 
             <img
               class="m-marketing__image--2"
               [src]="
-                cdnAssetsUrl + 'assets/product-pages/rewards/rewards-3-ux.png'
+                cdnAssetsUrl +
+                'assets/product-pages/rewards/liquidity-rewards-overlay.png'
               "
             />
           </span>
@@ -187,34 +232,35 @@
       </div>
     </div>
 
-    <!-- Section 4 -->
-
+    <!-- Holding Rewards -->
     <div class="m-marketing__section m-marketing__section--style-3">
       <div class="m-grid m-marketing__wrapper">
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2 i18n="@@COMMON__DEVELOPMENT">Development</h2>
+          <h2 i18n="@@BLOCKCHAIN__MARKETING__HOLDING_REWARDS">
+            Holding Rewards
+          </h2>
 
           <p
             class="m-marketing__description"
-            i18n="@@COMMON__OUR_DEVELOPMENT_IS_PUBLIC"
+            i18n="@@BLOCKCHAIN__MARKETING__EARN_DAILY_REWARDS_FOR_SUPPLY"
           >
-            All of our development is publicly available on Gitlab. Any
-            contribution you make to the code will be manually reviewed in order
-            to determine appropriate payouts in Minds Tokens, Bitcoin, Ether or
-            USD.
+            Earn daily tokens for your percent share of the total on-chain
+            supply of MINDS. Your rewards get multiplied the longer you hold
+            your tokens on-chain for.
           </p>
 
-          <div class="m-marketing__actionButtons">
-            <m-button size="small">
-              <a
-                href="https://gitlab.com/minds"
-                target="_blank"
-                i18n="@@COMMON__VIEW_SOURCECODE"
-              >
-                View Sourcecode
-              </a></m-button
+          <div class="m-marketing__engagementButtons">
+            <m-button [color]="'primary'" (onAction)="buyTokensClick()"
+              ><ng-container i18n="@@BLOCKCHAIN__MARKETING__BUY_TOKENS"
+                >Buy tokens</ng-container
+              ></m-button
+            >
+            <m-button [color]="'primary'" (onAction)="transferOnChainClick()"
+              ><ng-container i18n="@@BLOCKCHAIN__MARKETING__TRANSFER_ONCHAIN"
+                >Transfer On-chain</ng-container
+              ></m-button
             >
           </div>
         </div>
@@ -225,14 +271,16 @@
             <img
               class="m-marketing__image--1"
               [src]="
-                cdnAssetsUrl + 'assets/product-pages/rewards/rewards-4.jpg'
+                cdnAssetsUrl +
+                'assets/product-pages/rewards/holding-rewards.png'
               "
             />
 
             <img
               class="m-marketing__image--2"
               [src]="
-                cdnAssetsUrl + 'assets/product-pages/rewards/rewards-4-ux.png'
+                cdnAssetsUrl +
+                'assets/product-pages/rewards/holding-rewards-overlay.png'
               "
             />
           </span>
@@ -240,92 +288,67 @@
       </div>
     </div>
 
-    <!-- Final section -->
-
-    <div class="m-marketing__section m-marketing__section--tail">
+    <!-- Economics -->
+    <div class="m-marketing__section m-marketing__section--style-4">
       <div class="m-grid m-marketing__wrapper">
         <div
-          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body"
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2 i18n="@@COMMON__OTHER_REWARDS">Other Rewards</h2>
-        </div>
-      </div>
-
-      <div class="m-grid m-marketing__wrapper m-marketingSectionTail__table">
-        <div
-          class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h3 i18n="@@COMMON__ONCHAIN_TRANSACTIONS">OnChain Transactions</h3>
+          <h2 i18n="@@BLOCKCHAIN__MARKETING__ECONOMICS">Economics</h2>
 
           <p
             class="m-marketing__description"
-            i18n="@@COMMON__EARN_EVERY_TIME_TRANSACTIONS"
+            i18n="@@BLOCKCHAIN__MARKETING__FIXED_SUPPLY_OF_MINDS"
           >
-            Earn
-            <em
-              >{contributionValues.onchain_tx, plural, =1
-              {{{contributionValues.onchain_tx}} point} other
-              {{{contributionValues.onchain_tx}} points}}</em
-            >
-            every time you perform an OnChain transaction with your Minds
-            Tokens.
+            We reward a fixed supply of 50,000 MINDS every day. These tokens are
+            allocated towards engagement, liquidity and holding rewards.
           </p>
-        </div>
 
-        <div
-          class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h3 i18n="@@COMMON__JURY_DUTY">Jury Duty</h3>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@COMMON__EARN_EVERY_TIME_DECISIONS"
-          >
-            Earn
-            <em
-              >{contributionValues.jury_duty, plural, =1
-              {{{contributionValues.jury_duty}} point} other
-              {{{contributionValues.jury_duty}} points}}</em
+          <div class="m-marketing__engagementButtons">
+            <m-button [color]="'primary'" (onAction)="navigateToBlog()"
+              ><ng-container i18n="@@BLOCKCHAIN__MARKETING__READ_BLOG"
+                >Read blog</ng-container
+              ></m-button
             >
-            every time you participate in our Jury system to review appeals on
-            content moderation decisions.
-          </p>
-        </div>
-
-        <div
-          class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h3 i18n="@@COMMON__HOURLY_CHECK_INS">Hourly Check-ins</h3>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@COMMON__VOTING_COMMENTING"
-          >
-            Earn
-            <em
-              >{contributionValues.checkin, plural, =1
-              {{{contributionValues.checkin}} point} other
-              {{{contributionValues.checkin}} points}}</em
+            <m-button [color]="'primary'" (onAction)="navigateToWhitepaper()"
+              ><ng-container i18n="@@BLOCKCHAIN__MARKETING__WHITEPAPER"
+                >Whitepaper</ng-container
+              ></m-button
             >
-            every hour that you check in to the app and perform an action, such
-            as voting or commenting.
-          </p>
+          </div>
         </div>
-      </div>
-
-      <div class="m-grid m-marketing__wrapper">
         <div
-          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
         >
-          <m-button
-            color="blue"
-            (onAction)="scrollToTop()"
-            i18n="@@COMMON__JOIN_REWARDS"
-          >
-            Join Rewards
-          </m-button>
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="
+                cdnAssetsUrl +
+                'assets/product-pages/rewards/holding-rewards.png'
+              "
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="
+                cdnAssetsUrl +
+                'assets/product-pages/rewards/holding-rewards-overlay.png'
+              "
+            />
+          </span>
         </div>
       </div>
     </div>
+
+    <m-button
+      class="m-tokenMarketing__button--centered"
+      [color]="'blue'"
+      (onAction)="joinRewardsClick()"
+    >
+      <ng-container i18n="@@BLOCKCHAIN__MARKETING__JOIN_REWARDS"
+        >Join Rewards</ng-container
+      ></m-button
+    >
   </ng-container>
 </m-marketing>

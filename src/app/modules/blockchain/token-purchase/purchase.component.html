@@ -1,10 +1,28 @@
 <div class="m-blockchainTokenPurchase">
-  <m-button class="m-blockchainTokenPurchase__buyTokensButton" [color]="'blue'"
-    >Buy Tokens</m-button
+  <m-button
+    class="m-blockchainTokenPurchase__buyTokensButton"
+    [color]="'blue'"
+    (click)="onBuyTokensClick()"
+    ><ng-container i18n="@@MARKETING__BUY_TOKENS"
+      >Buy Tokens</ng-container
+    ></m-button
   >
-  <m-launchButton (click)="tokenAnalyticsClick()"
-    >Token Analytics</m-launchButton
-  >
+  <div class="m-blockchainTokenPurchase__launchButtonContainer">
+    <m-launchButton
+      *ngIf="launchButtons.indexOf('analytics') > -1"
+      (click)="tokenAnalyticsClick()"
+      ><ng-container i18n="@@MARKETING__TOKEN_ANALYTICS"
+        >Token Analytics</ng-container
+      ></m-launchButton
+    >
+    <m-launchButton
+      *ngIf="launchButtons.indexOf('earn') > -1"
+      (click)="earnClick()"
+      ><ng-container i18n="@@MARKETING__EARN"
+        >Earn</ng-container
+      ></m-launchButton
+    >
+  </div>
 </div>
 
 <m-modal-signup-on-action

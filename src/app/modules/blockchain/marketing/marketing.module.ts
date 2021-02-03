@@ -8,6 +8,7 @@ import { BlockchainModule } from '../blockchain.module';
 import { BlockchainMarketingTokenComponent } from './token.component';
 import { BlockchainMarketingRewardsComponent } from './rewards.component';
 import { MarketingModule } from '../../marketing/marketing.module';
+import { ComposerService } from '../../composer/services/composer.service';
 
 const routes: Routes = [
   {
@@ -51,6 +52,7 @@ const routes: Routes = [
     BlockchainModule,
     MarketingModule,
   ],
+  providers: [ComposerService],
   declarations: [
     BlockchainMarketingTokenComponent,
     BlockchainMarketingRewardsComponent,

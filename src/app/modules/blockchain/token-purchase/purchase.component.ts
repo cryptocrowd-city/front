@@ -21,6 +21,9 @@ import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.comp
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { Web3ModalService } from '@mindsorg/web3modal-angular';
+import { BlockchainMarketingLinksService } from '../marketing/blockchain-marketing-links.service';
+
+export type LaunchButtonType = 'analytics' | 'earn';
 
 @Component({
   selector: 'm-blockchain--purchase',
@@ -62,6 +65,7 @@ export class BlockchainPurchaseComponent implements OnInit {
   paramsSubscription: Subscription;
 
   @Input() hasTitle: boolean = false;
+  @Input() launchButtons: LaunchButtonType[] = [];
 
   constructor(
     protected client: Client,
@@ -73,7 +77,8 @@ export class BlockchainPurchaseComponent implements OnInit {
     public session: Session,
     private route: ActivatedRoute,
     protected router: Router,
-    protected toasterService: FormToastService
+    protected toasterService: FormToastService,
+    private linksService: BlockchainMarketingLinksService
   ) {}
 
   ngOnInit() {
@@ -235,10 +240,21 @@ export class BlockchainPurchaseComponent implements OnInit {
   }
 
   /**
-   * Called on "Token Analytics" click. Navigates to analytics.
+   * Called on "Token Analytics" click.
    */
   public tokenAnalyticsClick(): void {
-    this.router.navigate(['/analytics']);
+    this.linksService.navigateToTokenAnalytics();
+  }
+
+  /**
+   * Called on "Earn" click.
+   */
+  public earnClick(): void {
+    this.linksService.openEarnModal();
+  }
+
+  public onBuyTokensClick(): void {
+    this.linksService.openBuyTokensModal();
   }
 
   detectChanges() {

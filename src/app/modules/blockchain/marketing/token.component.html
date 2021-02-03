@@ -26,6 +26,7 @@
         <m-blockchain--purchase
           [hasTitle]="true"
           (onComplete)="onPurchaseComplete($event)"
+          [launchButtons]="['analytics']"
         ></m-blockchain--purchase>
       </div>
       <div
@@ -66,11 +67,8 @@
           <div class="m-marketing__links">
             <ol>
               <li>
-                <!--TODO: Open uniswap modal on click? -->
                 <a
-                  [href]="
-                    'https://app.uniswap.org/#/add/ETH/0xB26631c6dda06aD89B93C71400D25692de89c068'
-                  "
+                  (click)="provideLiquidityClick()"
                   target="_blank"
                   i18n="@@TOKEN_MARKETING__PROVIDE_LIQUIDITY_ON_UNISWAP"
                 >
@@ -93,7 +91,7 @@
                 </span>
 
                 <a
-                  routerLink="settings/other/referrals"
+                  (click)="navigateToReferrals()"
                   target="_blank"
                   i18n="@@TOKEN_MARKETING__REFER_FRIENDS"
                 >
@@ -102,9 +100,8 @@
               </li>
 
               <li>
-                <!--TODO: Transfer modal -->
                 <a
-                  routerLink="/wallet"
+                  (click)="holdClick()"
                   target="_blank"
                   i18n="hold (your tokens onchain)|@@TOKEN_MARKETING__HOLD"
                 >
@@ -125,7 +122,7 @@
               <ul>
                 <li>
                   <a
-                    routerLink="rewards"
+                    routerLink="/rewards"
                     target="_blank"
                     i18n="@@TOKEN_MARKETING__LEARN_ABOUT_TOKEN_REWARDS"
                   >
@@ -184,8 +181,11 @@
             Connect your wallet to see if you qualify for a MINDS airdrop. You
             can read our blog to learn more about who qualifies.
           </p>
-          <!-- TODO: Link up wallet / airdrop connection -->
-          <m-button [color]="'blue'">Connect Wallet</m-button>
+          <m-button [color]="'blue'" (onAction)="airdropClick()"
+            ><ng-container i18n="@@MARKETING__CONNECT_WALLET"
+              >Connect Wallet</ng-container
+            ></m-button
+          >
         </div>
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
@@ -462,12 +462,10 @@
         <div
           class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
         >
-          <m-button
-            color="blue"
-            (onAction)="scrollToTop()"
-            i18n="@@COMMON__BUY_TOKENS"
-          >
-            Buy Tokens
+          <m-button color="blue" (onAction)="scrollToTop()">
+            <ng-container i18n="@@BLOCKCHAIN__MARKETING__BUY_TOKENS">
+              Buy Tokens
+            </ng-container>
           </m-button>
         </div>
       </div>
