@@ -9,6 +9,7 @@ import { UniswapModalService } from '../../../../blockchain/token-purchase/v2/un
 import { EarnModalService } from '../../../../blockchain/earn/earn-modal.service';
 import { map } from 'rxjs/operators';
 import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';
+import { WalletV2Service } from '../../wallet-v2.service';
 
 @Component({
   selector: 'm-wallet__tokenRewards',
@@ -89,7 +90,8 @@ export class WalletTokenRewardsComponent implements OnInit {
     private uniswapModalService: UniswapModalService,
     private earnModalService: EarnModalService,
     protected injector: Injector,
-    protected onchainTransferModal: OnchainTransferModalService
+    protected onchainTransferModal: OnchainTransferModalService,
+    private walletService: WalletV2Service
   ) {}
 
   ngOnInit() {
@@ -158,6 +160,17 @@ export class WalletTokenRewardsComponent implements OnInit {
         }
       },
     });
+  }
+
+  get uniswapAccountLink(): string {
+    const address = this.walletService.wallet.receiver.address;
+
+    if (!address) {
+      return;
+    }
+
+    const uniswapUrl = 'https://info.uniswap.org/account/';
+    return uniswapUrl + address;
   }
 
   /**

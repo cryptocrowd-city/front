@@ -43,6 +43,7 @@ import { WalletEarningsComponent } from './components/components/earnings/earnin
 import { MindsWalletTokenPriceBadgeComponent } from './components/components/token-price-badge/token-price-badge.component';
 import { OnchainTransferModalService } from './components/components/onchain-transfer/onchain-transfer.service';
 import { PhoneVerificationService } from './components/components/phone-verification/phone-verification.service';
+import { WalletTokensDropdownMenu } from './components/tokens/dropdown-menu/dropdown-menu.component';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' },
@@ -204,6 +205,7 @@ export const WALLET_ROUTES: Routes = [
     WalletTokenRewardsComponent,
     WalletEarningsComponent,
     MindsWalletTokenPriceBadgeComponent,
+    WalletTokensDropdownMenu,
   ],
   exports: [WalletDashboardComponent, WalletPhoneVerificationComponent],
   providers: [
