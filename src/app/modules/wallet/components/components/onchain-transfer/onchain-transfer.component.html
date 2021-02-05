@@ -18,16 +18,17 @@
       </div>
       <div class="m-walletOnchainTransfer__buttonsContainer">
         <m-button
+          (onAction)="openPhoneVerificationModal()"
           size="large"
           [disabled]="phoneVerified"
           [ngClass]="{
             'm-walletOnchainTransfer__requirement--complete': phoneVerified
           }"
-          (onAction)="openPhoneVerificationModal()"
           ><i class="material-icons">call</i
           ><span>Phone Verification</span></m-button
         >
         <m-button
+          (onAction)="openPlusSubscriptionModal()"
           size="large"
           [disabled]="isPlus"
           [ngClass]="{
