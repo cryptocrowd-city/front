@@ -24,11 +24,14 @@ export class PhoneVerificationService {
   constructor(
     private stackableModal: StackableModalService,
     private session: Session
-  ) {}
-
-  async open(): Promise<void> {
+  ) {
     if (this.session.getLoggedInUser().rewards) {
       this.phoneVerified$.next(true);
+    }
+  }
+
+  async open(): Promise<void> {
+    if (this.phoneVerified$.getValue()) {
       return;
     }
 
@@ -46,4 +49,3 @@ export class PhoneVerificationService {
       .toPromise();
   }
 }
-// todoojm make phone modal in token onboarding use this

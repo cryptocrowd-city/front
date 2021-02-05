@@ -21,6 +21,12 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { PhoneVerificationService } from '../phone-verification/phone-verification.service';
+import { WireCreatorComponent } from '../../../../wire/v2/creator/wire-creator.component';
+import {
+  StackableModalEvent,
+  StackableModalService,
+} from '../../../../../services/ux/stackable-modal.service';
+import { WirePaymentHandlersService } from '../../../../wire/wire-payment-handlers.service';
 
 @Component({
   moduleId: module.id,
@@ -52,8 +58,10 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
     protected contract: WithdrawContractService,
     protected walletService: WalletV2Service,
     protected toasterService: FormToastService,
-    protected modalService: OverlayModalService,
+    protected overlayModal: OverlayModalService,
     protected phoneVerificationService: PhoneVerificationService,
+    protected stackableModal: StackableModalService,
+    protected wirePaymentHandlers: WirePaymentHandlersService,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -63,7 +71,6 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
     this.phoneVerifiedSubscription = this.phoneVerificationService.phoneVerified$.subscribe(
       verified => {
         this.phoneVerified = verified;
-        console.log('ojm phoneverified?', this.phoneVerified);
       }
     );
     this.isPlus = this.session.getLoggedInUser().plus;
@@ -107,45 +114,37 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   }
 
   async transfer() {
-    //ojm
-    // if (await this.walletService.web3WalletUnlocked()) {
-    //   this.showTransferModal = true;
-    // }
-    if (await !this.walletService.web3WalletUnlocked()) {
-      this.submitError =
-        'Your Ethereum wallet is locked or connected to another network';
-      return;
-    }
+    if (await this.walletService.web3WalletUnlocked()) {
+      try {
+        this.transferring = true;
 
-    try {
-      this.transferring = true;
+        const result: {
+          address;
+          guid;
+          amount;
+          gas;
+          tx;
+        } = await this.contract.request(
+          this.session.getLoggedInUser().guid,
+          this.amount.value * Math.pow(10, 18)
+        );
 
-      const result: {
-        address;
-        guid;
-        amount;
-        gas;
-        tx;
-      } = await this.contract.request(
-        this.session.getLoggedInUser().guid,
-        this.amount.value * Math.pow(10, 18)
-      );
+        const response: any = await this.client.post(
+          `api/v2/blockchain/transactions/withdraw`,
+          result
+        );
 
-      const response: any = await this.client.post(
-        `api/v2/blockchain/transactions/withdraw`,
-        result
-      );
-
-      if (response.done) {
-        this.transferComplete();
-      } else {
-        this.submitError = 'Server error';
+        if (response.done) {
+          this.transferComplete();
+        } else {
+          this.submitError = 'Server error';
+        }
+      } catch (e) {
+        console.error(e);
+        this.submitError = (e && e.message) || 'Server error';
+      } finally {
+        this.transferring = false;
       }
-    } catch (e) {
-      console.error(e);
-      this.submitError = (e && e.message) || 'Server error';
-    } finally {
-      this.transferring = false;
     }
   }
 
@@ -175,48 +174,43 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
     this.phoneVerificationService.open();
   }
 
-  async openPlusSubscriptionModal() {
-    //ojm todo
-    // try {
-    //   this.overlayModal
-    //     .create(
-    //       WireCreatorComponent,
-    //       await this.wirePaymentHandlers.get('plus'),
-    //       {
-    //         wrapperClass: 'm-modalV2__wrapper',
-    //         default: {
-    //           type: this.currency === 'usd' ? 'money' : 'tokens',
-    //           upgradeType: 'plus',
-    //           upgradeInterval: this.interval,
-    //         },
-    //         onComplete: () => {
-    //           this.paymentComplete();
-    //           this.overlayModal.dismiss();
-    //         },
-    //       }
-    //     )
-    //     .onDidDismiss(() => {
-    //       this.inProgress = false;
-    //       this.detectChanges();
-    //     })
-    //     .present();
-    // } catch (e) {
-    //   this.active = false;
-    //   this.hasSubscription = false;
-    //   this.session.getLoggedInUser().plus = false;
-    //   this.error = (e && e.message) || 'Unknown error';
-    //   this.toasterService.error(this.error);
-    //   this.inProgress = false;
-    // }
+  async openPlusSubscriptionModal(): Promise<void> {
+    if (this.session.getLoggedInUser().plus) {
+      this.isPlus = true;
+      return;
+    }
+
+    const stackableModalEvent: StackableModalEvent = await this.stackableModal
+      .present(
+        WireCreatorComponent,
+        await this.wirePaymentHandlers.get('plus'),
+        {
+          wrapperClass: 'm-modalV2__wrapper',
+          default: {
+            type: 'money',
+            upgradeType: 'plus',
+          },
+          onComplete: () => {
+            this.isPlus = true;
+            this.session.getLoggedInUser().plus = true;
+            this.toasterService.success('Welcome to Minds+');
+            this.stackableModal.dismiss();
+          },
+          onDismissIntent: () => {
+            this.stackableModal.dismiss();
+          },
+        }
+      )
+      .toPromise();
   }
 
-  transferComplete() {
+  transferComplete(): void {
     this.toasterService.success('On-chain transfer complete');
-    this.modalService.dismiss();
+    this.overlayModal.dismiss();
   }
 
-  ngOnDestroy() {
-    this.modalService.dismiss();
+  ngOnDestroy(): void {
+    this.overlayModal.dismiss();
     if (this.amountSubscription) {
       this.amountSubscription.unsubscribe();
     }

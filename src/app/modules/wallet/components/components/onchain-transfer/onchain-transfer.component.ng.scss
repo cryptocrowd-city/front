@@ -35,6 +35,20 @@
     @media screen and (max-width: $max-mobile) {
       padding: 20px 24px 30px;
     }
+
+    .m-walletSecondaryText--desc {
+      margin-top: 5px;
+
+      @media screen and (max-width: $max-mobile) {
+        margin: 20px 0 0;
+      }
+    }
+  }
+
+  .m-walletOnchainTransfer__balanceWrapper {
+    span:last-child {
+      margin-left: 5px;
+    }
   }
 
   .m-walletOnchainTransfer__buttonsContainer {

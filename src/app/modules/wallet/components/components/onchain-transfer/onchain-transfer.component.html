@@ -55,13 +55,14 @@
           <div class="m-walletForm__field--text stretchedField">
             <div class="m-walletForm__row--label">
               <label for="amount" i18n="@@COMMON__AMOUNT">Amount</label>
-              <!-- <label
-              ><span i18n="@@WALLETV2_ONCHAIN_TRANSFER__BALANCE">Balance</span>:
-              <span class="m-walletOnchainTransfer__balance">{{
-                balance | number
-              }}</span
-              >MINDS</label
-            > -->
+              <div class="m-walletOnchainTransfer__balanceWrapper">
+                <span i18n="@@WALLETV2_ONCHAIN_TRANSFER__BALANCE">Balance</span
+                >:
+                <span class="m-walletOnchainTransfer__balance">{{
+                  balance | number
+                }}</span
+                ><span>MINDS</span>
+              </div>
             </div>
             <div
               class="m-walletForm__row--input"
@@ -122,14 +123,14 @@
       </form>
       <div class="m-walletSecondaryText--desc">
         <p
-          class="m-walletSecondaryText--16"
+          class="m-walletSecondaryText"
           i18n="@@WALLETV2_ONCHAIN_TRANSFER__YOU_CAN_REQUEST_UP_TO_X"
         >
           You can request to transfer up to 999 tokens from your rewards to your
-          on-chain wallet below. You may only transfer once per day.
+          on-chain wallet. You may only transfer once per day.
         </p>
         <p
-          class="m-walletSecondaryText--15"
+          class="m-walletSecondaryText"
           i18n="@@WALLETV2_ONCHAIN_TRANSFER__TRANSACTION_FEE"
         >
           Note: a small amount of ETH will be charged to cover the transaction
