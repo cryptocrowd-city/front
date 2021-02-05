@@ -4,6 +4,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { ModalService } from '../../composer/components/modal/modal.service';
 import { EarnModalService } from '../earn/earn-modal.service';
 import { BuyTokensModalService } from '../token-purchase/v2/buy-tokens-modal.service';
+import { UniswapModalService } from '../token-purchase/v2/uniswap/uniswap-modal.service';
 import { Web3WalletService } from '../web3-wallet.service';
 
 /**
@@ -20,6 +21,7 @@ export class BlockchainMarketingLinksService {
     private web3WalletService: Web3WalletService,
     private buyTokensModalService: BuyTokensModalService,
     private earnModalService: EarnModalService,
+    private uniswapModal: UniswapModalService,
     @Inject(DOCUMENT) private document: Document,
     configs: ConfigsService
   ) {
@@ -86,22 +88,20 @@ export class BlockchainMarketingLinksService {
   }
 
   /**
-   * Opens liquidity provision modal.
+   * Opens airdrop modal.
    * @returns { BlockchainMarketingLinksService } - Chainable.
    */
-  public openLiquidityProvisionModal(): BlockchainMarketingLinksService {
-    // TODO: Implement.
-    console.log('liqudity provision clicked');
+  public openAirdropModal(): BlockchainMarketingLinksService {
+    console.log('airdrop');
     return this;
   }
 
   /**
-   * Opens hold modal.
+   * Opens liquidity provision modal.
    * @returns { BlockchainMarketingLinksService } - Chainable.
    */
-  public openHoldModal(): BlockchainMarketingLinksService {
-    // TODO: Implement.
-    console.log('hold clicked');
+  public openLiquidityProvisionModal(): BlockchainMarketingLinksService {
+    this.uniswapModal.open('add');
     return this;
   }
 
@@ -111,15 +111,6 @@ export class BlockchainMarketingLinksService {
    */
   public navigateToReferrals(): BlockchainMarketingLinksService {
     this.openInNewWindow(`${this.siteUrl}settings/other/referrals`);
-    return this;
-  }
-
-  /**
-   * Opens airdrop modal.
-   * @returns { BlockchainMarketingLinksService } - Chainable.
-   */
-  public openAirdropModal(): BlockchainMarketingLinksService {
-    console.log('airdrop');
     return this;
   }
 

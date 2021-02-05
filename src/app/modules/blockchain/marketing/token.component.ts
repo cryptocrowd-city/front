@@ -103,7 +103,7 @@ export class BlockchainMarketingTokenComponent extends AbstractSubscriberCompone
    * @returns { void }
    */
   public holdClick(): void {
-    this.linksService.openHoldModal();
+    this.linksService.openTransferOnchainModal();
   }
 
   /**
