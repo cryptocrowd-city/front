@@ -2,13 +2,6 @@ m-walletModal {
   position: relative;
   @include z-index(modal);
 
-  //ojm
-  // &.m-walletModal--hasHero {
-  //   .m-walletModal {
-  //     padding
-  //   }
-  // }
-
   .m-walletModal__container {
     display: block;
     position: fixed;

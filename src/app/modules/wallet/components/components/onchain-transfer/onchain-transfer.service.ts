@@ -47,11 +47,6 @@ export class OnchainTransferModalService {
             null,
             {
               wrapperClass: 'm-modalV2__wrapper',
-              // ojm
-              // onPost: response => {
-              //   subscriber.next(response);
-              //   this.dismiss();
-              // },
               onDismissIntent: () => {
                 this.dismiss();
               },
@@ -60,7 +55,6 @@ export class OnchainTransferModalService {
           )
           .onDidDismiss(() => {
             modalOpen = false;
-
             subscriber.complete();
           })
           .present();

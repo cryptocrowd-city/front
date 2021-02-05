@@ -1,11 +1,12 @@
 <div class="m-walletModal m-walletModal--v2 m-walletOnchainTransfer">
   <div class="m-walletModal__banner">
-    <img src="/assets/photos/stargazing-2x.jpg" />
+    <div class="m-walletModal__bannerImage"></div>
     <h2 i18n="@@WALLETV2_ONCHAIN_TRANSFER__TRANSFER_ONCHAIN">
       Transfer On-chain
     </h2>
   </div>
   <div class="m-walletModal__content">
+    <!-- -------------------------------------- -->
     <ng-container *ngIf="!meetsRequirements">
       <div class="m-walletSecondaryText--desc">
         <p
@@ -16,7 +17,7 @@
           on-chain.
         </p>
       </div>
-      <div class="m-walletOnchainTransfer__buttonsContainer">
+      <div class="m-walletOnchainTransfer__requirementsButtonsContainer">
         <m-button
           (onAction)="openPhoneVerificationModal()"
           size="large"
@@ -39,6 +40,7 @@
         >
       </div>
     </ng-container>
+    <!-- -------------------------------------- -->
     <ng-container *ngIf="meetsRequirements">
       <div
         *ngIf="!form"
@@ -113,6 +115,7 @@
           </div>
         </div>
         <m-button
+          class="m-walletOnchainTransfer__transferButton"
           [disabled]="!isFormValid() || loading"
           [saving]="transferring"
           (onAction)="submitError ? load() : onSubmit()"
@@ -126,18 +129,17 @@
           class="m-walletSecondaryText"
           i18n="@@WALLETV2_ONCHAIN_TRANSFER__YOU_CAN_REQUEST_UP_TO_X"
         >
-          You can request to transfer up to 999 tokens from your rewards to your
-          on-chain wallet. You may only transfer once per day.
+          You can request to transfer up to 25,000 tokens from your rewards to
+          your on-chain wallet. You may only transfer once per day.
         </p>
         <p
           class="m-walletSecondaryText"
-          i18n="@@WALLETV2_ONCHAIN_TRANSFER__TRANSACTION_FEE"
+          i18n="@@WALLETV2_ONCHAIN_TRANSFER__GAS_FEE_NOTE"
         >
           Note: a small amount of ETH will be charged to cover the transaction
-          fee.
+          fee. Transfers go through an approval process and may take up to 72
+          hours to complete.
         </p>
-        <!-- Transfers go through an approval process and may take up to 72
-        hours to complete. -->
       </div>
     </ng-container>
   </div>

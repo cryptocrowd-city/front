@@ -97,7 +97,7 @@ export class WalletPhoneVerificationComponent implements OnInit {
         secret: this.form.value.secret,
       });
       this.phoneVerificationComplete.emit();
-      this.onComplete(true); //ojm
+      this.onComplete(true);
     } catch (e) {
       this.invalidCode = true;
     }

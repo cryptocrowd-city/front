@@ -1,5 +1,6 @@
 <button
   class="m-button"
+  (click)="emitAction($event)"
   [type]="type"
   [disabled]="disabled"
   [ngClass]="{
