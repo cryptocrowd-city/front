@@ -114,6 +114,10 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   }
 
   async transfer() {
+    if (!this.isPlus || !this.phoneVerified) {
+      return;
+    }
+
     if (await this.walletService.web3WalletUnlocked()) {
       try {
         this.transferring = true;
