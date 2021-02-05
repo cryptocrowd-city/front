@@ -11,23 +11,25 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { Client } from '../../../services/api/client';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { Session } from '../../../services/session';
-import { Web3WalletService } from '../web3-wallet.service';
-import { TokenDistributionEventService } from '../contracts/token-distribution-event.service';
-import * as BN from 'bn.js';
-import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
+import { Client } from '../../../../../services/api/client';
+import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
+import { Session } from '../../../../../services/session';
+import { Web3WalletService } from '../../../web3-wallet.service';
+import { TokenDistributionEventService } from '../../../contracts/token-distribution-event.service';
 import { Router } from '@angular/router';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { Web3ModalService } from '@mindsorg/web3modal-angular';
+import { BlockchainMarketingLinksService } from '../../../marketing/v2/blockchain-marketing-links.service';
+
+export type LaunchButtonType = 'analytics' | 'earn';
 
 @Component({
-  selector: 'm-blockchain--purchase',
+  selector: 'm-blockchain--purchase--v2',
   templateUrl: 'purchase.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./purchase.component.ng.scss'],
 })
-export class BlockchainPurchaseComponent implements OnInit {
+export class BlockchainPurchaseV2Component implements OnInit {
   stats: { amount; count; requested; issued } = {
     amount: 0,
     count: 0,
@@ -61,6 +63,7 @@ export class BlockchainPurchaseComponent implements OnInit {
   paramsSubscription: Subscription;
 
   @Input() hasTitle: boolean = false;
+  @Input() launchButtons: LaunchButtonType[] = [];
 
   constructor(
     protected client: Client,
@@ -72,7 +75,8 @@ export class BlockchainPurchaseComponent implements OnInit {
     public session: Session,
     private route: ActivatedRoute,
     protected router: Router,
-    protected toasterService: FormToastService
+    protected toasterService: FormToastService,
+    private linksService: BlockchainMarketingLinksService
   ) {}
 
   ngOnInit() {
@@ -231,6 +235,24 @@ export class BlockchainPurchaseComponent implements OnInit {
     setTimeout(() => {
       input.focus();
     }, 100);
+  }
+
+  /**
+   * Called on "Token Analytics" click.
+   */
+  public tokenAnalyticsClick(): void {
+    this.linksService.navigateToTokenAnalytics();
+  }
+
+  /**
+   * Called on "Earn" click.
+   */
+  public earnClick(): void {
+    this.linksService.openEarnModal();
+  }
+
+  public onBuyTokensClick(): void {
+    this.linksService.openBuyTokensModal();
   }
 
   detectChanges() {

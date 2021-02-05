@@ -1,4 +1,4 @@
-@import '../../../foundation/grid-values';
+@import '../../../../../foundation/grid-values';
 @import 'defaults.scss';
 
 :host {
@@ -26,14 +26,17 @@
 .m-blockchainTokenPurchase {
   display: flex;
   flex-direction: column;
+  align-items: start;
+  background: unset !important;
   border-radius: 2px;
+  padding: unset;
 
   @include m-theme() {
     color: themed($m-textColor--primary);
   }
 
   @media screen and (max-width: $m-grid-min-vp) {
-    padding: 10px 15px;
+    padding: unset;
   }
 
   .m-blockchainTokenPurchase__buyTokensButton {

@@ -1,11 +1,11 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Injector } from '@angular/core';
-import { ConfigsService } from '../../../common/services/configs.service';
-import { ModalService } from '../../composer/components/modal/modal.service';
-import { EarnModalService } from '../earn/earn-modal.service';
-import { BuyTokensModalService } from '../token-purchase/v2/buy-tokens-modal.service';
-import { UniswapModalService } from '../token-purchase/v2/uniswap/uniswap-modal.service';
-import { Web3WalletService } from '../web3-wallet.service';
+import { ConfigsService } from '../../../../common/services/configs.service';
+import { ModalService } from '../../../composer/components/modal/modal.service';
+import { EarnModalService } from '../../earn/earn-modal.service';
+import { BuyTokensModalService } from '../../token-purchase/v2/buy-tokens-modal.service';
+import { UniswapModalService } from '../../token-purchase/v2/uniswap/uniswap-modal.service';
+import { Web3WalletService } from '../../web3-wallet.service';
 
 /**
  * Manages the opening of various modals and links on blockchain marketing pages.

@@ -7,16 +7,12 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { BlockchainMarketingLinksService } from './blockchain-marketing-links.service';
+import { FeaturesService } from '../../../services/features.service';
 
-/**
- * Multi-page rewards marketing component
- */
 @Component({
   selector: 'm-blockchainMarketing__rewards',
   templateUrl: 'rewards.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./rewards.component.ng.scss'],
 })
 export class BlockchainMarketingRewardsComponent {
   readonly cdnAssetsUrl: string;
@@ -29,7 +25,7 @@ export class BlockchainMarketingRewardsComponent {
   constructor(
     protected router: Router,
     protected cd: ChangeDetectorRef,
-    private linksService: BlockchainMarketingLinksService,
+    private features: FeaturesService,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -51,78 +47,14 @@ export class BlockchainMarketingRewardsComponent {
   }
 
   /**
-   * Opens composer modal.
-   * @returns { void }
+   * Returns whether token-marketing-2020 is enabled (v2).
+   * @returns { boolean } true if feature flag for v2 is enabled.
    */
-  public openComposerModal(): void {
-    this.linksService.openComposerModal();
+  public isV2(): boolean {
+    return this.features.has('token-marketing-2020');
   }
 
-  /**
-   * Open referrals page.
-   * @returns { void }
-   */
-  public navigateToReferrals(): void {
-    this.linksService.navigateToReferrals();
-  }
-
-  /**
-   * Open whitepaper.
-   * @returns { void }
-   */
-  public navigateToWhitepaper(): void {
-    this.linksService.navigateToWhitepaper();
-  }
-
-  /**
-   * Open explanatory blog.
-   * @returns { void }
-   */
-  public navigateToBlog(): void {
-    this.linksService.navigateToBlog();
-  }
-
-  /**
-   * Open join rewards modal.
-   * @returns { void }
-   */
-  public joinRewardsClick(): void {
-    this.linksService.navigateToJoinRewards();
-  }
-
-  /**
-   * Open buy tokens modal.
-   * @returns { void }
-   */
-  public buyTokensClick() {
-    this.linksService.openBuyTokensModal();
-  }
-
-  /**
-   * Open provide liquidity modal.
-   * @returns { void }
-   */
-  public provideLiquidityClick(): void {
-    this.linksService.openLiquidityProvisionModal();
-  }
-
-  /**
-   * Open transfer on-chain modal.
-   * @returns { void }
-   */
-  public transferOnChainClick(): void {
-    this.linksService.openTransferOnchainModal();
-  }
-
-  /**
-   * Called on purchase completed.
-   * @returns { void }
-   */
-  public onPurchaseComplete($event): void {
-    // do nothing
-  }
-
-  public detectChanges() {
+  detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }

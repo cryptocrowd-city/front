@@ -1,50 +1,28 @@
-<h4 *ngIf="hasTitle" i18n="@@COMMON__PURCHASE_TOKENS">Purchase Tokens</h4>
-
 <div class="m-blockchainTokenPurchase">
-  <div class="m-blockchainTokenPurchase__amount">
-    <input
-      type="number"
-      name="amount"
-      id="m-blockchainTokenPurchase__amountInput"
-      placeholder="0"
-      [(ngModel)]="tokens"
-      (focus)="selectAllInput(amountInput)"
-      #amountInput
-    />
-
-    <label for="m-blockchainTokenPurchase__amountInput" i18n="@@COMMON__TOKENS"
-      >tokens</label
-    >
-  </div>
-
-  <div class="m-blockchainTokenPurchase__ethTotal" ngPreserveWhitespaces>
-    <span class="m-blockchainTokenPurchaseEthTotal__value">{{ amount }}</span>
-    ETH
-  </div>
-
-  <div class="m-blockchainTokenPurchase__action">
-    <m-button
-      color="blue"
-      [disabled]="!tokens"
-      (onAction)="purchase(); $event.preventDefault()"
-      i18n="verb|@@COMMON__BUY"
-    >
-      Buy
-    </m-button>
-  </div>
-</div>
-
-<div class="m-blockchainTokenPurchase__ethRate" ngPreserveWhitespaces>
-  <span>
-    {tokens, plural, =1 {{{tokens | number}} token} other
-    {{{tokens | number}} tokens}} = {calculatedViews, plural, =1
-    {{{calculatedViews | number}} view} other
-    {{{calculatedViews | number}} views}}
-  </span>
-  |
-  <a (click)="purchaseEth(); $event.preventDefault()" i18n="@@COMMON__BUY_ETH"
-    >Buy ETH</a
+  <m-button
+    class="m-blockchainTokenPurchase__buyTokensButton"
+    [color]="'blue'"
+    (click)="onBuyTokensClick()"
+    ><ng-container i18n="@@MARKETING__BUY_TOKENS"
+      >Buy Tokens</ng-container
+    ></m-button
   >
+  <div class="m-blockchainTokenPurchase__launchButtonContainer">
+    <m-launchButton
+      *ngIf="launchButtons.indexOf('analytics') > -1"
+      (click)="tokenAnalyticsClick()"
+      ><ng-container i18n="@@MARKETING__TOKEN_ANALYTICS"
+        >Token Analytics</ng-container
+      ></m-launchButton
+    >
+    <m-launchButton
+      *ngIf="launchButtons.indexOf('earn') > -1"
+      (click)="earnClick()"
+      ><ng-container i18n="@@MARKETING__EARN"
+        >Earn</ng-container
+      ></m-launchButton
+    >
+  </div>
 </div>
 
 <m-modal-signup-on-action

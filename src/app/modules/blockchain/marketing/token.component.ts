@@ -6,54 +6,27 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { fromEvent } from 'rxjs';
-import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { Session } from '../../../services/session';
-import { BlockchainMarketingLinksService } from './blockchain-marketing-links.service';
+import { FeaturesService } from '../../../services/features.service';
 
-/**
- * Multi-page tokens marketing component
- */
 @Component({
   selector: 'm-blockchainMarketing__token',
   templateUrl: 'token.component.html',
-  styleUrls: ['./token.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BlockchainMarketingTokenComponent extends AbstractSubscriberComponent {
-  public readonly cdnAssetsUrl: string;
-  public readonly siteUrl: string;
+export class BlockchainMarketingTokenComponent {
+  readonly cdnAssetsUrl: string;
 
   @ViewChild('topAnchor')
   readonly topAnchor: ElementRef;
 
-  @ViewChild('composerOpenAnchor') readonly composerOpenAnchor: ElementRef;
-
   constructor(
     protected router: Router,
     protected cd: ChangeDetectorRef,
-    private linksService: BlockchainMarketingLinksService,
-    private session: Session,
-    configs: ConfigsService
+    private features: FeaturesService,
+    private configs: ConfigsService
   ) {
-    super();
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
-    this.siteUrl = configs.get('site_url');
-  }
-
-  ngAfterViewInit(): void {
-    this.subscriptions.push(
-      fromEvent(this.composerOpenAnchor.nativeElement, 'click').subscribe(
-        $event => {
-          if (!this.session.isLoggedIn()) {
-            this.router.navigate(['/']);
-            return;
-          }
-          this.openComposerModal();
-        }
-      )
-    );
   }
 
   scrollToTop() {
@@ -66,52 +39,14 @@ export class BlockchainMarketingTokenComponent extends AbstractSubscriberCompone
     }
   }
 
-  /**
-   * Called on purchase completed.
-   * @returns { void }
-   */
-  public onPurchaseComplete($event): void {
-    // do nothing
-  }
+  onPurchaseComplete(purchase: any) {}
 
   /**
-   * Opens composer modal
-   * @returns { BlockchainMarketingTokenComponent } - Chainable.
+   * Returns whether token-marketing-2020 is enabled (v2).
+   * @returns { boolean } true if feature flag for v2 is enabled.
    */
-  public openComposerModal(): void {
-    this.linksService.openComposerModal();
-  }
-
-  /**
-   * Open provide liquidity modal.
-   * @returns { void }
-   */
-  public provideLiquidityClick() {
-    this.linksService.openLiquidityProvisionModal();
-  }
-
-  /**
-   * Open referrals page.
-   * @returns { void }
-   */
-  public navigateToReferrals(): void {
-    this.linksService.navigateToReferrals();
-  }
-
-  /**
-   * Open hold modal.
-   * @returns { void }
-   */
-  public holdClick(): void {
-    this.linksService.openTransferOnchainModal();
-  }
-
-  /**
-   * Open airdrop modal.
-   * @returns { void }
-   */
-  public airdropClick(): void {
-    this.linksService.openAirdropModal();
+  public isV2(): boolean {
+    return this.features.has('token-marketing-2020');
   }
 
   detectChanges() {

@@ -9,6 +9,8 @@ import { BlockchainMarketingTokenComponent } from './token.component';
 import { BlockchainMarketingRewardsComponent } from './rewards.component';
 import { MarketingModule } from '../../marketing/marketing.module';
 import { ComposerService } from '../../composer/services/composer.service';
+import { BlockchainMarketingTokenV2Component } from './v2/token.component';
+import { BlockchainMarketingRewardsV2Component } from './v2/rewards.component';
 
 const routes: Routes = [
   {
@@ -56,6 +58,8 @@ const routes: Routes = [
   declarations: [
     BlockchainMarketingTokenComponent,
     BlockchainMarketingRewardsComponent,
+    BlockchainMarketingTokenV2Component,
+    BlockchainMarketingRewardsV2Component,
   ],
 })
 export class BlockchainMarketingModule {}
