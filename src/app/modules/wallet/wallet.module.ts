@@ -41,6 +41,8 @@ import { WalletCurrencyValueComponent } from './components/components/currency-v
 import { WalletTokenRewardsComponent } from './components/tokens/rewards/rewards.component';
 import { WalletEarningsComponent } from './components/components/earnings/earnings.component';
 import { MindsWalletTokenPriceBadgeComponent } from './components/components/token-price-badge/token-price-badge.component';
+import { OnchainTransferModalService } from './components/components/onchain-transfer/onchain-transfer.service';
+import { PhoneVerificationService } from './components/components/phone-verification/phone-verification.service';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' },
@@ -210,6 +212,8 @@ export const WALLET_ROUTES: Routes = [
     WalletTabHistoryService,
     DefaultRedirectGuard,
     TabStorageGuard,
+    OnchainTransferModalService,
+    PhoneVerificationService,
   ],
 })
 export class WalletModule {}

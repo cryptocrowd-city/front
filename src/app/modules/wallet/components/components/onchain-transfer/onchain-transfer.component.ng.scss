@@ -1,0 +1,74 @@
+@import 'defaults.scss';
+
+:host {
+  .m-walletModal {
+    padding: 0;
+  }
+  .m-walletModal__banner {
+    position: relative;
+
+    img {
+      // max-width: 100%;
+      height: 180px;
+    }
+
+    h2 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 60px 70px 0 70px;
+      font-weight: 700;
+      font-size: 30;
+      margin: 0;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      @media screen and (max-width: $max-mobile) {
+        padding: 10px;
+      }
+    }
+  }
+
+  .m-walletModal__content {
+    padding: 40px 70px 30px;
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 20px 24px 30px;
+    }
+  }
+
+  .m-walletOnchainTransfer__buttonsContainer {
+    ::ng-deep m-button {
+      .m-button {
+        &:first-child {
+          margin-right: 40px;
+          @media screen and (max-width: $max-mobile) {
+            margin-right: 0;
+            margin-bottom: 20px;
+          }
+        }
+
+        span {
+          font-size: 15px !important;
+        }
+        i {
+          font-size: 19px !important;
+          margin-right: 10px !important;
+        }
+      }
+      &.m-walletOnchainTransfer__requirement--complete {
+        .m-button {
+          span {
+            text-decoration: line-through;
+          }
+        }
+      }
+    }
+  }
+
+  .m-walletOnchainTransfer__balance {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+}

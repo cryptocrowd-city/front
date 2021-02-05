@@ -8,6 +8,7 @@ import {
   Inject,
   PLATFORM_ID,
   ViewRef,
+  Injector,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -16,6 +17,8 @@ import { Session } from '../../../../../services/session';
 import { WalletV2Service, Wallet } from '../../wallet-v2.service';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import * as moment from 'moment';
+import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';
+import { PhoneVerificationService } from '../../components/phone-verification/phone-verification.service';
 
 @Component({
   selector: 'm-walletBalance--tokens',
@@ -30,7 +33,6 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   offchainBalance;
   onchainBalance;
   inProgress = true;
-  showTransferModal = false;
   showTokenModal = false;
   protected updateTimer$;
 
@@ -50,6 +52,8 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     protected session: Session,
     protected walletService: WalletV2Service,
     protected toasterService: FormToastService,
+    protected onchainTransferModal: OnchainTransferModalService,
+    private injector: Injector,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
@@ -107,9 +111,10 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   }
 
   async openTransferModal() {
-    if (await this.walletService.web3WalletUnlocked()) {
-      this.showTransferModal = true;
-    }
+    this.onchainTransferModal
+      .setInjector(this.injector)
+      .present()
+      .toPromise();
   }
 
   updateNextPayoutDate() {
@@ -117,11 +122,6 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
       this.nextPayoutDate--;
       this.detectChanges();
     }
-  }
-
-  transferComplete() {
-    this.toasterService.success('On-chain transfer complete');
-    this.showTransferModal = false;
   }
 
   detectChanges() {

@@ -150,7 +150,9 @@
       about Minds Tokens and our Rewards System.
     </div>
   </ng-template>
-  <m-walletModal
+  <!-- ojm transfer modal-->
+  <!-- ojm note: make this standalone via a service AND connect it to the 'transfer' link in wallet token rewards holdings -->
+  <!-- <m-walletModal
     [showModal]="showTransferModal"
     (closeModal)="showTransferModal = false"
   >
@@ -158,7 +160,8 @@
       *ngIf="wallet && showTransferModal"
       (transferComplete)="transferComplete()"
     ></m-walletOnchainTransfer>
-  </m-walletModal>
+  </m-walletModal> -->
+  <!-- ojm --------------------------- -->
   <m-walletModal
     [showModal]="showTokenModal"
     (closeModal)="showTokenModal = false"

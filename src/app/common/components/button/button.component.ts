@@ -97,17 +97,11 @@ export class ButtonComponent implements AfterViewInit {
     this.setSavingWidth();
   }
 
-  setSavingWidth() {
-    if (this.buttonTextContainer && !this.saving) {
-      const elWidth = this.buttonTextContainer.nativeElement.clientWidth || 0;
-      this.buttonTextWidth = elWidth > 0 ? elWidth : this.buttonTextWidth;
-    }
-  }
-
   /**
    * Emits the action to the parent using the exported interface
    */
-  emitAction($event: MouseEvent) {
+  @HostListener('click', ['$event'])
+  onClick($event: MouseEvent) {
     if (this.disabled) {
       $event.preventDefault();
       $event.stopPropagation();
@@ -115,4 +109,22 @@ export class ButtonComponent implements AfterViewInit {
       this.onAction.emit($event);
     }
   }
+
+  setSavingWidth() {
+    if (this.buttonTextContainer && !this.saving) {
+      const elWidth = this.buttonTextContainer.nativeElement.clientWidth || 0;
+      this.buttonTextWidth = elWidth > 0 ? elWidth : this.buttonTextWidth;
+    }
+  }
+
+  //ojm remove
+  // from html   (click)="emitAction($event)"
+  // emitAction($event: MouseEvent) {
+  //   if (this.disabled) {
+  //     $event.preventDefault();
+  //     $event.stopPropagation();
+  //   } else {
+  //     this.onAction.emit($event);
+  //   }
+  // }
 }
