@@ -167,7 +167,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
     return this.form.get('web3WalletWorks');
   }
 
-  get allowedToTransfer() {
+  get meetsRequirements() {
     return this.phoneVerified && this.isPlus;
   }
 
