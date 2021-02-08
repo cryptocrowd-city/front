@@ -47,11 +47,11 @@ export class BlockchainMarketingRewardsComponent {
   }
 
   /**
-   * Returns whether token-marketing-2020 is enabled (v2).
+   * Returns whether token-marketing-2021 is enabled (v2).
    * @returns { boolean } true if feature flag for v2 is enabled.
    */
   public isV2(): boolean {
-    return this.features.has('token-marketing-2020');
+    return this.features.has('token-marketing-2021');
   }
 
   detectChanges() {
