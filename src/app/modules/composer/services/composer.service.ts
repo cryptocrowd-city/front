@@ -365,6 +365,13 @@ export class ComposerService implements OnDestroy {
   >(DEFAULT_POST_TO_PERMAWEB_VALUE);
 
   /**
+   * Determines whether user should be able to create a blog.
+   */
+  readonly hideCreateBlog$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
+  /**
    * Tag count subject
    */
   readonly tagCount$: BehaviorSubject<number> = new BehaviorSubject<number>(0);

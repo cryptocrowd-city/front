@@ -38,6 +38,14 @@ export class ComposerComponent implements OnInit, OnDestroy {
   @Input() embedded: boolean = false;
 
   /**
+   * Should create blog button be hidden?
+   * @param { boolean } value - true if Creat Blog option should be hidden.
+   */
+  @Input() set hideCreateBlog(value: boolean) {
+    this.service.hideCreateBlog$.next(value);
+  }
+
+  /**
    * Input activity (for edits)
    * @param activity
    * @private

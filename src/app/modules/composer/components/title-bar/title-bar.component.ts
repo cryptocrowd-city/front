@@ -60,6 +60,14 @@ export class TitleBarComponent {
   }
 
   /**
+   * Should "Create Blog" be hidden?
+   * @returns { Observable<boolean> } - holds true if 'Create Blog' option should be hidden.
+   */
+  get hideCreateBlog$(): Observable<boolean> {
+    return this.service.hideCreateBlog$;
+  }
+
+  /**
    * Clicked Create Blog trigger
    */
   onCreateBlogClick() {

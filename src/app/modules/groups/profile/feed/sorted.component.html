@@ -2,6 +2,7 @@
   *ngIf="isMember()"
   (onPost)="prepend($event)"
   [containerGuid]="group.guid"
+  [hideCreateBlog]="true"
   #composer
 ></m-composer>
 
