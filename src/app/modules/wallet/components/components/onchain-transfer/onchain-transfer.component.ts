@@ -27,6 +27,8 @@ import {
   StackableModalService,
 } from '../../../../../services/ux/stackable-modal.service';
 import { WirePaymentHandlersService } from '../../../../wire/wire-payment-handlers.service';
+import { BigNumber } from 'ethers';
+import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
 
 @Component({
   moduleId: module.id,
@@ -62,6 +64,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
     protected phoneVerificationService: PhoneVerificationService,
     protected stackableModal: StackableModalService,
     protected wirePaymentHandlers: WirePaymentHandlersService,
+    protected web3Wallet: Web3WalletService,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -130,7 +133,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
           tx;
         } = await this.contract.request(
           this.session.getLoggedInUser().guid,
-          this.amount.value * Math.pow(10, 18)
+          this.web3Wallet.toWei(this.amount.value, 'ether')
         );
 
         const response: any = await this.client.post(
