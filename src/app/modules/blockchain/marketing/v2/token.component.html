@@ -30,13 +30,14 @@
         ></m-blockchain--purchase--v2>
       </div>
       <div
-        class="m-grid__column-5 m-grid__column-12--mobile m-marketing__image m-marketing__mobileTokenImage"
+        class="m-grid__column-5 m-grid__column-12--mobile m-marketing__image m-marketing__imageContainer"
       >
         <span>
           <img
             [src]="
               cdnAssetsUrl + 'assets/product-pages/token/v2/mobile-tokens.png'
             "
+            class="m-marketing__image--tall"
             alt="Minds mobile wallet"
           />
         </span>
@@ -167,7 +168,7 @@
     </div>
 
     <!-- Airdrop section -->
-    <!-- <div class="m-marketing__section m-marketing__section--style-3">
+    <div class="m-marketing__section m-marketing__section--style-3">
       <div class="m-grid m-marketing__wrapper">
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
@@ -178,8 +179,8 @@
             class="m-marketing__description"
             i18n="@@MARKETING__CONNECT_YOUR_WALLET_QUALIFY"
           >
-            Connect your wallet to see if you qualify for a MINDS airdrop. You
-            can read our blog to learn more about who qualifies.
+            Coming soon: Connect your wallet to see if you qualify for a MINDS
+            airdrop. You can read our blog to learn more about who qualifies.
           </p>
           <m-button [color]="'blue'" (onAction)="airdropClick()"
             ><ng-container i18n="@@MARKETING__CONNECT_WALLET"
@@ -206,7 +207,7 @@
           </span>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <!-- Buy Premium Subscriptions -->
     <div class="m-marketing__section m-marketing__section--style-4">

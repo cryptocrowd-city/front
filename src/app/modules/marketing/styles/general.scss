@@ -316,4 +316,23 @@
       }
     }
   }
+
+  .m-marketing__imageContainer {
+    max-height: 600px;
+
+    span {
+      &::before {
+        @media screen and (min-width: $m-grid-min-vp) {
+          transform: translate(-45px, -200px) !important;
+        }
+      }
+      .m-marketing__image--tall {
+        @media screen and (min-width: $m-grid-min-vp) {
+          transform: translate(-100px, -100px);
+          height: 800px !important;
+          width: 600px !important;
+        }
+      }
+    }
+  }
 }

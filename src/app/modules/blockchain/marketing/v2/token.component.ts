@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { fromEvent } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { ConfigsService } from '../../../../common/services/configs.service';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 import { Session } from '../../../../services/session';
 import { BlockchainMarketingLinksService } from './blockchain-marketing-links.service';
 
@@ -35,6 +36,7 @@ export class BlockchainMarketingTokenV2Component extends AbstractSubscriberCompo
     protected cd: ChangeDetectorRef,
     private linksService: BlockchainMarketingLinksService,
     private session: Session,
+    private toast: FormToastService,
     configs: ConfigsService
   ) {
     super();
@@ -106,13 +108,14 @@ export class BlockchainMarketingTokenV2Component extends AbstractSubscriberCompo
     this.linksService.openTransferOnchainModal();
   }
 
-  // /**
-  //  * Open airdrop modal.
-  //  * @returns { void }
-  //  */
-  // public airdropClick(): void {
-  //   this.linksService.openAirdropModal();
-  // }
+  /**
+   * Open airdrop modal.
+   * @returns { void }
+   */
+  public airdropClick(): void {
+    this.toast.warn('Coming soon!');
+    // this.linksService.openAirdropModal();
+  }
 
   detectChanges() {
     this.cd.markForCheck();
