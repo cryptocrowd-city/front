@@ -1,17 +1,14 @@
 @import 'defaults.scss';
 
-// check if mobile mixin exists already
-@mixin for-mobile-only {
-  @media screen and(max-width: $m-grid-max-mobile) {
-    @content;
-  }
-}
-
 :host {
   .m-branding {
     padding: 0 45px 100px 45px;
 
-    @include for-mobile-only {
+    @include mobile-only {
+      padding: 0 23px;
+    }
+
+    @include tablet-only {
       padding: 0 23px;
     }
 
@@ -20,7 +17,7 @@
         font-weight: bold;
         font-size: 32px;
 
-        @include for-mobile-only {
+        @include mobile-only {
           margin-bottom: 10px;
         }
 
@@ -63,7 +60,7 @@
     }
 
     &--gridItem {
-      @include for-mobile-only {
+      @include mobile-only {
         width: calc(100% - 10px);
         margin-bottom: 25px;
       }
@@ -71,9 +68,10 @@
       width: calc(50% - 10px);
       background: map-get(map-get($themes, 'light'), 'm-bgColor--primary');
       border-radius: 5px;
-      border: 1px solid #ccc;
+      border: 1px solid
+        map-get(map-get($themes, 'light'), 'm-borderColor--primary');
       margin-bottom: 20px;
-      color: #333;
+      color: map-get(map-get($themes, 'light'), 'm-textColor--secondary');
 
       display: flex;
       flex-direction: column;
@@ -95,7 +93,8 @@
         width: 100%;
         padding: 13px 0;
         text-align: center;
-        border-top: 1px solid #ccc;
+        border-top: 1px solid
+          map-get(map-get($themes, 'light'), 'm-borderColor--primary');
         display: flex;
         justify-content: center;
 
