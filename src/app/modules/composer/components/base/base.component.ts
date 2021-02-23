@@ -23,7 +23,7 @@ import { InMemoryStorageService } from '../../../../services/in-memory-storage.s
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
-import { first, map } from 'rxjs/operators';
+import { first, map, distinctUntilChanged } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 /**
@@ -98,6 +98,11 @@ export class BaseComponent implements AfterViewInit {
     configs: ConfigsService
   ) {
     this.plusTierUrn = configs.get('plus').support_tier_urn;
+
+    this.attachmentError$.pipe(distinctUntilChanged()).subscribe(error => {
+      this.toasterService.error(error);
+      this.service.removeAttachment();
+    });
   }
 
   /**
@@ -155,9 +160,6 @@ export class BaseComponent implements AfterViewInit {
    * Attachment error subject in service
    */
   get attachmentError$() {
-    if (this.service.attachmentError$.value) {
-      this.toasterService.error(this.service.attachmentError$.value);
-    }
     return this.service.attachmentError$;
   }
 

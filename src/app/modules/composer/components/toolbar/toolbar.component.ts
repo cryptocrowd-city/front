@@ -48,6 +48,8 @@ import { FeaturesService } from '../../../../services/features.service';
   styleUrls: ['toolbar.component.ng.scss'],
 })
 export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
+  private subscriptions: Subscription[] = [];
+
   /**
    * On Post event emitter
    */
@@ -86,11 +88,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   /**
    * Window resize event subscription
    */
-  protected windowResizeSubscription: Subscription;
-
-  /**
-   * Window resize event subscription
-   */
   protected attachmentSubscription: Subscription;
 
   public legacyPaywallEnabled: boolean = false;
@@ -118,15 +115,16 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @internal
    */
   ngOnInit(): void {
-    this.windowResizeSubscription = this.windowResize$
-      .pipe(debounceTime(250))
-      .subscribe(() => this.calcNarrow());
-
-    this.attachmentSubscription = this.attachment$.subscribe(attachment => {
-      if (!attachment && this.fileUploadComponent) {
-        this.fileUploadComponent.reset();
-      }
-    });
+    this.subscriptions.push(
+      this.windowResize$
+        .pipe(debounceTime(250))
+        .subscribe(() => this.calcNarrow()),
+      (this.attachmentSubscription = this.attachment$.subscribe(attachment => {
+        if (!attachment && this.fileUploadComponent) {
+          this.fileUploadComponent.reset();
+        }
+      }))
+    );
 
     /**
      * Don't show the monetize button if a post has a
@@ -173,8 +171,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @internal
    */
   ngOnDestroy(): void {
-    this.windowResizeSubscription.unsubscribe();
     this.attachmentSubscription.unsubscribe();
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   /**
