@@ -12,7 +12,7 @@
       padding: 0 23px;
     }
 
-    &--header {
+    &__header {
       h1 {
         font-weight: bold;
         font-size: 32px;
@@ -35,7 +35,7 @@
       }
     }
 
-    &--group {
+    &__group {
       h2 {
         font-weight: 600;
         font-size: 24px;
@@ -53,13 +53,13 @@
       }
     }
 
-    &--grid {
+    &__grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
     }
 
-    &--gridItem {
+    &__gridItem {
       @include mobile-only {
         width: calc(100% - 10px);
         margin-bottom: 25px;
@@ -120,11 +120,11 @@
       }
     }
 
-    &--gridItemDark {
+    &__gridItemDark {
       background: map-get(map-get($themes, 'dark'), 'm-bgColor--primary');
       border-color: map-get(map-get($themes, 'dark'), 'm-borderColor--primary');
 
-      .m-branding--gridItemActions {
+      .m-branding__gridItemActions {
         border-top-color: map-get(
           map-get($themes, 'dark'),
           'm-borderColor--primary'
