@@ -53,9 +53,13 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   phoneVerifiedSubscription: Subscription;
 
   readonly cdnAssetsUrl: string;
+  readonly transferLimit: number;
 
-  transferLimit: number;
-  ceilingIsLimit: boolean = false; // true if balance > limit,
+  /**
+   * Determines whether the max transfer amount used in validation
+   * is user's balance or the transfer limit from configs.
+   */
+  balanceIsLimit: boolean = true;
 
   constructor(
     protected session: Session,
@@ -72,10 +76,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
 
-    // ojm temp
-    // this.transferLimit = configs.get('blockchain').contracts.withdraw.limit;
-    this.transferLimit = 25000;
-    console.log('ojm,', configs.get('blockchain'));
+    this.transferLimit = configs.get('blockchain').withdraw_limit;
   }
 
   async ngOnInit() {
@@ -95,14 +96,15 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
 
     this.balance = this.wallet.offchain.balance;
 
-    this.ceilingIsLimit =
-      Math.min(this.balance, this.transferLimit) === this.balance;
+    this.balanceIsLimit = this.balance < this.transferLimit;
 
     this.form = new FormGroup({
       amount: new FormControl(Math.min(this.balance, 1), {
         validators: [
           Validators.required,
-          Validators.max(Math.min(this.balance, this.transferLimit)),
+          Validators.max(
+            this.balanceIsLimit ? this.balance : this.transferLimit
+          ),
           Validators.min(0),
           this.validateMoreThanZero,
         ],
