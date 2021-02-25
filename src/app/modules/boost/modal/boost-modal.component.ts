@@ -103,7 +103,7 @@ export class BoostModalComponent implements LazyComponent, OnDestroy {
    */
   get bannerSrc(): { backgroundImage: string } {
     return {
-      backgroundImage: `url('${this.cdnAssetsUrl}assets/photos/red-blue-gradient-banner.png')`,
+      backgroundImage: `url('${this.cdnAssetsUrl}assets/photos/red-blue-gradient-banner.jpg')`,
     };
   }
 
