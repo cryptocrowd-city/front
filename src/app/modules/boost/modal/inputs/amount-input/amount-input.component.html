@@ -20,7 +20,7 @@
     <label i18n="@@BOOST_MODAL__AMOUNT__TOKENS">Tokens</label>
     <input
       type="number"
-      [ngModel]="(tokens$ | async)?.toString()"
+      [ngModel]="tokens$ | async"
       (ngModelChange)="tokensValueChanged($event)"
       name="tokens"
       formControlName="tokens"

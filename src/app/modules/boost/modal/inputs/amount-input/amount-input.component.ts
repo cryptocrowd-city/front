@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import {
@@ -31,10 +31,7 @@ export class BoostModalAmountInputComponent implements OnDestroy {
   // amount input form
   public form: FormGroup;
 
-  constructor(
-    private service: BoostModalService,
-    private cd: ChangeDetectorRef
-  ) {}
+  constructor(private service: BoostModalService) {}
 
   /**
    * Gets impressions subject from service.
@@ -93,7 +90,6 @@ export class BoostModalAmountInputComponent implements OnDestroy {
    */
   public viewsValueChanged($event: number): void {
     this.tokens$.next($event / this.rate$.getValue());
-    this.cd.detectChanges();
   }
 
   /**
@@ -103,6 +99,5 @@ export class BoostModalAmountInputComponent implements OnDestroy {
    */
   public tokensValueChanged($event: number): void {
     this.impressions$.next($event * this.rate$.getValue());
-    this.cd.detectChanges();
   }
 }
