@@ -45,7 +45,7 @@ export type BoostPaymentMethod = 'onchain' | 'offchain';
 export type TargetUser = MindsUser | null;
 
 /**
- * Boost wallet
+ * Boost wallet.
  */
 export type BoostWallet = {
   balance: string;
