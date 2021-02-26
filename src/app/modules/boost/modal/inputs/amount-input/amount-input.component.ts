@@ -86,7 +86,7 @@ export class BoostModalAmountInputComponent implements OnDestroy {
   /**
    * Sets up form controls depending on the active tab.
    * @param { number } rate - rate.
-   * @param { BoostTab } activeTab - current active tab -
+   * @param { BoostTab } activeTab - current active tab.
    * @returns { void }
    */
   setupFormControls(rate: number, activeTab: BoostTab): void {
