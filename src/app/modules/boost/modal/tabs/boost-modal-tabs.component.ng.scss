@@ -51,6 +51,10 @@ $collapse-width: 830px;
       display: flex;
       flex-direction: column;
 
+      @media screen and (min-width: $collapse-width) {
+        width: 504px;
+      }
+
       .m-boostModal__mainPanelInput + * {
         margin-top: 40px;
         display: block;

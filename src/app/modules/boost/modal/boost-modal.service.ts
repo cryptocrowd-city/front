@@ -16,10 +16,13 @@ export const MAXIMUM_SINGLE_BOOST_IMPRESSIONS = 5000;
 // TODO: Source from server.
 export const MINIMUM_SINGLE_BOOST_IMPRESSIONS = 500;
 
+export const MINIMUM_BOOST_OFFER_TOKENS = 1;
+
 export const DEFAULT_BOOST_RATE = 1000;
 export const DEFAULT_ACTIVE_TAB = 'newsfeed';
 export const DEFAULT_PAYMENT_METHOD = 'onchain';
 export const DEFAULT_IMPRESSIONS = MAXIMUM_SINGLE_BOOST_IMPRESSIONS / 2;
+export const DEFAULT_TOKENS = DEFAULT_IMPRESSIONS / 1000;
 export const DEFAULT_ENTITY = { guid: '' };
 export const DEFAULT_TARGET_USER = null;
 export const DEFAULT_BALANCE = 0;
@@ -164,6 +167,13 @@ export class BoostModalService implements OnDestroy {
   >(DEFAULT_IMPRESSIONS);
 
   /**
+   * Value of tokens.
+   */
+  public readonly tokens$: BehaviorSubject<number> = new BehaviorSubject<
+    number
+  >(DEFAULT_TOKENS);
+
+  /**
    * Entity being boosted.
    */
   public readonly entity$: BehaviorSubject<
@@ -214,6 +224,7 @@ export class BoostModalService implements OnDestroy {
       this.activeTab$,
       this.paymentMethod$,
       this.impressions$,
+      this.tokens$,
       this.targetUser$,
       this.onchainBalance$,
       this.offchainBalance$,
@@ -224,6 +235,7 @@ export class BoostModalService implements OnDestroy {
           activeTab,
           paymentMethod,
           impressions,
+          tokens,
           targetUser,
           onchainBalance,
           offchainBalance,
@@ -232,31 +244,44 @@ export class BoostModalService implements OnDestroy {
           BoostTab,
           BoostPaymentMethod,
           number,
+          number,
           MindsUser,
           number,
           number,
           number
         ]) => {
-          // check impressions are within max and min bounds.
-          if (!this.hasValidImpressions(impressions)) {
-            return true;
-          }
-
           // set balance depending on payment method.
           const balance =
             paymentMethod === 'onchain' ? onchainBalance : offchainBalance;
 
+          // check impressions are within max and min bounds.
+          if (activeTab === 'newsfeed') {
+            if (!this.hasValidImpressions(impressions)) {
+              return true;
+            }
+
+            // if user has funds.
+            if (!this.hasBoostFunds(impressions, balance, rate)) {
+              return true;
+            }
+
+            return false;
+          }
+          // is an offer
+          if (!this.hasValidBid(tokens)) {
+            return true;
+          }
+
           // if user has funds.
-          if (!this.hasFunds(impressions, balance, rate)) {
+          if (!this.hasOfferFunds(tokens, balance)) {
             return true;
           }
 
           // if tab is offer, we need to make sure there is a target user.
-          if (activeTab === 'offer') {
-            if (!targetUser) {
-              return true;
-            }
+          if (!targetUser) {
+            return true;
           }
+
           return false;
         }
       )
@@ -308,7 +333,7 @@ export class BoostModalService implements OnDestroy {
     const prepared = await this.prepareBoostPayload().toPromise();
 
     // if not on the newsfeed tab, this is a peer boost / boost offer.
-    if (this.activeTab$.getValue() !== 'newsfeed') {
+    if (this.activeTab$.getValue() === 'offer') {
       const payload = await this.assemblePeerBoostPayload(prepared);
       return this.postPeerBoost(payload).toPromise();
     }
@@ -419,11 +444,11 @@ export class BoostModalService implements OnDestroy {
     preparedResponse
   ): Promise<PeerBoostPayload> {
     const paymentMethod = this.paymentMethod$.getValue();
-    const impressions = this.impressions$.getValue();
+    const tokens = this.tokens$.getValue();
 
     let response = {
       guid: preparedResponse.guid,
-      bid: this.getBid(impressions / this.rate$.getValue()),
+      bid: this.getBid(tokens),
       currency: 'tokens',
       checksum: preparedResponse.checksum,
       destination: this.targetUser$.getValue().guid,
@@ -444,7 +469,7 @@ export class BoostModalService implements OnDestroy {
         ...response,
         ...(await this.getOnchainPaymentMethod(
           preparedResponse.guid,
-          impressions,
+          tokens,
           preparedResponse.checksum
         )),
       };
@@ -461,9 +486,10 @@ export class BoostModalService implements OnDestroy {
    */
   private async getOnchainPaymentMethod(
     guid: string,
-    impressions: number,
+    tokens: number,
     checksum: string
   ): Promise<PayloadPaymentMethod> {
+    const rate = this.rate$.getValue();
     if (this.web3Wallet.isUnavailable()) {
       throw new Error('No Ethereum wallets available on your browser.');
     }
@@ -476,7 +502,7 @@ export class BoostModalService implements OnDestroy {
 
     return {
       method: 'onchain',
-      txHash: await this.boostContract.create(guid, impressions, checksum),
+      txHash: await this.boostContract.create(guid, tokens * rate, checksum),
       address: await this.web3Wallet.getCurrentWallet(true),
     };
   }
@@ -504,12 +530,22 @@ export class BoostModalService implements OnDestroy {
    * @param { number } rate - token rate.
    * @returns { boolean } true if user has funds.
    */
-  private hasFunds(
+  private hasBoostFunds(
     impressions: number,
     balance: number,
     rate: number
   ): boolean {
     let tokenCost = impressions / rate;
+    return balance >= tokenCost;
+  }
+
+  /**
+   * True if user has enough funds.
+   * @param { number } tokenCost - amount of tokens.
+   * @param { number } balance - balance of users wallet.
+   * @returns { boolean } true if user has funds.
+   */
+  private hasOfferFunds(tokenCost: number, balance: number): boolean {
     return balance >= tokenCost;
   }
 
@@ -526,6 +562,15 @@ export class BoostModalService implements OnDestroy {
   }
 
   /**
+   * True is user is above the min offered tokens thresholds.
+   * @param { number } tokens - amount of tokens
+   * @returns { boolean } true if users impressions are above the minimum and below the maximum amount.
+   */
+  private hasValidBid(tokens: number): boolean {
+    return tokens >= MINIMUM_BOOST_OFFER_TOKENS;
+  }
+
+  /**
    * Resets local state to default values.
    * @returns { void }
    */
@@ -534,6 +579,7 @@ export class BoostModalService implements OnDestroy {
     this.activeTab$.next(DEFAULT_ACTIVE_TAB);
     this.paymentMethod$.next(DEFAULT_PAYMENT_METHOD);
     this.impressions$.next(DEFAULT_IMPRESSIONS);
+    this.tokens$.next(DEFAULT_TOKENS);
     this.entity$.next(DEFAULT_ENTITY);
     this.targetUser$.next(DEFAULT_TARGET_USER);
     this.onchainBalance$.next(DEFAULT_BALANCE);

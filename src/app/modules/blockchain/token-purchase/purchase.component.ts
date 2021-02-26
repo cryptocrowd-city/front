@@ -100,9 +100,10 @@ export class BlockchainPurchaseComponent implements OnInit {
   }
 
   get amount() {
-    let newAmnt = this.tokens / this.rate;
-    let wei = 10 ** 18;
-    return Math.ceil(newAmnt * wei) / wei; // Rounds up amount and add 1/1000th ETH to compensate for rounding
+    return 0.001;
+    // let newAmnt = this.tokens / this.rate;
+    // let wei = 10 ** 18;
+    // return Math.ceil(newAmnt * wei) / wei; // Rounds up amount and add 1/1000th ETH to compensate for rounding
   }
 
   get calculatedViews() {

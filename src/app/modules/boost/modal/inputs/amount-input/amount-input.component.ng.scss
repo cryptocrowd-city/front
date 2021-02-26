@@ -20,6 +20,11 @@
         border: 1px solid themed($m-borderColor--primary);
       }
 
+      &.fullWidth {
+        max-width: unset;
+        width: 100%;
+      }
+
       label {
         font-size: 14px;
         font-weight: 400;
