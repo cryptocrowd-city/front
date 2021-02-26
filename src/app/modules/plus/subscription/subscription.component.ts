@@ -76,6 +76,10 @@ export class PlusSubscriptionComponent implements OnInit {
   ) {
     this.upgrades = configs.get('upgrades');
 
+    //ojm temp
+    console.log('ojm upgrades', this.upgrades);
+    this.upgrades.plus['lifetime'] = { tokens: 2500 };
+
     const user = session.getLoggedInUser();
     this.userIsPro = user && user.pro;
   }
@@ -93,7 +97,9 @@ export class PlusSubscriptionComponent implements OnInit {
         this.interval = params.i || 'yearly';
 
         if (params.c || params.i) {
-          this.setTokensToYearlyInterval();
+          if (this.currency === 'tokens') {
+            this.interval = 'lifetime';
+          }
           this.enable();
         }
       }
@@ -203,24 +209,38 @@ export class PlusSubscriptionComponent implements OnInit {
   }
 
   get pricing() {
-    if (this.interval === 'yearly') {
+    if (this.currency !== 'tokens') {
+      if (this.interval === 'yearly') {
+        return {
+          amount: currency(
+            this.upgrades.plus.yearly[this.currency] / 12,
+            this.currency
+          ),
+          offerFrom: currency(
+            this.upgrades.plus.monthly[this.currency],
+            this.currency
+          ),
+          annualAmount: currency(
+            this.upgrades.plus.yearly[this.currency],
+            this.currency
+          ),
+        };
+      } else if (this.interval === 'monthly') {
+        return {
+          amount: currency(
+            this.upgrades.plus.monthly[this.currency],
+            this.currency
+          ),
+          offerFrom: null,
+          annualAmount: null,
+        };
+      }
+    } else {
+      this.interval = 'lifetime';
       return {
-        amount: currency(
-          this.upgrades.plus.yearly[this.currency] / 12,
-          this.currency
-        ),
-        offerFrom: currency(
-          this.upgrades.plus.monthly[this.currency],
-          this.currency
-        ),
-      };
-    } else if (this.interval === 'monthly') {
-      return {
-        amount: currency(
-          this.upgrades.plus.monthly[this.currency],
-          this.currency
-        ),
+        amount: this.upgrades.plus.lifetime[this.currency],
         offerFrom: null,
+        annualAmount: null,
       };
     }
   }
@@ -250,19 +270,15 @@ export class PlusSubscriptionComponent implements OnInit {
 
   setCurrency(currency: UpgradeOptionCurrency) {
     this.currency = currency;
-    this.setTokensToYearlyInterval();
+    if (this.currency === 'usd') {
+      this.interval = 'yearly';
+    } else if (this.currency === 'tokens') {
+      this.interval = 'lifetime';
+    }
   }
 
   setInterval(interval: UpgradeOptionInterval) {
     this.interval = interval;
-    this.setTokensToYearlyInterval();
-  }
-
-  setTokensToYearlyInterval() {
-    if (this.currency === 'tokens' && this.interval === 'monthly') {
-      this.interval = 'yearly';
-      this.toasterService.inform('Tokens can only be used on the yearly plan');
-    }
   }
 
   detectChanges() {

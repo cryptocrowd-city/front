@@ -68,6 +68,10 @@ export class ProSubscriptionComponent implements OnInit {
     protected toasterService: FormToastService
   ) {
     this.upgrades = configs.get('upgrades');
+
+    //ojm temp
+    console.log('ojm upgrades', this.upgrades);
+    this.upgrades.pro['lifetime'] = { tokens: 20000 };
   }
 
   ngOnInit() {
@@ -83,7 +87,9 @@ export class ProSubscriptionComponent implements OnInit {
         this.interval = params.i || 'yearly';
 
         if (params.c || params.i) {
-          this.setTokensToYearlyInterval();
+          if (this.currency === 'tokens') {
+            this.interval = 'lifetime';
+          }
           this.enable();
         }
       }
@@ -184,24 +190,38 @@ export class ProSubscriptionComponent implements OnInit {
   }
 
   get pricing() {
-    if (this.interval === 'yearly') {
+    if (this.currency !== 'tokens') {
+      if (this.interval === 'yearly') {
+        return {
+          amount: currency(
+            this.upgrades.pro.yearly[this.currency] / 12,
+            this.currency
+          ),
+          offerFrom: currency(
+            this.upgrades.pro.monthly[this.currency],
+            this.currency
+          ),
+          annualAmount: currency(
+            this.upgrades.pro.yearly[this.currency],
+            this.currency
+          ),
+        };
+      } else if (this.interval === 'monthly') {
+        return {
+          amount: currency(
+            this.upgrades.pro.monthly[this.currency],
+            this.currency
+          ),
+          offerFrom: null,
+          annualAmount: null,
+        };
+      }
+    } else {
+      this.interval = 'lifetime';
       return {
-        amount: currency(
-          this.upgrades.pro.yearly[this.currency] / 12,
-          this.currency
-        ),
-        offerFrom: currency(
-          this.upgrades.pro.monthly[this.currency],
-          this.currency
-        ),
-      };
-    } else if (this.interval === 'monthly') {
-      return {
-        amount: currency(
-          this.upgrades.pro.monthly[this.currency],
-          this.currency
-        ),
+        amount: this.upgrades.pro.lifetime[this.currency],
         offerFrom: null,
+        annualAmount: null,
       };
     }
   }
@@ -218,19 +238,15 @@ export class ProSubscriptionComponent implements OnInit {
 
   setCurrency(currency: UpgradeOptionCurrency) {
     this.currency = currency;
-    this.setTokensToYearlyInterval();
+    if (this.currency === 'usd') {
+      this.interval = 'yearly';
+    } else if (this.currency === 'tokens') {
+      this.interval = 'lifetime';
+    }
   }
 
   setInterval(interval: UpgradeOptionInterval) {
     this.interval = interval;
-    this.setTokensToYearlyInterval();
-  }
-
-  setTokensToYearlyInterval() {
-    if (this.currency === 'tokens' && this.interval === 'monthly') {
-      this.interval = 'yearly';
-      this.toasterService.inform('Tokens can only be used on the yearly plan');
-    }
   }
 
   detectChanges() {

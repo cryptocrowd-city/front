@@ -69,6 +69,7 @@ interface WireRewards {
 export interface WireUpgradePricingOptions {
   monthly: number;
   yearly: number;
+  lifetime: number;
 }
 
 export interface WireCurrencyOptions {
@@ -122,6 +123,7 @@ const DEFAULT_UPGRADE_INTERVAL_VALUE: UpgradeOptionInterval = 'yearly';
 const DEFAULT_WIRE_UPGRADE_PRICING_OPTIONS: WireUpgradePricingOptions = {
   monthly: 0,
   yearly: 0,
+  lifetime: 0,
 };
 
 /**
@@ -893,7 +895,8 @@ export class WireV2Service implements OnDestroy {
     }
 
     if (data.isUpgrade && data.upgradeInterval) {
-      wire.recurringInterval = data.upgradeInterval;
+      wire.recurringInterval =
+        data.upgradeInterval === 'lifetime' ? 'once' : data.upgradeInterval;
     }
 
     return wire as WireStruc;

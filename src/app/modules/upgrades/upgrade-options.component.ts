@@ -3,7 +3,7 @@ import { Session } from '../../services/session';
 import currency, { Currency } from '../../helpers/currency';
 import { ConfigsService } from '../../common/services/configs.service';
 
-export type UpgradeOptionInterval = 'yearly' | 'monthly';
+export type UpgradeOptionInterval = 'yearly' | 'monthly' | 'lifetime';
 
 export type UpgradeOptionCurrency = Currency;
 
@@ -46,6 +46,14 @@ export class UpgradeOptionsComponent {
         ),
         offerFrom: null,
       };
+    } else if (this.interval === 'lifetime') {
+      return {
+        amount: currency(
+          this.upgrades.plus.lifetime[this.currency],
+          this.currency
+        ),
+        offerFrom: null,
+      };
     }
   }
 
@@ -65,6 +73,14 @@ export class UpgradeOptionsComponent {
       return {
         amount: currency(
           this.upgrades.pro.monthly[this.currency],
+          this.currency
+        ),
+        offerFrom: null,
+      };
+    } else if (this.interval === 'lifetime') {
+      return {
+        amount: currency(
+          this.upgrades.pro.lifetime[this.currency],
           this.currency
         ),
         offerFrom: null,
