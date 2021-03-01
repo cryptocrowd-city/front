@@ -382,6 +382,9 @@ export class WireV2Service implements OnDestroy {
     private toasterSevice: FormToastService
   ) {
     this.upgrades = configs.get('upgrades');
+    // ojm temp fakedata
+    this.upgrades.plus['lifetime'] = { tokens: 2500 };
+    this.upgrades.pro['lifetime'] = { tokens: 20000 };
 
     const user = session.getLoggedInUser();
     this.userIsPlus = user && user.plus;
@@ -585,6 +588,13 @@ export class WireV2Service implements OnDestroy {
       this.recurring$.next(false);
     }
 
+    if (this.isUpgrade$.value) {
+      if (type === 'tokens') {
+        this.setUpgradeInterval('lifetime');
+      } else if (type === 'usd') {
+        this.setUpgradeInterval('yearly');
+      }
+    }
     this.setUpgradePricingOptions(type, this.upgradeType$.getValue());
 
     return this;
@@ -597,7 +607,9 @@ export class WireV2Service implements OnDestroy {
    */
   setIsUpgrade(isUpgrade: boolean): WireV2Service {
     this.isUpgrade$.next(isUpgrade);
-    this.recurring$.next(true);
+    if (this.upgradeInterval$.value !== 'lifetime') {
+      this.recurring$.next(true);
+    }
 
     return this;
   }
@@ -639,13 +651,12 @@ export class WireV2Service implements OnDestroy {
     type: WireType,
     upgradeType: WireUpgradeType
   ): WireV2Service {
-    // Tokens can only be used on annual subscriptions
+    // Tokens can only be used on lifetime subscriptions
     if (
       this.type$.value === 'tokens' &&
-      this.upgradeInterval$.value === 'monthly'
+      this.upgradeInterval$.value !== 'lifetime'
     ) {
-      this.upgradeInterval$.next('yearly');
-      this.toasterSevice.inform('Tokens can only be used on the yearly plan');
+      this.upgradeInterval$.next('lifetime');
     }
 
     // If it's an upgrade, calculate the pricing options
@@ -656,6 +667,7 @@ export class WireV2Service implements OnDestroy {
       upgradePricingOptions = {
         monthly: this.upgrades[upgradeType]['monthly'][type],
         yearly: this.upgrades[upgradeType]['yearly'][type],
+        lifetime: this.upgrades[upgradeType]['lifetime'][type],
       };
       this.upgradePricingOptions$.next(upgradePricingOptions);
 
@@ -895,8 +907,7 @@ export class WireV2Service implements OnDestroy {
     }
 
     if (data.isUpgrade && data.upgradeInterval) {
-      wire.recurringInterval =
-        data.upgradeInterval === 'lifetime' ? 'once' : data.upgradeInterval;
+      wire.recurringInterval = data.upgradeInterval;
     }
 
     return wire as WireStruc;

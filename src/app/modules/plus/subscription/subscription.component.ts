@@ -76,7 +76,9 @@ export class PlusSubscriptionComponent implements OnInit {
   ) {
     this.upgrades = configs.get('upgrades');
 
-    //ojm temp
+    // ojm resolve toast error: "cannot read property 'tokens' of undefined
+
+    //ojm temp fakedata
     console.log('ojm upgrades', this.upgrades);
     this.upgrades.plus['lifetime'] = { tokens: 2500 };
 

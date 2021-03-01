@@ -69,7 +69,7 @@ export class ProSubscriptionComponent implements OnInit {
   ) {
     this.upgrades = configs.get('upgrades');
 
-    //ojm temp
+    //ojm temp fakedata
     console.log('ojm upgrades', this.upgrades);
     this.upgrades.pro['lifetime'] = { tokens: 20000 };
   }
