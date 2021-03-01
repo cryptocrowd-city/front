@@ -426,11 +426,13 @@ export class BoostModalService implements OnDestroy {
     if (paymentMethod === 'onchain') {
       return {
         ...response,
-        ...(await this.getOnchainPaymentMethod(
-          preparedResponse.guid,
-          impressions,
-          preparedResponse.checksum
-        )),
+        paymentMethod: {
+          ...(await this.getOnchainPaymentMethod(
+            preparedResponse.guid,
+            impressions,
+            preparedResponse.checksum
+          )),
+        },
       };
     }
   }
@@ -467,11 +469,13 @@ export class BoostModalService implements OnDestroy {
     if (paymentMethod === 'onchain') {
       return {
         ...response,
-        ...(await this.getOnchainPaymentMethod(
-          preparedResponse.guid,
-          tokens,
-          preparedResponse.checksum
-        )),
+        paymentMethod: {
+          ...(await this.getOnchainPaymentMethod(
+            preparedResponse.guid,
+            tokens,
+            preparedResponse.checksum
+          )),
+        },
       };
     }
   }
