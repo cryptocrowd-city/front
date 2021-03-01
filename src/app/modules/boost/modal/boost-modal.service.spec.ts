@@ -154,7 +154,7 @@ describe('BoostModalService', () => {
   });
 
   it('should assess whether the user has enough funds', () => {
-    expect((service as any).hasFunds(1000, 1000, 1)).toBe(true);
+    expect((service as any).hasBoostFunds(1000, 1000, 1)).toBe(true);
   });
 
   it('should return false if users impressions amount is out of bounds of the min and max', () => {
