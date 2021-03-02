@@ -23,8 +23,6 @@ $collapse-width: 830px;
       cursor: pointer;
 
       &.m-boostModalTabs__tabContainer--active {
-        font-weight: 700;
-
         @include m-theme() {
           border-bottom: 3px solid themed($m-blue);
           color: themed($m-textColor--primary);
