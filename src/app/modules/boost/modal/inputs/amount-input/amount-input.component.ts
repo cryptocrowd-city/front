@@ -1,7 +1,13 @@
-import { Component, OnDestroy } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, fromEvent, Subscription } from 'rxjs';
+import { map, skip, take } from 'rxjs/operators';
 import {
   BoostModalService,
   BoostTab,
@@ -15,8 +21,13 @@ import {
   templateUrl: './amount-input.component.html',
   styleUrls: ['./amount-input.component.ng.scss'],
 })
-export class BoostModalAmountInputComponent implements OnDestroy {
+export class BoostModalAmountInputComponent
+  implements OnDestroy, AfterViewInit {
+  // general subscriptions
   private subscriptions: Subscription[] = [];
+
+  // focus listener subscriptions - treat separately so we can re-init as DOM changes.
+  private focusListenerSubscriptions: Subscription[] = [];
 
   // max impressions.
   public maxImpressions = MAXIMUM_SINGLE_BOOST_IMPRESSIONS;
@@ -24,10 +35,22 @@ export class BoostModalAmountInputComponent implements OnDestroy {
   // min impressions.
   public minImpressions = MINIMUM_SINGLE_BOOST_IMPRESSIONS;
 
+  // min tokens
   public minTokens = MINIMUM_BOOST_OFFER_TOKENS;
+
+  // true if input is focused.
+  public readonly isFocused$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
 
   // amount input form
   public form: FormGroup;
+
+  // impressions input ElementRef
+  @ViewChild('impressionsInput') impressionsInput: ElementRef;
+
+  // tokens input ElementRef
+  @ViewChild('tokensInput') tokensInput: ElementRef;
 
   constructor(private service: BoostModalService) {}
 
@@ -77,10 +100,101 @@ export class BoostModalAmountInputComponent implements OnDestroy {
     );
   }
 
+  ngAfterViewInit(): void {
+    // setup focus listener subscriptions.
+    this.resetFocusListenerSubscriptions();
+
+    this.subscriptions.push(
+      // on tab change, reset focus listeners as visible fields may have changed.
+      this.activeTab$.pipe(skip(1)).subscribe(() => {
+        // push to back of the event queue while DOM updates
+        setTimeout(() => this.resetFocusListenerSubscriptions());
+      })
+    );
+  }
+
   ngOnDestroy(): void {
-    for (let subscription of this.subscriptions) {
+    for (let subscription of [
+      ...this.subscriptions,
+      ...this.focusListenerSubscriptions,
+    ]) {
       subscription.unsubscribe();
     }
+  }
+
+  /**
+   * On views value changed, update tokens to match based on rate.
+   * @param { number } $event - views value.
+   * @returns { void }
+   */
+  public viewsValueChanged($event: number): void {
+    this.impressions$.next($event);
+    this.tokens$.next($event / this.rate$.getValue());
+  }
+
+  /**
+   * On tokens value changed, update impressions to match based on rate.
+   * @param { number } $event - tokens value.
+   * @returns { void }
+   */
+  public tokensValueChanged($event: number): void {
+    this.tokens$.next($event);
+    this.impressions$.next($event * this.rate$.getValue());
+  }
+
+  /**
+   * Reset focus listener subscriptions and resubscribe.
+   * @returns { void }
+   */
+  private resetFocusListenerSubscriptions(): void {
+    // unsub from any existing to avoid subscription duplication.
+    for (let subscription of this.focusListenerSubscriptions) {
+      subscription.unsubscribe();
+    }
+
+    // if impressions input is in DOM
+    if (this.impressionsInput && this.impressionsInput.nativeElement) {
+      // subscribe to focus in and out events.
+      this.setupImpressionsInputListeners();
+    }
+
+    // subscribe to token input focus events
+    this.setupTokenInputListeners();
+  }
+
+  /**
+   * Sets up token input listeners.
+   * @returns { void }
+   */
+  private setupTokenInputListeners(): void {
+    this.focusListenerSubscriptions.push(
+      fromEvent(this.tokensInput.nativeElement, 'focus').subscribe(value => {
+        this.isFocused$.next(true);
+      }),
+
+      fromEvent(this.tokensInput.nativeElement, 'focusout').subscribe(value => {
+        this.isFocused$.next(false);
+      })
+    );
+  }
+
+  /**
+   * Sets up impressions input listeners.
+   * @returns { void }
+   */
+  private setupImpressionsInputListeners(): void {
+    this.focusListenerSubscriptions.push(
+      fromEvent(this.impressionsInput.nativeElement, 'focus').subscribe(
+        value => {
+          this.isFocused$.next(true);
+        }
+      ),
+      fromEvent(this.impressionsInput.nativeElement, 'focusout').subscribe(
+        value => {
+          this.isFocused$.next(false);
+        }
+      )
+    );
   }
 
   /**
@@ -89,7 +203,7 @@ export class BoostModalAmountInputComponent implements OnDestroy {
    * @param { BoostTab } activeTab - current active tab.
    * @returns { void }
    */
-  setupFormControls(rate: number, activeTab: BoostTab): void {
+  private setupFormControls(rate: number, activeTab: BoostTab): void {
     const defaultViews = this.maxImpressions / 2;
     const defaultTokens = defaultViews / rate;
     const minTokens = this.minImpressions / rate;
@@ -122,25 +236,5 @@ export class BoostModalAmountInputComponent implements OnDestroy {
         ],
       }),
     });
-  }
-
-  /**
-   * On views value changed, update tokens to match based on rate.
-   * @param { number } $event - views value.
-   * @returns { void }
-   */
-  public viewsValueChanged($event: number): void {
-    this.impressions$.next($event);
-    this.tokens$.next($event / this.rate$.getValue());
-  }
-
-  /**
-   * On tokens value changed, update impressions to match based on rate.
-   * @param { number } $event - tokens value.
-   * @returns { void }
-   */
-  public tokensValueChanged($event: number): void {
-    this.tokens$.next($event);
-    this.impressions$.next($event * this.rate$.getValue());
   }
 }

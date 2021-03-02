@@ -1,4 +1,8 @@
-<div class="m-boostModalAmount__container" [formGroup]="form">
+<div
+  class="m-boostModalAmount__container"
+  [formGroup]="form"
+  [ngClass]="{ isFocused: isFocused$ | async }"
+>
   <!-- Views -->
   <div
     class="m-boostModalAmount__inputContainer m-boostModalAmount__viewsInput"
@@ -6,6 +10,7 @@
   >
     <label i18n="@@BOOST_MODAL__AMOUNT__VIEWS">Views</label>
     <input
+      #impressionsInput
       type="number"
       [ngModel]="impressions$ | async"
       (ngModelChange)="viewsValueChanged($event)"
@@ -24,6 +29,7 @@
   >
     <label i18n="@@BOOST_MODAL__AMOUNT__TOKENS">Tokens</label>
     <input
+      #tokensInput
       type="number"
       [ngModel]="tokens$ | async"
       (ngModelChange)="tokensValueChanged($event)"
