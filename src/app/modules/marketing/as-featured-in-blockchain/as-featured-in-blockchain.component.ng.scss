@@ -1,6 +1,8 @@
 @import 'defaults.scss';
 
 :host {
+  position: relative;
+
   .m-marketing__asFeaturedIn {
     min-width: 320px;
     max-width: 1084px;

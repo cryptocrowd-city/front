@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Injector } from '@angular/core';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { ModalService } from '../../../composer/components/modal/modal.service';
+import { OnchainTransferModalService } from '../../../wallet/components/components/onchain-transfer/onchain-transfer.service';
 import { EarnModalService } from '../../earn/earn-modal.service';
 import { BuyTokensModalService } from '../../token-purchase/v2/buy-tokens-modal.service';
 import { UniswapModalService } from '../../token-purchase/v2/uniswap/uniswap-modal.service';
@@ -22,6 +23,7 @@ export class BlockchainMarketingLinksService {
     private buyTokensModalService: BuyTokensModalService,
     private earnModalService: EarnModalService,
     private uniswapModal: UniswapModalService,
+    private onchainTransferModal: OnchainTransferModalService,
     @Inject(DOCUMENT) private document: Document,
     configs: ConfigsService
   ) {
@@ -82,8 +84,14 @@ export class BlockchainMarketingLinksService {
    * @returns { BlockchainMarketingLinksService } - Chainable.
    */
   public openTransferOnchainModal(): BlockchainMarketingLinksService {
-    // TODO: Implement.
-    console.log('transfer onchain clicked');
+    try {
+      this.onchainTransferModal
+        .setInjector(this.injector)
+        .present()
+        .toPromise();
+    } catch (e) {
+      // do nothing
+    }
     return this;
   }
 
@@ -92,7 +100,6 @@ export class BlockchainMarketingLinksService {
    * @returns { BlockchainMarketingLinksService } - Chainable.
    */
   public openAirdropModal(): BlockchainMarketingLinksService {
-    console.log('airdrop');
     return this;
   }
 
