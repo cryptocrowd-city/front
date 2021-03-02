@@ -362,6 +362,8 @@ export class WireV2Service implements OnDestroy {
    */
   upgrades: any; // readonly removed as component reydrates post authModal login
 
+  handlers: any;
+
   userIsPlus: boolean;
   userIsPro: boolean;
 
@@ -382,6 +384,9 @@ export class WireV2Service implements OnDestroy {
     private toasterSevice: FormToastService
   ) {
     this.upgrades = configs.get('upgrades');
+    this.handlers = configs.get('handlers');
+    console.log('ojm handlers:', this.handlers);
+
     // ojm temp fakedata
     this.upgrades.plus['lifetime'] = { tokens: 2500 };
     this.upgrades.pro['lifetime'] = { tokens: 20000 };
@@ -809,7 +814,15 @@ export class WireV2Service implements OnDestroy {
       case 'eth':
         if (data.type === 'tokens' && data.tokenType === 'offchain') {
           // Off-chain
-          if (data.wallet.loaded && data.amount > data.wallet.limits.wire) {
+          const isUpgrade =
+            data.entityGuid === this.handlers.pro ||
+            data.entityGuid === this.handlers.plus;
+
+          // Purchases of plus/pro are exempt from wire limits
+          const amountExceedsLimit =
+            !isUpgrade && data.amount > data.wallet.limits.wire;
+
+          if (data.wallet.loaded && amountExceedsLimit) {
             return invalid(
               `Cannot spend more than ${data.wallet.limits.wire} tokens today`,
               true
