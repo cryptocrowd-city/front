@@ -37,6 +37,10 @@ export class UpgradeOptionsComponent {
           this.upgrades.plus.monthly[this.currency],
           this.currency
         ),
+        annualAmount: currency(
+          this.upgrades.plus.yearly[this.currency],
+          this.currency
+        ),
       };
     } else if (this.interval === 'monthly') {
       return {
@@ -45,14 +49,13 @@ export class UpgradeOptionsComponent {
           this.currency
         ),
         offerFrom: null,
+        annualAmount: null,
       };
     } else if (this.interval === 'lifetime') {
       return {
-        amount: currency(
-          this.upgrades.plus.lifetime[this.currency],
-          this.currency
-        ),
+        amount: this.upgrades.plus.lifetime[this.currency],
         offerFrom: null,
+        annualAmount: null,
       };
     }
   }
@@ -68,6 +71,10 @@ export class UpgradeOptionsComponent {
           this.upgrades.pro.monthly[this.currency],
           this.currency
         ),
+        annualAmount: currency(
+          this.upgrades.pro.yearly[this.currency],
+          this.currency
+        ),
       };
     } else if (this.interval === 'monthly') {
       return {
@@ -76,15 +83,23 @@ export class UpgradeOptionsComponent {
           this.currency
         ),
         offerFrom: null,
+        annualAmount: null,
       };
     } else if (this.interval === 'lifetime') {
       return {
-        amount: currency(
-          this.upgrades.pro.lifetime[this.currency],
-          this.currency
-        ),
+        amount: this.upgrades.pro.lifetime[this.currency],
         offerFrom: null,
+        annualAmount: null,
       };
+    }
+  }
+
+  setCurrency(currency: UpgradeOptionCurrency) {
+    this.currency = currency;
+    if (this.currency === 'usd') {
+      this.interval = 'yearly';
+    } else if (this.currency === 'tokens') {
+      this.interval = 'lifetime';
     }
   }
 }

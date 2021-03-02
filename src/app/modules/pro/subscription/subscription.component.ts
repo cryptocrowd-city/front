@@ -68,10 +68,6 @@ export class ProSubscriptionComponent implements OnInit {
     protected toasterService: FormToastService
   ) {
     this.upgrades = configs.get('upgrades');
-
-    //ojm temp fakedata
-    console.log('ojm upgrades', this.upgrades);
-    this.upgrades.pro['lifetime'] = { tokens: 20000 };
   }
 
   ngOnInit() {

@@ -124,7 +124,10 @@ export class WireService {
         method: payload.method,
         amount: wire.amount,
         recurring: wire.recurring,
-        recurring_interval: wire.recurringInterval,
+        recurring_interval:
+          wire.recurringInterval === 'lifetime'
+            ? 'once'
+            : wire.recurringInterval,
       });
 
       this.wireSent.next(wire);

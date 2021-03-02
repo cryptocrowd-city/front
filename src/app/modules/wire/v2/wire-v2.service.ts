@@ -385,11 +385,6 @@ export class WireV2Service implements OnDestroy {
   ) {
     this.upgrades = configs.get('upgrades');
     this.handlers = configs.get('handlers');
-    console.log('ojm handlers:', this.handlers);
-
-    // ojm temp fakedata
-    this.upgrades.plus['lifetime'] = { tokens: 2500 };
-    this.upgrades.pro['lifetime'] = { tokens: 20000 };
 
     const user = session.getLoggedInUser();
     this.userIsPlus = user && user.plus;
