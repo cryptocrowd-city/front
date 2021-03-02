@@ -60,10 +60,22 @@
       &.m-boostModalAmount__viewsInput {
         border-right: unset !important;
         border-radius: 2px 0 0 2px;
+
+        &:focus {
+          border: 1px solid red;
+          box-shadow: 0 0 10px #719ece;
+          outline: blue;
+        }
       }
 
       &.m-boostModalAmount__tokensInput {
         border-radius: 0 2px 2px 0;
+
+        &:focus {
+          border: 1px solid red;
+          box-shadow: 0 0 10px #719ece;
+          outline: blue;
+        }
       }
     }
   }
@@ -71,6 +83,7 @@
   .m-boostModalAmount--error {
     margin-top: 10px;
     font-weight: 500;
+    min-height: 20px;
 
     @include m-theme() {
       color: themed($m-red);
