@@ -66,7 +66,7 @@
     em {
       font-style: inherit;
       text-decoration: inherit;
-      white-space: nowrap;
+      white-space: break-spaces;
       position: relative;
 
       &::after {
@@ -320,7 +320,12 @@
   .m-marketing__imageContainer {
     // max height of wrapper is less than image so that page is not stretched.
     max-height: 600px;
-
+    @media screen and (max-width: $m-grid-min-vp) {
+      transform: translateX(-50px);
+    }
+    @media screen and (max-width: $m-grid-max-mobile) {
+      transform: unset;
+    }
     span {
       // move background patterns in accordance with new position on desktop.
       &::before {
