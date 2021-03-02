@@ -69,12 +69,12 @@
       <span class="m-channelCardSubs__header">subscriptions</span></a
     >
   </div>
-  <!-- - TAGS ---------------------------- -->
-  <div class="m-channelCard__tags" *ngIf="showTags && channel.tags.length">
+  <!-- - TAGS (disabled) ---------------- -->
+  <!-- <div class="m-channelCard__tags" *ngIf="showTags && channel.tags.length">
     <span *ngFor="let tag of channel.tags" [innerHTML]="'#' + tag | tags"
       >#{{ tag }}</span
     >
-  </div>
+  </div> -->
   <!-- - DESC ---------------------------- -->
   <div
     class="m-channelCard__desc"

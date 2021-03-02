@@ -21,9 +21,9 @@ export class ChannelCardComponent implements AfterViewInit {
   @Input() channel: any;
 
   @Input() showDescription: boolean = true;
-  @Input() showTags: boolean = true;
   @Input() showSubs: boolean = true;
   @Input() showSubscribeButton: boolean = true;
+  // @Input() showTags: boolean = false; // disabled
 
   // display a blue border
   @Input() featured: boolean = false;
