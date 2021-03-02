@@ -58,9 +58,12 @@
       }
 
       &.m-boostModalAmount__viewsInput {
+        border-right: unset !important;
+        border-radius: 2px 0 0 2px;
       }
 
       &.m-boostModalAmount__tokensInput {
+        border-radius: 0 2px 2px 0;
       }
     }
   }
