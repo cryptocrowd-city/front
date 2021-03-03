@@ -21,6 +21,7 @@ import {
   MonetizationSubjectValue,
   DEFAULT_ACCESS_ID_VALUE,
 } from '../../../composer/services/composer.service';
+import { BlogPreloadService } from './blog-preload.service';
 
 export interface MetaData {
   title: string;
@@ -131,8 +132,16 @@ export class BlogsEditService {
     protected client: Client,
     protected site: SiteService,
     private toaster: FormToastService,
+    private preload: BlogPreloadService,
     @Self() @Inject(ComposerService) private composerService: ComposerService
   ) {
+    const preloadMessage = this.preload.getValue();
+
+    if (preloadMessage) {
+      this.content$.next(preloadMessage);
+      this.preload.clear();
+    }
+
     this.contentSubscription = this.content$
       .pipe(
         distinctUntilChanged(),
