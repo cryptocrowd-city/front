@@ -8,7 +8,7 @@
     class="m-boostModalAmount__inputContainer m-boostModalAmount__viewsInput"
     *ngIf="(activeTab$ | async) !== 'offer'"
   >
-    <label i18n="@@BOOST_MODAL__AMOUNT__VIEWS">Views</label>
+    <label i18n="@@BOOST_MODAL__AMOUNT__VIEWS" #impressionsLabel>Views</label>
     <input
       #impressionsInput
       type="number"
@@ -27,7 +27,7 @@
     class="m-boostModalAmount__inputContainer m-boostModalAmount__tokensInput"
     [ngClass]="{ fullWidth: (activeTab$ | async) === 'offer' }"
   >
-    <label i18n="@@BOOST_MODAL__AMOUNT__TOKENS">Tokens</label>
+    <label i18n="@@BOOST_MODAL__AMOUNT__TOKENS" #tokensLabel>Tokens</label>
     <input
       #tokensInput
       type="number"

@@ -52,6 +52,12 @@ export class BoostModalAmountInputComponent
   // tokens input ElementRef
   @ViewChild('tokensInput') tokensInput: ElementRef;
 
+  // token label ElementRef
+  @ViewChild('tokensLabel') tokensLabel: ElementRef;
+
+  // impressions label ElementRef
+  @ViewChild('impressionsLabel') impressionsLabel: ElementRef;
+
   constructor(private service: BoostModalService) {}
 
   /**
@@ -174,6 +180,9 @@ export class BoostModalAmountInputComponent
 
       fromEvent(this.tokensInput.nativeElement, 'focusout').subscribe(value => {
         this.isFocused$.next(false);
+      }),
+      fromEvent(this.tokensLabel.nativeElement, 'click').subscribe(value => {
+        this.tokensInput.nativeElement.focus();
       })
     );
   }
@@ -192,6 +201,11 @@ export class BoostModalAmountInputComponent
       fromEvent(this.impressionsInput.nativeElement, 'focusout').subscribe(
         value => {
           this.isFocused$.next(false);
+        }
+      ),
+      fromEvent(this.impressionsLabel.nativeElement, 'click').subscribe(
+        value => {
+          this.impressionsInput.nativeElement.focus();
         }
       )
     );
