@@ -8,7 +8,7 @@
  */
 
 import { Injectable, Self, Inject } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 // import { MonetizationSubjectValue } from '../../../composer/services/composer.service';
 import { Upload, Client } from '../../../../services/api';
 import { Router } from '@angular/router';
@@ -135,18 +135,21 @@ export class BlogsEditService {
     private preload: BlogPreloadService,
     @Self() @Inject(ComposerService) private composerService: ComposerService
   ) {
-    const preloadMessage = this.preload.getValue();
-
-    if (preloadMessage) {
-      this.content$.next(preloadMessage);
-      this.preload.clear();
-    }
-
-    this.contentSubscription = this.content$
+    this.contentSubscription = combineLatest([
+      this.content$,
+      this.preload.message$,
+    ])
       .pipe(
         distinctUntilChanged(),
-        tap(content => {
-          // console.log(`contentPipe | setting canPost ${content.length > 0}`);
+        tap(([content, preloadMessage]: [string, string]) => {
+          // if preload message is set, set content to message
+          if (preloadMessage) {
+            this.content$.next(preloadMessage);
+            // clear preloaded message
+            this.preload.clear();
+          }
+
+          // set canPost$ true if content length greater than 0.
           this.canPost$.next(content.length > 0);
         })
       )
