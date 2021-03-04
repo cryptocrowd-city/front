@@ -20,7 +20,7 @@ export const MINIMUM_BOOST_OFFER_TOKENS = 1;
 
 export const DEFAULT_BOOST_RATE = 1000;
 export const DEFAULT_ACTIVE_TAB = 'newsfeed';
-export const DEFAULT_PAYMENT_METHOD = 'onchain';
+export const DEFAULT_PAYMENT_METHOD = 'offchain';
 export const DEFAULT_IMPRESSIONS = MAXIMUM_SINGLE_BOOST_IMPRESSIONS / 2;
 export const DEFAULT_TOKENS = DEFAULT_IMPRESSIONS / 1000;
 export const DEFAULT_ENTITY = { guid: '' };
