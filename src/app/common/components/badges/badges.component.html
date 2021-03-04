@@ -33,6 +33,25 @@
   </li>
 
   <li *ngIf="user.pro && badges.indexOf('plus') > -1" routerLink="/pro">
+    <!-- <m-tooltip>
+      <m-icon
+        from="assets-file"
+        iconId="assets/icons/compose.svg"
+        [sizeFactor]="120"
+        m-tooltip--icon
+      ></m-icon>
+      Pro
+    </m-tooltip>
+
+    <m-icon from="custom" iconId="push_pin" m-tooltip--icon></m-icon> -->
+
+    <m-tooltip
+      iconSrc="http://localhost:4200/assets/icons/custom.svg"
+      i18n="@@COMMON__BADGES__PRO"
+    >
+      Pro 2
+    </m-tooltip>
+
     <m-tooltip icon="business_center" i18n="@@COMMON__BADGES__PRO">
       Pro
     </m-tooltip>
